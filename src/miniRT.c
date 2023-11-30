@@ -6,22 +6,36 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2023/11/27 15:09:45 by uclement         ###   ########.fr       */
+/*   Updated: 2023/11/30 15:57:19 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
+t_tuple cross_product(t_tuple a, t_tuple b)
+{
+	t_tuple c;
 
-#include <math.h>
+	c.x = a.y * b.z - a.z * b.y;
+	c.y = a.z * b.x - a.x * b.z;
+	c.z = a.x * b.y - a.y * b.x;
+	return(c);
+}
 
+float dot_product(t_tuple a, t_tuple b)
+{
+	float nbr;
+
+	nbr = a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
+	return (nbr);
+}
 
 float magnitude(t_tuple t)
 {
 	return sqrt(t.x * t.x + t.y * t.y + t.z * t.z);
 }
 
-t_tuple normalizeTuple(t_tuple t)
+t_tuple norm(t_tuple t)
 {
 	float mag = magnitude(t);
 
@@ -30,23 +44,29 @@ t_tuple normalizeTuple(t_tuple t)
 		t.y /= mag;
 		t.z /= mag;
 	}
-	return t;
+	return (t);
 }
 
-void	point(float x, float y, float z, t_tuple *point)
+t_tuple	point(float x, float y, float z)
 {
-	point->x = x;
-	point->y = y;
-	point->z = z;
-	point->w = 1;
+	t_tuple p;
+	
+	p.x = x;
+	p.y = y;
+	p.z = z;
+	p.w = 1;
+	return (p);
 }
 
-void	vector(float x, float y, float z, t_tuple *vector)
+t_tuple	vector(float x, float y, float z)
 {
-	vector->x = x;
-	vector->y = y;
-	vector->z = z;
-	vector->w = 0;
+	t_tuple v;
+	
+	v.x = x;
+	v.y = y;
+	v.z = z;
+	v.w = 1;
+	return (v);
 }
 
 t_tuple	add_tuple(t_tuple a, t_tuple b)
@@ -57,11 +77,11 @@ t_tuple	add_tuple(t_tuple a, t_tuple b)
 	c.y = a.y + b.y;
 	c.z = a.z + b.z;
 	c.w = a.w + b.w;
-	if (c.w == 2)
-	{
-		perror("w = 2");
-		exit(1);
-	}
+	// if (c.w == 2)
+	// {
+	// 	perror("w = 2");
+	// 	exit(1);
+	// }
 	return(c);
 }
 
@@ -117,14 +137,31 @@ bool	equal_tuple(t_tuple a, t_tuple b)
 		return false;
 }
 
+t_proj tick(t_env env, t_proj proj)
+{
+	t_proj	new_proj;
+
+	new_proj.pos = add_tuple(proj.pos, proj.vel);
+	new_proj.vel = add_tuple(add_tuple(proj.vel, env.grav), env.wind);
+	return (new_proj);
+}
 
 int main(void)
 {
-	t_tuple	a;
-	t_tuple	b;
-	
-	point(1, 2 , 3, &a);
-	b = normalizeTuple(a);
-	printf("%f\n", magnitude(b));
+	t_proj	p;
+	t_env	e;
+	int		count = 0;
+
+	p.pos = point(0, 1, 0);
+	p.vel = vector(1, 1, 0);
+	e.grav = vector(0, -0.1, 0);
+	e.wind = vector(-0.01, 0, 0);
+
+	while (p.pos.y > 0)
+	{
+		p = tick(e, p);
+		count++;
+		printf("%d\n", count);
+	}
 	return(0);
 }

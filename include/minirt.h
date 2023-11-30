@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2023/11/27 13:43:36 by uclement         ###   ########.fr       */
+/*   Updated: 2023/11/30 15:28:51 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINIRT_H
 
 #include <stdio.h>
+#include <math.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <errno.h>
@@ -26,5 +27,17 @@ typedef struct s_tuple {
 	float	z;
 	int		w;
 }	t_tuple;
+
+//test
+typedef struct s_proj {
+	t_tuple	pos;
+	t_tuple	vel;
+}	t_proj;
+
+typedef struct s_env {
+	t_tuple	grav;
+	t_tuple	wind;
+}	t_env;
+//end test
 
 #endif
