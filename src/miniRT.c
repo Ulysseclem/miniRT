@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2023/11/30 15:57:19 by uclement         ###   ########.fr       */
+/*   Updated: 2023/11/30 16:12:37 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,15 @@ t_tuple	vector(float x, float y, float z)
 	return (v);
 }
 
-t_tuple	add_tuple(t_tuple a, t_tuple b)
+t_tuple	add_tuple(t_tuple a, t_tuple b, int mode)
 {
 	t_tuple c;
 	
 	c.x = a.x + b.x;
 	c.y = a.y + b.y;
 	c.z = a.z + b.z;
-	c.w = a.w + b.w;
+	if (mode)
+		c.w = a.w + b.w;
 	// if (c.w == 2)
 	// {
 	// 	perror("w = 2");
@@ -85,19 +86,20 @@ t_tuple	add_tuple(t_tuple a, t_tuple b)
 	return(c);
 }
 
-t_tuple	sub_tuple(t_tuple a, t_tuple b)
+t_tuple	sub_tuple(t_tuple a, t_tuple b, int mode)
 {
 	t_tuple c;
 	
 	c.x = a.x - b.x;
 	c.y = a.y - b.y;
 	c.z = a.z - b.z;
-	c.w = a.w - b.w;
-	if (c.w == -1)
-	{
-		perror("w = -1");
-		exit(1);
-	}
+	if (mode)
+		c.w = a.w - b.w;
+	// if (c.w == -1)
+	// {
+	// 	perror("w = -1");
+	// 	exit(1);
+	// }
 	return(c);
 }
 t_tuple	neg_tuple(t_tuple a)
@@ -114,9 +116,19 @@ t_tuple	mul_sca_tuple(t_tuple a, float mul)
 	a.x *= mul;
 	a.x *= mul;
 	a.z *= mul;
-	a.w *= mul; //pas sur de celui la
+	// a.w *= mul; pas sur de celui la
 	return (a);	
 }
+t_tuple	mul_tuple(t_tuple a, t_tuple b)
+{
+	t_tuple c;
+	
+	c.x = a.x * b.x;
+	c.y = a.y * b.y;
+	c.z = a.z * b.z;
+	return(c);
+}
+
 
 bool	equal(float a, float b)
 {
