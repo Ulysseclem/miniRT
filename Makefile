@@ -31,7 +31,8 @@ INCS        := include    \
 	lib/libft/include   \
 
 SRC_DIR     := src
-SRCS        :=	miniRT.c \
+SRCS        :=	main.c \
+				color.c
 
 
 SRCS        := $(SRCS:%=$(SRC_DIR)/%)
