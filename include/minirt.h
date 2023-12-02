@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2023/11/30 21:55:37 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/02 16:03:39 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@
 #include <string.h>
 #include <mlx.h>
 
+# ifndef LENGHT
+# define LENGHT 900
+# endif
+
+# ifndef HEIGHT
+# define HEIGHT 550
+# endif
 
 typedef struct s_tuple {
 	float	x;
