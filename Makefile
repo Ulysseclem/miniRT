@@ -33,7 +33,8 @@ INCS        := include    \
 SRC_DIR     := src
 SRCS        :=	main.c \
 				color.c \
-				matrix.c
+				matrix.c \
+				matrix_inverter.c
 
 
 SRCS        := $(SRCS:%=$(SRC_DIR)/%)

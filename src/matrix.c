@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matrix.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 11:43:53 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/04 16:43:58 by uclement         ###   ########.fr       */
+/*   Updated: 2023/12/04 22:48:36 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,12 +165,22 @@ void	free_matrix(t_matrix *m)
 
 
 // PRINT
-void print_matrix(t_matrix *matrix) {
-	for (int i = 0; i < matrix->r; i++) {
-		for (int j = 0; j < matrix->c; j++) {
+void print_matrix(t_matrix *matrix) 
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (i < matrix->r)
+	{
+		j = 0;
+		while (j < matrix->c)
+		{
 			printf("%f ", matrix->data[i * matrix->c + j]);
+			j++;
 		}
 		printf("\n");
+		i++;
 	}
 }
 

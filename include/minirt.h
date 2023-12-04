@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/04 16:31:39 by uclement         ###   ########.fr       */
+/*   Updated: 2023/12/04 22:45:28 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,9 @@ t_matrix *mul_matrix(t_matrix *a, t_matrix *b);
 t_tuple	mul_matrix_tuple(t_matrix *a, t_tuple b);
 t_matrix *identify_matrix(int r, int c);
 t_matrix	*transp_matrix(t_matrix *m);
+
+float determinant(t_matrix *m);
+t_matrix *submatrix(t_matrix *m, int r, int c);
+
 
 #endif
