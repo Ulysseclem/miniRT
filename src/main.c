@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/04 22:46:16 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/04 22:54:30 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,18 +154,21 @@ bool	equal_tuple(t_tuple a, t_tuple b)
 /* ************************************************************************** */
 /*					gestion des couleurs									  */
 /* ************************************************************************** */
-int RGB_to_hex(t_color c) {
-    int scaledRed = (int)(c.r * 255);
-    int scaledGreen = (int)(c.g * 255);
-    int scaledBlue = (int)(c.b * 255);
+int RGB_to_hex(t_color c) 
+{
+	int red;
+	int green;
+	int blue;
+	int hex_value;
 
-    scaledRed = (scaledRed < 0) ? 0 : (scaledRed > 255) ? 255 : scaledRed;
-    scaledGreen = (scaledGreen < 0) ? 0 : (scaledGreen > 255) ? 255 : scaledGreen;
-    scaledBlue = (scaledBlue < 0) ? 0 : (scaledBlue > 255) ? 255 : scaledBlue;
-
-    int hexValue = (scaledRed << 16) + (scaledGreen << 8) + scaledBlue;
-
-    return hexValue;
+	red = (int)(c.r * 255);
+	green = (int)(c.g * 255);
+	blue = (int)(c.b * 255);
+	red = (red < 0) ? 0 : (red > 255) ? 255 : red;
+	green = (green < 0) ? 0 : (green > 255) ? 255 : green;
+	blue = (blue < 0) ? 0 : (blue > 255) ? 255 : blue;
+	hex_value = (red << 16) + (green << 8) + blue;
+	return (hex_value);
 }
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, t_color color)
