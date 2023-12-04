@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/02 16:33:24 by uclement         ###   ########.fr       */
+/*   Updated: 2023/12/04 16:40:41 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ t_tuple norm(t_tuple t)
 
 	if (mag != 0)
 	{
-		t.x = t.x / magnitude(t);
-		t.y = t.y / magnitude(t);
-		t.z = t.z / magnitude(t);
-		t.w = t.w / magnitude(t);
+		t.x = t.x / mag;
+		t.y = t.y / mag;
+		t.z = t.z / mag;
+		t.w = t.w / mag;
 	}
 	return (t);
 }
@@ -114,7 +114,7 @@ t_tuple	neg_tuple(t_tuple a)
 t_tuple	mul_sca_tuple(t_tuple a, float mul)
 {
 	a.x *= mul;
-	a.x *= mul;
+	a.y *= mul;
 	a.z *= mul;
 	a.w *= mul;
 	return (a);	
@@ -175,6 +175,11 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, t_color color)
 	*(unsigned int*)dst = RGBToHex(color);
 }
 
+void	print_tuple(t_tuple	t)
+{
+	printf("(%f, %f, %f, %d)\n", t.x, t.y, t.z, t.w);
+}
+
 int main(void)
 {
 	t_proj	p;
@@ -186,14 +191,15 @@ int main(void)
 	t_color color;
 
 	color = set_color(1, 0, 0);
+
 	mlx = mlx_init();
-	
 	mlx_win = mlx_new_window(mlx, LENGHT, HEIGHT, "Hello world!");
 	img.img = mlx_new_image(mlx, LENGHT, HEIGHT);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 								&img.endian);
+
 	p.pos = point(0, 1, 0);
-	p.vel = mul_sca_tuple(norm(vector(1, 1.8, 0)), 10);
+	p.vel = mul_sca_tuple(norm(vector(1, 1.8, 0)), 11.25);
 	e.grav = vector(0, -0.1, 0);
 	e.wind = vector(-0.01, 0, 0);
 
@@ -202,8 +208,48 @@ int main(void)
 		p = tick(e, p);
 		count++;
 		my_mlx_pixel_put(&img, p.pos.x, HEIGHT - p.pos.y, color);
-		printf("%d\n", count);
+		// printf("%d\n", count);
 	}
+// // TEST MATRIX
+
+	t_matrix	*m;
+	t_matrix	*m2;
+	t_matrix	*m3;
+
+	float	value[16];
+
+	value[0] = 1;
+	value[1] = 2;
+	value[2] = 3;
+	value[3] = 4;
+	value[4] = 2;
+	value[5] = 4;
+	value[6] = 4;
+	value[7] = 2;
+	value[8] = 8;
+	value[9] = 6;
+	value[10] = 4;
+	value[11] = 1;
+	value[12] = 0;
+	value[13] = 0;
+	value[14] = 0;
+	value[15] = 1;
+
+	m = create_matrix(4, 4);
+	fill_matrix(m, value);
+	m2 = identify_matrix(4, 4);
+	m3 = transp_matrix(m2);
+	print_matrix(m2);
+	
+	
+// END TEST MATRIX
+
+
+
+// TEST BULLET
+
+// END TES BULLET
+
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);
 	return(0);

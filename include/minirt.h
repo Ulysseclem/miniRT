@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/02 16:03:39 by uclement         ###   ########.fr       */
+/*   Updated: 2023/12/04 16:31:39 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,13 @@ typedef struct	s_data {
 	int		endian;
 }				t_data;
 
+typedef struct s_matrix
+{
+	int	r;
+	int	c;
+	float	*data;
+}	t_matrix;
+
 //test
 typedef struct s_proj {
 	t_tuple	pos;
@@ -63,11 +70,24 @@ typedef struct s_env {
 }	t_env;
 //end test
 
+//utils
+bool	equal(float a, float b);
+
 //color
 t_color	add_color(t_color a, t_color b);
 t_color	sub_color(t_color a, t_color b);
 t_color	mul_sca_color(t_color a, float mul);
 t_color	mul_color(t_color a, t_color b);
 t_color	set_color(float x, float y, float z);
+
+//matrix
+t_matrix	*create_matrix(int r, int c);
+void		fill_matrix(t_matrix *m, float *value);
+void		print_matrix(t_matrix *matrix);
+int			equal_matrix(t_matrix *a, t_matrix *b);
+t_matrix *mul_matrix(t_matrix *a, t_matrix *b);
+t_tuple	mul_matrix_tuple(t_matrix *a, t_tuple b);
+t_matrix *identify_matrix(int r, int c);
+t_matrix	*transp_matrix(t_matrix *m);
 
 #endif
