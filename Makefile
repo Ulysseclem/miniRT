@@ -34,7 +34,8 @@ SRC_DIR     := src
 SRCS        :=	main.c \
 				color.c \
 				matrix.c \
-				matrix_inverter.c
+				matrix_inverter.c \
+				matrix_transformation.c
 
 
 SRCS        := $(SRCS:%=$(SRC_DIR)/%)

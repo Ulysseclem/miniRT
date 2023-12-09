@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/09 16:04:15 by uclement         ###   ########.fr       */
+/*   Updated: 2023/12/09 17:53:17 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,6 +244,7 @@ int main(void)
 	t_matrix	*m;
 	t_matrix	*m2;
 	t_matrix	*m3;
+	t_tuple		p;
 
 	float	value[16];
 	float	value2[16];
@@ -287,11 +288,14 @@ int main(void)
 	m2 = create_matrix(4, 4);
 	fill_matrix(m2, value2);
 
+
+	p = vector(0, 1, 0);
+	m3 = matrix_rotation(d_to_r(0));
+	print_tuple(mul_matrix_tuple((m3), p));
 	
-	m3 = mul_matrix(m, m2);
-	print_matrix(m3);
-	printf("\n\n");
-	print_matrix(mul_matrix(m3, inverse(m2)));
+	// print_matrix(m3);
+	// printf("\n\n");
+	// print_matrix(mul_matrix(m3, inverse(m2)));
 	(void)m3;
 /* ************************************************************************** */
 /*					END TEST MATRIX											  */

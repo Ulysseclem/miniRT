@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/09 15:28:26 by uclement         ###   ########.fr       */
+/*   Updated: 2023/12/09 17:49:51 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,18 @@ t_tuple	mul_matrix_tuple(t_matrix *a, t_tuple b);
 t_matrix *identify_matrix(int r, int c);
 t_matrix	*transp_matrix(t_matrix *m);
 
+// matrix inverter
 float determinant(t_matrix *m);
 t_matrix *submatrix(t_matrix *m, int r, int c);
 float minor(t_matrix *m, int r, int c);
 float cofactor(t_matrix *m, int r, int c);
 t_matrix *inverse(t_matrix *m);
+
+// matrix tranformation
+t_matrix *matrix_translation(float x, float y, float z);
+t_matrix *matrix_scaling(float x, float y, float z);
+float	d_to_r(float deg);
+t_matrix *matrix_rotation(float r);
 
 
 #endif
