@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/04 22:54:30 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/09 16:04:15 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,32 +243,56 @@ int main(void)
 /* ************************************************************************** */
 	t_matrix	*m;
 	t_matrix	*m2;
+	t_matrix	*m3;
 
 	float	value[16];
-
-	value[0] = 1;
-	value[1] = 5;
-	value[2] = 0;
-	value[3] = -3;
-	value[4] = 2;
-	value[5] = 7;
-	value[6] = 0;
-	value[7] = 6;
-	value[8] = -3;
-
-	value[9] = 6;
+	float	value2[16];
+	
+	value[0] = 3;
+	value[1] = -9;
+	value[2] = 7;
+	value[3] = 3;
+	value[4] = 3;
+	value[5] = -8;
+	value[6] = 2;
+	value[7] = -9;
+	value[8] = -4;
+	value[9] = 4;
 	value[10] = 4;
 	value[11] = 1;
-	value[12] = 0;
-	value[13] = 0;
-	value[14] = 0;
+	value[12] = -6;
+	value[13] = 5;
+	value[14] = -1;
 	value[15] = 1;
 
-	m = create_matrix(3, 3);
+	value2[0] = 8;
+	value2[1] = 2;
+	value2[2] = 2;
+	value2[3] = 2;
+	value2[4] = 3;
+	value2[5] = -1;
+	value2[6] = 7;
+	value2[7] = 0;
+	value2[8] = 7;
+	value2[9] = 0;
+	value2[10] = 5;
+	value2[11] = 4;
+	value2[12] = 6;
+	value2[13] = -2;
+	value2[14] = 0;
+	value2[15] = 5;
+
+	m = create_matrix(4, 4);
 	fill_matrix(m, value);
-	// print_matrix(m);
-	m2 = submatrix(m, 0, 2);
-	(void)m2;
+	m2 = create_matrix(4, 4);
+	fill_matrix(m2, value2);
+
+	
+	m3 = mul_matrix(m, m2);
+	print_matrix(m3);
+	printf("\n\n");
+	print_matrix(mul_matrix(m3, inverse(m2)));
+	(void)m3;
 /* ************************************************************************** */
 /*					END TEST MATRIX											  */
 /* ************************************************************************** */

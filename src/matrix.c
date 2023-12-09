@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matrix.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 11:43:53 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/04 22:48:36 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/09 16:03:40 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ t_matrix *create_matrix(int r, int c)
 	t_matrix	*matrix;
 
 	matrix = malloc(sizeof(t_matrix));
+	if (!matrix->data)
+		return(NULL);
 	matrix->r = r;
 	matrix->c = c;
 	matrix->data = malloc(sizeof(float) * (r * c));
@@ -88,7 +90,6 @@ int	equal_matrix(t_matrix *a, t_matrix *b)
 /* ************************************************************************** */
 float	gmv(t_matrix *m, int r, int c)
 {
-	printf("%f\n", m->data[c + r * m->r]);
 	return (m->data[c + r * m->r]);
 }
 

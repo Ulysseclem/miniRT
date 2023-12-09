@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/04 22:45:28 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/09 15:28:26 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,9 @@ t_matrix	*transp_matrix(t_matrix *m);
 
 float determinant(t_matrix *m);
 t_matrix *submatrix(t_matrix *m, int r, int c);
+float minor(t_matrix *m, int r, int c);
+float cofactor(t_matrix *m, int r, int c);
+t_matrix *inverse(t_matrix *m);
 
 
 #endif
