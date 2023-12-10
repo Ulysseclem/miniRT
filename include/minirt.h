@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/10 12:31:37 by uclement         ###   ########.fr       */
+/*   Updated: 2023/12/10 15:40:42 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,19 @@ typedef struct s_matrix
 	float	*data;
 }	t_matrix;
 
+typedef struct s_ray {
+	t_tuple origin;
+	t_tuple	direction;
+}	t_ray;
+
 //test
+
+typedef struct s_sphere {
+	t_tuple point;
+    float 	radius;
+	int		id;
+} t_sphere;
+
 typedef struct s_proj {
 	t_tuple	pos;
 	t_tuple	vel;
@@ -77,6 +89,11 @@ typedef struct s_env {
 
 //utils
 bool	equal(float a, float b);
+t_tuple	add_tuple(t_tuple a, t_tuple b);
+t_tuple	mul_sca_tuple(t_tuple a, float mul);
+t_tuple	point(float x, float y, float z);
+t_tuple	sub_tuple(t_tuple a, t_tuple b);
+float dot_product(t_tuple a, t_tuple b);
 
 //color
 t_color	add_color(t_color a, t_color b);
@@ -112,5 +129,11 @@ t_matrix *matrix_rotation_x(float r);
 t_matrix *matrix_rotation_y(float r);
 t_matrix *matrix_rotation_z(float d);
 
+//ray
+void ray(t_ray *r, t_tuple p, t_tuple v);
+t_tuple	position(t_ray r, float time);
+float	discriminant(t_ray r, float a, float b, t_tuple s_t_r);
+void	intersect(t_sphere s, t_ray r);
+t_sphere sphere();
 
 #endif

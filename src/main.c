@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/10 13:42:01 by uclement         ###   ########.fr       */
+/*   Updated: 2023/12/10 15:47:52 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,16 +206,16 @@ int main(void)
 /* ************************************************************************** */
 /*					LIBX LAUCNHER											  */
 /* ************************************************************************** */
-	void	*mlx;
-	void	*mlx_win;
-	t_data	img;
+	// void	*mlx;
+	// void	*mlx_win;
+	// t_data	img;
 
 
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, LENGHT, HEIGHT, "Hello world!");
-	img.img = mlx_new_image(mlx, LENGHT, HEIGHT);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-								&img.endian);
+	// mlx = mlx_init();
+	// mlx_win = mlx_new_window(mlx, LENGHT, HEIGHT, "Hello world!");
+	// img.img = mlx_new_image(mlx, LENGHT, HEIGHT);
+	// img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
+	// 							&img.endian);
 
 /* ************************************************************************** */
 /*					TEST BULLET												  */
@@ -241,31 +241,47 @@ int main(void)
 /* ************************************************************************** */
 /*					TEST MATRIX	CLOCK										  */
 /* ************************************************************************** */
-	t_tuple		p;
-	t_tuple		tmp;
-	t_color color;
+	// t_tuple		p;
+	// t_tuple		tmp;
+	// t_color color;
 	
-	int i = 0;
-	color = set_color(1, 0, 0);
-	p = point(0, 0, 0);
+	// int i = 0;
+	// color = set_color(1, 0, 0);
+	// p = point(0, 0, 0);
 	
-	my_mlx_pixel_put(&img, CENTER - p.x, CENTER - p.z, color);
-	tmp = mul_matrix_tuple(matrix_translation(0, 0, 50), p);
-	my_mlx_pixel_put(&img, CENTER - tmp.x, CENTER - tmp.z, color);
-	print_tuple(tmp);
+	// my_mlx_pixel_put(&img, CENTER - p.x, CENTER - p.z, color);
+	// tmp = mul_matrix_tuple(matrix_translation(0, 0, 50), p);
+	// my_mlx_pixel_put(&img, CENTER - tmp.x, CENTER - tmp.z, color);
+	// print_tuple(tmp);
 	
-	while (i < 360)
-	{
-		tmp = mul_matrix_tuple(matrix_rotation_y(1), tmp);
-		my_mlx_pixel_put(&img, CENTER - tmp.x, CENTER - tmp.z, color);
-		i++;
-	}
-	print_tuple(tmp);
+	// while (i < 360)
+	// {
+	// 	tmp = mul_matrix_tuple(matrix_rotation_y(1), tmp);
+	// 	my_mlx_pixel_put(&img, CENTER - tmp.x, CENTER - tmp.z, color);
+	// 	i++;
+	// }
+	// print_tuple(tmp);
+
+/* ************************************************************************** */
+/*					TEST RAY										  */
+/* ************************************************************************** */
+
+	t_tuple p;
+	t_tuple v;
+	t_ray	r;
+	t_sphere s;
+	
+	p = point(0, 0, -5);
+	v = vector(0, 0, 1);
+	ray(&r, p, v);
+	s = sphere();
+	intersect(s, r);
+
 /* ************************************************************************** */
 /*					END TEST MATRIX											  */
 /* ************************************************************************** */
 
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
+	// mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+	// mlx_loop(mlx);
 	return(0);
 }
