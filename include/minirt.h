@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/09 17:49:51 by uclement         ###   ########.fr       */
+/*   Updated: 2023/12/10 12:31:37 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,13 @@
 # endif
 
 # ifndef HEIGHT
-# define HEIGHT 550
+# define HEIGHT 900
 # endif
+
+# ifndef CENTER
+# define CENTER 450
+# endif
+
 
 typedef struct s_tuple {
 	float	x;
@@ -101,7 +106,11 @@ t_matrix *inverse(t_matrix *m);
 t_matrix *matrix_translation(float x, float y, float z);
 t_matrix *matrix_scaling(float x, float y, float z);
 float	d_to_r(float deg);
-t_matrix *matrix_rotation(float r);
+t_tuple matrix_rotation(t_tuple t, float x, float y, float z);
+t_matrix *matrix_shearing(float xy, float xz, float yx, float yz, float zx, float zy);
+t_matrix *matrix_rotation_x(float r);
+t_matrix *matrix_rotation_y(float r);
+t_matrix *matrix_rotation_z(float d);
 
 
 #endif

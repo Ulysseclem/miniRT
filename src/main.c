@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/09 17:53:17 by uclement         ###   ########.fr       */
+/*   Updated: 2023/12/10 13:42:01 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,14 +187,14 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, t_color color)
 /* ************************************************************************** */
 /*					Pour le test BULLET										  */
 /* ************************************************************************** */
-t_proj tick(t_env env, t_proj proj)
-{
-	t_proj	new_proj;
+// t_proj tick(t_env env, t_proj proj)
+// {
+// 	t_proj	new_proj;
 
-	new_proj.pos = add_tuple(proj.pos, proj.vel);
-	new_proj.vel = add_tuple(add_tuple(proj.vel, env.grav), env.wind);
-	return (new_proj);
-}
+// 	new_proj.pos = add_tuple(proj.pos, proj.vel);
+// 	new_proj.vel = add_tuple(add_tuple(proj.vel, env.grav), env.wind);
+// 	return (new_proj);
+// }
 
 void	print_tuple(t_tuple	t)
 {
@@ -206,16 +206,16 @@ int main(void)
 /* ************************************************************************** */
 /*					LIBX LAUCNHER											  */
 /* ************************************************************************** */
-	// void	*mlx;
-	// void	*mlx_win;
-	// t_data	img;
+	void	*mlx;
+	void	*mlx_win;
+	t_data	img;
 
 
-	// mlx = mlx_init();
-	// mlx_win = mlx_new_window(mlx, LENGHT, HEIGHT, "Hello world!");
-	// img.img = mlx_new_image(mlx, LENGHT, HEIGHT);
-	// img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-	// 							&img.endian);
+	mlx = mlx_init();
+	mlx_win = mlx_new_window(mlx, LENGHT, HEIGHT, "Hello world!");
+	img.img = mlx_new_image(mlx, LENGHT, HEIGHT);
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
+								&img.endian);
 
 /* ************************************************************************** */
 /*					TEST BULLET												  */
@@ -239,69 +239,33 @@ int main(void)
 	// }
 
 /* ************************************************************************** */
-/*					TEST MATRIX												  */
+/*					TEST MATRIX	CLOCK										  */
 /* ************************************************************************** */
-	t_matrix	*m;
-	t_matrix	*m2;
-	t_matrix	*m3;
 	t_tuple		p;
-
-	float	value[16];
-	float	value2[16];
+	t_tuple		tmp;
+	t_color color;
 	
-	value[0] = 3;
-	value[1] = -9;
-	value[2] = 7;
-	value[3] = 3;
-	value[4] = 3;
-	value[5] = -8;
-	value[6] = 2;
-	value[7] = -9;
-	value[8] = -4;
-	value[9] = 4;
-	value[10] = 4;
-	value[11] = 1;
-	value[12] = -6;
-	value[13] = 5;
-	value[14] = -1;
-	value[15] = 1;
-
-	value2[0] = 8;
-	value2[1] = 2;
-	value2[2] = 2;
-	value2[3] = 2;
-	value2[4] = 3;
-	value2[5] = -1;
-	value2[6] = 7;
-	value2[7] = 0;
-	value2[8] = 7;
-	value2[9] = 0;
-	value2[10] = 5;
-	value2[11] = 4;
-	value2[12] = 6;
-	value2[13] = -2;
-	value2[14] = 0;
-	value2[15] = 5;
-
-	m = create_matrix(4, 4);
-	fill_matrix(m, value);
-	m2 = create_matrix(4, 4);
-	fill_matrix(m2, value2);
-
-
-	p = vector(0, 1, 0);
-	m3 = matrix_rotation(d_to_r(0));
-	print_tuple(mul_matrix_tuple((m3), p));
+	int i = 0;
+	color = set_color(1, 0, 0);
+	p = point(0, 0, 0);
 	
-	// print_matrix(m3);
-	// printf("\n\n");
-	// print_matrix(mul_matrix(m3, inverse(m2)));
-	(void)m3;
+	my_mlx_pixel_put(&img, CENTER - p.x, CENTER - p.z, color);
+	tmp = mul_matrix_tuple(matrix_translation(0, 0, 50), p);
+	my_mlx_pixel_put(&img, CENTER - tmp.x, CENTER - tmp.z, color);
+	print_tuple(tmp);
+	
+	while (i < 360)
+	{
+		tmp = mul_matrix_tuple(matrix_rotation_y(1), tmp);
+		my_mlx_pixel_put(&img, CENTER - tmp.x, CENTER - tmp.z, color);
+		i++;
+	}
+	print_tuple(tmp);
 /* ************************************************************************** */
 /*					END TEST MATRIX											  */
 /* ************************************************************************** */
 
-	// mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	// mlx_loop(mlx);
+	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+	mlx_loop(mlx);
 	return(0);
 }
