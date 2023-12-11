@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 13:49:48 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/11 17:46:59 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/11 19:04:53 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_sphere sphere()
 	t_sphere	s;
 	static int	i = 0;
 
+	s.transform = identify_matrix(4, 4);
 	s.point = point(0, 0, 0);
 	s.radius = 1;
 	s.id = i;
@@ -31,10 +32,14 @@ t_sphere sphere()
 /*					END TEST SPHERE											  */
 /* ************************************************************************** */
 
-void	create_inter(t_inter *i, float t, t_sphere s)
+t_inter	create_inter(float t, t_sphere s)
 {
-	i->t = t;
-	i->object = s;
+	t_inter i;
+	
+	i.t = t;
+	i.object = s;
+
+	return (i);
 }
 
 float	discriminant(t_ray r, float a, float b, t_tuple s_t_r)
@@ -52,14 +57,16 @@ void ray(t_ray *r, t_tuple p, t_tuple v)
 	r->direction = v;
 }
 
-t_inter	*intersect(t_sphere s, t_ray r)
+t_inter	*intersect(t_sphere s, t_ray r2)
 {
 	float	a;
 	float	b;
 	float	d;
-	t_tuple s_t_r;
 	t_inter *xs;
+	t_ray r;
+	t_tuple s_t_r;
 
+	r = trnsform_ray(r2, inverse(s.transform));
 	s_t_r = sub_tuple(r.origin, point(0 ,0 ,0));
 	a = dot_product(r.direction, r.direction);
 	b = dot_product(r.direction, s_t_r) * 2;
@@ -70,8 +77,8 @@ t_inter	*intersect(t_sphere s, t_ray r)
 	if (!xs)
 		return (NULL);
 	xs->count = 2;
-	create_inter(&xs[0], ((b * -1) - sqrt(d)) / (2 * a), s); // premiere inter
-	create_inter(&xs[1], ((b * -1) + sqrt(d)) / (2 * a), s); // deuxieme inter
+	xs[0] = create_inter(((b * -1) - sqrt(d)) / (2 * a), s); // premiere inter
+	xs[1] = create_inter(((b * -1) + sqrt(d)) / (2 * a), s); // deuxieme inter
 	return(xs);
 }
 
@@ -118,3 +125,16 @@ t_inter *intersections(int count, t_inter *inter)
 	return (xs);
 }
 
+t_ray trnsform_ray(t_ray r, t_matrix *m)
+{
+	t_ray r2;
+	
+	r2.origin =  mul_matrix_tuple(m, r.origin);
+	r2.direction =  mul_matrix_tuple(m, r.direction);
+	return (r2);
+}
+
+void set_transform(t_sphere *s, t_matrix *m)
+{
+	s->transform = m;
+}

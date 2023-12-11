@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/11 17:47:48 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/11 19:03:53 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,37 +270,44 @@ int main(void)
 	t_tuple v;
 	t_ray	r;
 	t_sphere s;
-	t_inter xs[4];
-	t_inter *xs2;
-	t_inter i1;
-	t_inter i2;
-	t_inter i3;
-	t_inter i4;
-	t_inter *result;
+	t_inter *xs;
 	
-	p = point(1, 2, 3);
-	v = vector(0, 1, 0);
+	xs = NULL;
+	p = point(0, 0, -5);
+	v = vector(0, 0, 1);
 	ray(&r, p, v);
-
-	
-
-
-	
 	s = sphere();
 
-	create_inter(&i1, -1, s);
-	create_inter(&i2,  -1, s);
-	create_inter(&i3, -3, s);
-	create_inter(&i4, -1, s);
+	set_transform(&s, matrix_scaling(2, 2, 2));
+	xs = intersect(s, r);
+	if (xs)
+	{
+		printf("%f\n", xs[0].t);
+		printf("%f\n", xs[1].t);	
+	}
 
-	xs[0] = i1;
-	xs[1] = i2;
-	xs[2] = i3;
-	xs[3] = i4;
-	xs2 = intersections(4, xs);
-	result = hit(xs2);
-	if (result != NULL)
-		printf("%f\n", result->t);
+	set_transform(&s, matrix_translation(5, 0, 0));
+	xs = intersect(s, r);
+	if (xs)
+	{
+		printf("%f\n", xs[0].t);
+		printf("%f\n", xs[1].t);	
+	}
+	// s = sphere();
+
+	// create_inter(&i1, -1, s);
+	// create_inter(&i2,  -1, s);
+	// create_inter(&i3, -3, s);
+	// create_inter(&i4, -1, s);
+
+	// xs[0] = i1;
+	// xs[1] = i2;
+	// xs[2] = i3;
+	// xs[3] = i4;
+	// xs2 = intersections(4, xs);
+	// result = hit(xs2);
+	// if (result != NULL)
+	// 	printf("%f\n", result->t);
 	
 	
 
