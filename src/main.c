@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/10 15:47:52 by uclement         ###   ########.fr       */
+/*   Updated: 2023/12/11 12:40:17 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,12 +270,21 @@ int main(void)
 	t_tuple v;
 	t_ray	r;
 	t_sphere s;
+	t_inter	i1;
+	t_inter	i2;
 	
-	p = point(0, 0, -5);
+	p = point(0, 0, 5);
 	v = vector(0, 0, 1);
 	ray(&r, p, v);
 	s = sphere();
-	intersect(s, r);
+
+	create_inter(&i1, 1, s);
+	create_inter(&i2, 2, s);
+
+	
+
+
+	
 
 /* ************************************************************************** */
 /*					END TEST MATRIX											  */

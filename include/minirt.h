@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/10 15:40:42 by uclement         ###   ########.fr       */
+/*   Updated: 2023/12/11 14:16:48 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,11 @@ typedef struct s_ray {
 
 //test
 
+typedef struct s_inter {
+	float		t;
+	t_sphere	object; 
+} t_inter;
+
 typedef struct s_sphere {
 	t_tuple point;
     float 	radius;
@@ -131,9 +136,9 @@ t_matrix *matrix_rotation_z(float d);
 
 //ray
 void ray(t_ray *r, t_tuple p, t_tuple v);
-t_tuple	position(t_ray r, float time);
 float	discriminant(t_ray r, float a, float b, t_tuple s_t_r);
-void	intersect(t_sphere s, t_ray r);
+t_inter	*intersect(t_sphere s, t_ray r);
 t_sphere sphere();
+void	create_inter(t_inter *i, float t, t_sphere s);
 
 #endif

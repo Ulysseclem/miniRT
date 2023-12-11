@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 13:49:48 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/10 15:48:56 by uclement         ###   ########.fr       */
+/*   Updated: 2023/12/11 14:17:23 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,15 @@ t_sphere sphere()
 	i++;
 	return(s);
 }
+/* ************************************************************************** */
+/*					END TEST SPHERE											  */
+/* ************************************************************************** */
+
+void	create_inter(t_inter *i, float t, t_sphere s)
+{
+	i->t = t;
+	i->object = s;
+}
 
 float	discriminant(t_ray r, float a, float b, t_tuple s_t_r)
 {
@@ -36,9 +45,6 @@ float	discriminant(t_ray r, float a, float b, t_tuple s_t_r)
 	c = dot_product(s_t_r, s_t_r) - 1;
 	return (pow(b, 2) - 4 * a * c);
 }
-/* ************************************************************************** */
-/*					TEST SPHERE												  */
-/* ************************************************************************** */
 
 void ray(t_ray *r, t_tuple p, t_tuple v)
 {
@@ -46,30 +52,44 @@ void ray(t_ray *r, t_tuple p, t_tuple v)
 	r->direction = v;
 }
 
-t_tuple	position(t_ray r, float time)
-{
-	return (add_tuple(r.origin, mul_sca_tuple(r.direction, time)));
-}
-
-void	intersect(t_sphere s, t_ray r)
+t_inter	*intersect(t_sphere s, t_ray r)
 {
 	float	a;
 	float	b;
 	float	d;
 	t_tuple s_t_r;
-
-	(void)s;
+	t_inter *xs;
 
 	s_t_r = sub_tuple(r.origin, point(0 ,0 ,0));
 	a = dot_product(r.direction, r.direction);
 	b = dot_product(r.direction, s_t_r) * 2;
-	
-	d = discriminant(r, a, b, s_t_r);
-	printf("d : %f\n", d);
+	d = discriminant(r, a, b, s_t_r);   // est-ce que cela touche l'object ?
 	if (d < 0)
 		return ;
-	printf("1 : %f", ((b * -1) - sqrt(d)) / (2 * a));
-	printf("2 : %f", ((b * -1) + sqrt(d)) / (2 * a));
-
+	xs = malloc(sizeof(t_inter) * 2);
+	if (!xs)
+		return (NULL);
+	create_inter(&xs[0], ((b * -1) - sqrt(d)) / (2 * a), s); // premiere inter
+	create_inter(&xs[1], ((b * -1) + sqrt(d)) / (2 * a), s); // deuxieme inter
+	return(xs);
 }
 
+/* ************************************************************************** */
+/*					Stock les interseciton dans une liste					  */
+/* ************************************************************************** */
+t_inter *intersections(int count, t_inter *inter) 
+{
+	t_inter *xs;
+	int		i;
+	
+	xs = malloc(sizeof(t_inter) * count);
+	if (!xs)
+		return (NULL);
+	i = 0;
+	while (i < count)
+	{
+		xs[i] = inter[i];
+		i++;
+	}	
+	return (xs);
+}
