@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 13:49:48 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/11 14:17:23 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/11 17:46:59 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,37 @@ t_inter	*intersect(t_sphere s, t_ray r)
 	b = dot_product(r.direction, s_t_r) * 2;
 	d = discriminant(r, a, b, s_t_r);   // est-ce que cela touche l'object ?
 	if (d < 0)
-		return ;
+		return (NULL);
 	xs = malloc(sizeof(t_inter) * 2);
 	if (!xs)
 		return (NULL);
+	xs->count = 2;
 	create_inter(&xs[0], ((b * -1) - sqrt(d)) / (2 * a), s); // premiere inter
 	create_inter(&xs[1], ((b * -1) + sqrt(d)) / (2 * a), s); // deuxieme inter
 	return(xs);
 }
+
+
+t_inter *hit(t_inter *xs)
+{
+	int 	i;
+	t_inter	*hit_xs;
+
+	i = 0;
+	if (&xs[i])          // pas sur que ca marche
+		hit_xs = &xs[i];
+	while(i < xs->count)
+	{
+		if (hit_xs->t > xs[i].t && xs[i].t >=0)
+			hit_xs = &xs[i];
+		i++;
+	}
+	if (hit_xs->t < 0)
+		return(NULL);
+	else
+		return(hit_xs);
+}
+
 
 /* ************************************************************************** */
 /*					Stock les interseciton dans une liste					  */
@@ -90,6 +113,8 @@ t_inter *intersections(int count, t_inter *inter)
 	{
 		xs[i] = inter[i];
 		i++;
-	}	
+	}
+	xs->count = count;
 	return (xs);
 }
+

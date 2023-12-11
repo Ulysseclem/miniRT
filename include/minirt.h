@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/11 14:16:48 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/11 17:01:55 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,17 @@ typedef struct s_ray {
 
 //test
 
-typedef struct s_inter {
-	float		t;
-	t_sphere	object; 
-} t_inter;
-
 typedef struct s_sphere {
 	t_tuple point;
     float 	radius;
 	int		id;
 } t_sphere;
+
+typedef struct s_inter {
+	float		t;
+	t_sphere	object;
+	int			count;
+} t_inter;
 
 typedef struct s_proj {
 	t_tuple	pos;
@@ -135,10 +136,12 @@ t_matrix *matrix_rotation_y(float r);
 t_matrix *matrix_rotation_z(float d);
 
 //ray
-void ray(t_ray *r, t_tuple p, t_tuple v);
+void 	ray(t_ray *r, t_tuple p, t_tuple v);
 float	discriminant(t_ray r, float a, float b, t_tuple s_t_r);
 t_inter	*intersect(t_sphere s, t_ray r);
 t_sphere sphere();
 void	create_inter(t_inter *i, float t, t_sphere s);
+t_inter *intersections(int count, t_inter *inter);
+t_inter *hit(t_inter *xs);
 
 #endif
