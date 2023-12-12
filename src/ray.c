@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 13:49:48 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/11 19:04:53 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/12 13:08:49 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ t_inter	create_inter(float t, t_sphere s)
 	return (i);
 }
 
-float	discriminant(t_ray r, float a, float b, t_tuple s_t_r)
-{
-	float		c;
-	(void)r;
+// float	discriminant(t_ray r, float a, float b, t_tuple s_t_r)
+// {
+// 	float		c;
+// 	(void)r;
 
-	c = dot_product(s_t_r, s_t_r) - 1;
-	return (pow(b, 2) - 4 * a * c);
-}
+// 	c = dot_product(s_t_r, s_t_r) - 1;
+// 	return (pow(b, 2) - 4 * a * c);
+// }
 
 void ray(t_ray *r, t_tuple p, t_tuple v)
 {
@@ -61,16 +61,19 @@ t_inter	*intersect(t_sphere s, t_ray r2)
 {
 	float	a;
 	float	b;
+	float	c;
 	float	d;
 	t_inter *xs;
 	t_ray r;
 	t_tuple s_t_r;
+	xs = NULL;
 
 	r = trnsform_ray(r2, inverse(s.transform));
-	s_t_r = sub_tuple(r.origin, point(0 ,0 ,0));
+	s_t_r = sub_tuple(r.origin, point(0 ,0 , 0));
 	a = dot_product(r.direction, r.direction);
 	b = dot_product(r.direction, s_t_r) * 2;
-	d = discriminant(r, a, b, s_t_r);   // est-ce que cela touche l'object ?
+	c = dot_product(s_t_r, s_t_r) - 1;
+	d = pow(b, 2) - (4 * a * c);   // est-ce que cela touche l'object ?
 	if (d < 0)
 		return (NULL);
 	xs = malloc(sizeof(t_inter) * 2);
@@ -89,6 +92,8 @@ t_inter *hit(t_inter *xs)
 	t_inter	*hit_xs;
 
 	i = 0;
+	if (!xs)
+		return(NULL);
 	if (&xs[i])          // pas sur que ca marche
 		hit_xs = &xs[i];
 	while(i < xs->count)

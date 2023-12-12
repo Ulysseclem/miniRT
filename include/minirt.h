@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/11 18:57:48 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/12 12:57:55 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@
 #include <mlx.h>
 
 # ifndef LENGHT
-# define LENGHT 900
+# define LENGHT 1000
 # endif
 
 # ifndef HEIGHT
-# define HEIGHT 900
+# define HEIGHT 1000
 # endif
 
 # ifndef CENTER
-# define CENTER 450
+# define CENTER 50
 # endif
 
 
@@ -101,6 +101,7 @@ t_tuple	mul_sca_tuple(t_tuple a, float mul);
 t_tuple	point(float x, float y, float z);
 t_tuple	sub_tuple(t_tuple a, t_tuple b);
 float dot_product(t_tuple a, t_tuple b);
+void	print_tuple(t_tuple	t);
 
 //color
 t_color	add_color(t_color a, t_color b);

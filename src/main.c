@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/11 19:03:53 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/12 13:10:30 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,16 +206,16 @@ int main(void)
 /* ************************************************************************** */
 /*					LIBX LAUCNHER											  */
 /* ************************************************************************** */
-	// void	*mlx;
-	// void	*mlx_win;
-	// t_data	img;
+	void	*mlx;
+	void	*mlx_win;
+	t_data	img;
 
 
-	// mlx = mlx_init();
-	// mlx_win = mlx_new_window(mlx, LENGHT, HEIGHT, "Hello world!");
-	// img.img = mlx_new_image(mlx, LENGHT, HEIGHT);
-	// img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-	// 							&img.endian);
+	mlx = mlx_init();
+	mlx_win = mlx_new_window(mlx, LENGHT, HEIGHT, "Hello world!");
+	img.img = mlx_new_image(mlx, LENGHT, HEIGHT);
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
+								&img.endian);
 
 /* ************************************************************************** */
 /*					TEST BULLET												  */
@@ -257,65 +257,62 @@ int main(void)
 	// while (i < 360)
 	// {
 	// 	tmp = mul_matrix_tuple(matrix_rotation_y(1), tmp);
-	// 	my_mlx_pixel_put(&img, CENTER - tmp.x, CENTER - tmp.z, color);
-	// 	i++;
+		// my_mlx_pixel_put(&img, CENTER - tmp.x, CENTER - tmp.z, color);
+		// i++;
 	// }
 	// print_tuple(tmp);
 
 /* ************************************************************************** */
-/*					TEST RAY										  */
+/*					TEST CERCLE RAY											  */
 /* ************************************************************************** */
-
-	t_tuple p;
-	t_tuple v;
-	t_ray	r;
-	t_sphere s;
-	t_inter *xs;
 	
-	xs = NULL;
-	p = point(0, 0, -5);
-	v = vector(0, 0, 1);
-	ray(&r, p, v);
-	s = sphere();
+	// t_inter *xs;
+	// t_ray	r;
+	// t_sphere	s;
+	// t_color		color;
+	// t_tuple		ray_origin;
+	// t_tuple position;
+	// float	y;
+	// float	x;
+	// float	w_y;
+	// float	w_x;
+	// float	half;
+	// float 	pixel_size;
+	// float 	wall_size = 7;
+	// float	wall_z = 10;
+	// float	canva_size = 200;
 
-	set_transform(&s, matrix_scaling(2, 2, 2));
-	xs = intersect(s, r);
-	if (xs)
-	{
-		printf("%f\n", xs[0].t);
-		printf("%f\n", xs[1].t);	
-	}
-
-	set_transform(&s, matrix_translation(5, 0, 0));
-	xs = intersect(s, r);
-	if (xs)
-	{
-		printf("%f\n", xs[0].t);
-		printf("%f\n", xs[1].t);	
-	}
-	// s = sphere();
-
-	// create_inter(&i1, -1, s);
-	// create_inter(&i2,  -1, s);
-	// create_inter(&i3, -3, s);
-	// create_inter(&i4, -1, s);
-
-	// xs[0] = i1;
-	// xs[1] = i2;
-	// xs[2] = i3;
-	// xs[3] = i4;
-	// xs2 = intersections(4, xs);
-	// result = hit(xs2);
-	// if (result != NULL)
-	// 	printf("%f\n", result->t);
-	
+	// xs = NULL;
+	// ray_origin = point(0, 0, -5);
+	// pixel_size = wall_size / canva_size;
+	// half = wall_size / 2;
+	// s = sphere();	
+	// color = set_color(1, 0, 0);
+	// y = 0;
+	// // set_transform(&s, matrix_scaling(1, 0.5, 1));
+	// while (y < canva_size)
+	// {
+	// 	w_y = half - pixel_size * y;
+	// 	x = 0;
+	// 	while (x < canva_size)
+	// 	{
+	// 		w_x = -half + pixel_size * x;
+	// 		position = point(w_x, w_y, wall_z);
+	// 		ray(&r, ray_origin, norm((sub_tuple(position, ray_origin))));
+	// 		xs = intersect(s, r);
+	// 		if (hit(xs))
+	// 			my_mlx_pixel_put(&img, 300 - x,  300 - y, color);
+	// 		x++;
+	// 	}
+	// 	y++;
+	// }
 	
 
 /* ************************************************************************** */
-/*					END TEST MATRIX											  */
+/*					END TEST											  */
 /* ************************************************************************** */
 
-	// mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	// mlx_loop(mlx);
+	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+	mlx_loop(mlx);
 	return(0);
 }
