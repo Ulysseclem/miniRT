@@ -37,6 +37,7 @@ SRCS        :=	main.c \
 				matrix_inverter.c \
 				matrix_transformation.c \
 				ray.c \
+				light_shading.c \
 
 
 SRCS        := $(SRCS:%=$(SRC_DIR)/%)

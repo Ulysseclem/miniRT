@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/12 13:10:30 by uclement         ###   ########.fr       */
+/*   Updated: 2023/12/12 15:02:40 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,16 +206,16 @@ int main(void)
 /* ************************************************************************** */
 /*					LIBX LAUCNHER											  */
 /* ************************************************************************** */
-	void	*mlx;
-	void	*mlx_win;
-	t_data	img;
+	// void	*mlx;
+	// void	*mlx_win;
+	// t_data	img;
 
 
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, LENGHT, HEIGHT, "Hello world!");
-	img.img = mlx_new_image(mlx, LENGHT, HEIGHT);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-								&img.endian);
+	// mlx = mlx_init();
+	// mlx_win = mlx_new_window(mlx, LENGHT, HEIGHT, "Hello world!");
+	// img.img = mlx_new_image(mlx, LENGHT, HEIGHT);
+	// img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
+	// 							&img.endian);
 
 /* ************************************************************************** */
 /*					TEST BULLET												  */
@@ -270,6 +270,7 @@ int main(void)
 	// t_ray	r;
 	// t_sphere	s;
 	// t_color		color;
+	// t_color		white;
 	// t_tuple		ray_origin;
 	// t_tuple position;
 	// float	y;
@@ -277,7 +278,7 @@ int main(void)
 	// float	w_y;
 	// float	w_x;
 	// float	half;
-	// float 	pixel_size;
+	// float 	pixel_size;    // Utile pour eviter que le prog prenne trop de temps
 	// float 	wall_size = 7;
 	// float	wall_z = 10;
 	// float	canva_size = 200;
@@ -288,6 +289,7 @@ int main(void)
 	// half = wall_size / 2;
 	// s = sphere();	
 	// color = set_color(1, 0, 0);
+	// white = set_color(1, 1, 1);
 	// y = 0;
 	// // set_transform(&s, matrix_scaling(1, 0.5, 1));
 	// while (y < canva_size)
@@ -302,6 +304,8 @@ int main(void)
 	// 		xs = intersect(s, r);
 	// 		if (hit(xs))
 	// 			my_mlx_pixel_put(&img, 300 - x,  300 - y, color);
+	// 		else
+	// 			my_mlx_pixel_put(&img, 300 - x,  300 - y, white);
 	// 		x++;
 	// 	}
 	// 	y++;
@@ -309,10 +313,26 @@ int main(void)
 	
 
 /* ************************************************************************** */
+/*					TEST LIGHT & SHADING									  */
+/* ************************************************************************** */
+
+	t_sphere	s;
+	t_tuple		v;
+	t_tuple		p;
+
+	s = sphere();
+	p = point(sqrt(3) / 3, sqrt(3) / 3, sqrt(3) / 3);
+	v = normale_at(s, p);
+	print_tuple(v);
+	v = norm(v);
+	print_tuple(v);	
+
+
+/* ************************************************************************** */
 /*					END TEST											  */
 /* ************************************************************************** */
 
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
+	// mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+	// mlx_loop(mlx);
 	return(0);
 }

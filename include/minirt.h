@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/12 12:57:55 by uclement         ###   ########.fr       */
+/*   Updated: 2023/12/12 14:37:56 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ t_tuple	point(float x, float y, float z);
 t_tuple	sub_tuple(t_tuple a, t_tuple b);
 float dot_product(t_tuple a, t_tuple b);
 void	print_tuple(t_tuple	t);
+t_tuple norm(t_tuple t);
+t_tuple	vector(float x, float y, float z);
 
 //color
 t_color	add_color(t_color a, t_color b);
@@ -147,5 +149,10 @@ t_inter *intersections(int count, t_inter *inter);
 t_inter *hit(t_inter *xs);
 t_ray trnsform_ray(t_ray r, t_matrix *m);
 void set_transform(t_sphere *s, t_matrix *m);
+
+//light & shading
+
+t_tuple	normale_at(t_sphere s, t_tuple p);
+
 
 #endif

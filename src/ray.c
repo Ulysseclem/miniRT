@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 13:49:48 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/12 13:08:49 by uclement         ###   ########.fr       */
+/*   Updated: 2023/12/12 14:17:22 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,6 @@ t_inter	create_inter(float t, t_sphere s)
 	return (i);
 }
 
-// float	discriminant(t_ray r, float a, float b, t_tuple s_t_r)
-// {
-// 	float		c;
-// 	(void)r;
-
-// 	c = dot_product(s_t_r, s_t_r) - 1;
-// 	return (pow(b, 2) - 4 * a * c);
-// }
-
 void ray(t_ray *r, t_tuple p, t_tuple v)
 {
 	r->origin = p;
@@ -73,7 +64,7 @@ t_inter	*intersect(t_sphere s, t_ray r2)
 	a = dot_product(r.direction, r.direction);
 	b = dot_product(r.direction, s_t_r) * 2;
 	c = dot_product(s_t_r, s_t_r) - 1;
-	d = pow(b, 2) - (4 * a * c);   // est-ce que cela touche l'object ?
+	d = pow(b, 2) - (4 * a * c);   // si positif = touche l'objet
 	if (d < 0)
 		return (NULL);
 	xs = malloc(sizeof(t_inter) * 2);
@@ -94,8 +85,7 @@ t_inter *hit(t_inter *xs)
 	i = 0;
 	if (!xs)
 		return(NULL);
-	if (&xs[i])          // pas sur que ca marche
-		hit_xs = &xs[i];
+	hit_xs = &xs[i];
 	while(i < xs->count)
 	{
 		if (hit_xs->t > xs[i].t && xs[i].t >=0)
@@ -110,7 +100,7 @@ t_inter *hit(t_inter *xs)
 
 
 /* ************************************************************************** */
-/*					Stock les interseciton dans une liste					  */
+/*	Stock les interseciton dans une liste	A REVOIR EN ENTIER AVEC INTERSECT */
 /* ************************************************************************** */
 t_inter *intersections(int count, t_inter *inter) 
 {
