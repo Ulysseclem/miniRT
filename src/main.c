@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/12 15:02:40 by uclement         ###   ########.fr       */
+/*   Updated: 2023/12/14 16:03:07 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,21 +201,29 @@ void	print_tuple(t_tuple	t)
 	printf("(%f, %f, %f, %d)\n", t.x, t.y, t.z, t.w);
 }
 
+void	print_color(t_color	t)
+{
+	printf("(%f, %f, %f)\n", t.r, t.g, t.b);
+}
+
+
+
+
 int main(void)
 {
 /* ************************************************************************** */
 /*					LIBX LAUCNHER											  */
 /* ************************************************************************** */
-	// void	*mlx;
-	// void	*mlx_win;
-	// t_data	img;
+	void	*mlx;
+	void	*mlx_win;
+	t_data	img;
 
 
-	// mlx = mlx_init();
-	// mlx_win = mlx_new_window(mlx, LENGHT, HEIGHT, "Hello world!");
-	// img.img = mlx_new_image(mlx, LENGHT, HEIGHT);
-	// img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-	// 							&img.endian);
+	mlx = mlx_init();
+	mlx_win = mlx_new_window(mlx, LENGHT, HEIGHT, "Hello world!");
+	img.img = mlx_new_image(mlx, LENGHT, HEIGHT);
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
+								&img.endian);
 
 /* ************************************************************************** */
 /*					TEST BULLET												  */
@@ -270,7 +278,6 @@ int main(void)
 	// t_ray	r;
 	// t_sphere	s;
 	// t_color		color;
-	// t_color		white;
 	// t_tuple		ray_origin;
 	// t_tuple position;
 	// float	y;
@@ -287,9 +294,8 @@ int main(void)
 	// ray_origin = point(0, 0, -5);
 	// pixel_size = wall_size / canva_size;
 	// half = wall_size / 2;
-	// s = sphere();	
+	// s = sphere();
 	// color = set_color(1, 0, 0);
-	// white = set_color(1, 1, 1);
 	// y = 0;
 	// // set_transform(&s, matrix_scaling(1, 0.5, 1));
 	// while (y < canva_size)
@@ -304,8 +310,6 @@ int main(void)
 	// 		xs = intersect(s, r);
 	// 		if (hit(xs))
 	// 			my_mlx_pixel_put(&img, 300 - x,  300 - y, color);
-	// 		else
-	// 			my_mlx_pixel_put(&img, 300 - x,  300 - y, white);
 	// 		x++;
 	// 	}
 	// 	y++;
@@ -316,23 +320,65 @@ int main(void)
 /*					TEST LIGHT & SHADING									  */
 /* ************************************************************************** */
 
+	t_inter *xs;
+	t_ray	r;
 	t_sphere	s;
-	t_tuple		v;
-	t_tuple		p;
+	t_color		color;
+	t_tuple		ray_origin;
+	t_tuple 	position;
+	t_tuple 	normal;
+	t_tuple 	eye;
+	t_light l;
+	float	y;
+	float	x;
+	float	w_y;
+	float	w_x;
+	float	half;
+	float 	pixel_size;    // Utile pour eviter que le prog prenne trop de temps
+	float 	wall_size = 7;
+	float	wall_z = 10;
+	float	canva_size = 200;
+
+	xs = NULL;
+	ray_origin = point(0, 0, -5);
+	pixel_size = wall_size / canva_size;
+	half = wall_size / 2;
 
 	s = sphere();
-	p = point(sqrt(3) / 3, sqrt(3) / 3, sqrt(3) / 3);
-	v = normale_at(s, p);
-	print_tuple(v);
-	v = norm(v);
-	print_tuple(v);	
+	s.material.color = set_color(1, 0.2, 1);
+	set_transform(&s, matrix_scaling(1, 0.8, 1));
 
+	l.position = point(-10, 10, -10);
+	l.intensity = set_color (1, 1, 1);
+
+	y = 0;
+	while (y < canva_size)
+	{
+		w_y = half - pixel_size * y;
+		x = 0;
+		while (x < canva_size)
+		{
+			w_x = -half + pixel_size * x;
+			position = point(w_x, w_y, wall_z);
+			ray(&r, ray_origin, norm((sub_tuple(position, ray_origin))));
+			xs = intersect(s, r);
+			if (hit(xs))
+			{
+				normal = normale_at(xs->object, position_f(r, xs->t));
+				eye = neg_tuple(r.direction);
+				color = lightning(xs->object.material, l, position_f(r, xs->t), eye, normal);
+				my_mlx_pixel_put(&img, 300 - x,  300 - y, color);
+			}
+			x++;
+		}
+		y++;
+	}
 
 /* ************************************************************************** */
 /*					END TEST											  */
 /* ************************************************************************** */
 
-	// mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	// mlx_loop(mlx);
+	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+	mlx_loop(mlx);
 	return(0);
 }

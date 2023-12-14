@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 13:49:48 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/12 14:17:22 by uclement         ###   ########.fr       */
+/*   Updated: 2023/12/14 16:01:34 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_sphere sphere()
 	static int	i = 0;
 
 	s.transform = identify_matrix(4, 4);
+	s.material = material_default();
 	s.point = point(0, 0, 0);
 	s.radius = 1;
 	s.id = i;
@@ -46,6 +47,11 @@ void ray(t_ray *r, t_tuple p, t_tuple v)
 {
 	r->origin = p;
 	r->direction = v;
+}
+
+t_tuple position_f(t_ray r, float t)
+{
+	return (add_tuple(r.origin, mul_sca_tuple(r.direction, t)));
 }
 
 t_inter	*intersect(t_sphere s, t_ray r2)
