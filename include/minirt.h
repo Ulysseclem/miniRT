@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/14 16:01:28 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/14 17:34:22 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ void	print_tuple(t_tuple	t);
 t_tuple norm(t_tuple t);
 t_tuple	vector(float x, float y, float z);
 t_tuple	neg_tuple(t_tuple a);
+void	print_color(t_color	t);
 
 //color
 t_color	add_color(t_color a, t_color b);
@@ -173,6 +174,7 @@ t_tuple	reflect(t_tuple vector_in, t_tuple normal);
 t_light	light(t_tuple position, t_color color);
 t_material	material_default();
 t_color lightning(t_material m, t_light l, t_tuple p, t_tuple eyev, t_tuple normalv);
+t_color lightning_no_specular(t_material m, t_light l, t_tuple p, t_tuple normalv);
 
 
 

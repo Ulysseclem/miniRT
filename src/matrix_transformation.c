@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matrix_transformation.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 16:26:14 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/10 13:20:18 by uclement         ###   ########.fr       */
+/*   Updated: 2023/12/14 16:16:18 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ t_matrix *matrix_rotation_y(float d)
 	m->data[2] = sin(r);
 	m->data[8] = sin(r) * -1;
 	m->data[10] = cos(r);
-	print_matrix(m);
 	return (m);	
 }
 

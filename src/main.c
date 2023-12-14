@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/14 16:03:07 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/14 17:37:18 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,14 +156,14 @@ bool	equal_tuple(t_tuple a, t_tuple b)
 /* ************************************************************************** */
 int RGB_to_hex(t_color c) 
 {
-	int red;
-	int green;
-	int blue;
-	int hex_value;
+	long long int red;
+	long long int green;
+	long long int blue;
+	long long int hex_value;
 
-	red = (int)(c.r * 255);
-	green = (int)(c.g * 255);
-	blue = (int)(c.b * 255);
+	red = (long long int)(c.r * 255);
+	green = (long long int)(c.g * 255);
+	blue = (long long int)(c.b * 255);
 	red = (red < 0) ? 0 : (red > 255) ? 255 : red;
 	green = (green < 0) ? 0 : (green > 255) ? 255 : green;
 	blue = (blue < 0) ? 0 : (blue > 255) ? 255 : blue;
@@ -327,7 +327,7 @@ int main(void)
 	t_tuple		ray_origin;
 	t_tuple 	position;
 	t_tuple 	normal;
-	t_tuple 	eye;
+	// t_tuple 	eye;
 	t_light l;
 	float	y;
 	float	x;
@@ -345,11 +345,11 @@ int main(void)
 	half = wall_size / 2;
 
 	s = sphere();
-	s.material.color = set_color(1, 0.2, 1);
-	set_transform(&s, matrix_scaling(1, 0.8, 1));
+	s.material.color = set_color(1, 0.5, 1);
+	set_transform(&s, matrix_scaling(1, 0.5, 1));
 
 	l.position = point(-10, 10, -10);
-	l.intensity = set_color (1, 1, 1);
+	l.intensity = set_color (0.5, 0.7, 0.2);
 
 	y = 0;
 	while (y < canva_size)
@@ -365,8 +365,9 @@ int main(void)
 			if (hit(xs))
 			{
 				normal = normale_at(xs->object, position_f(r, xs->t));
-				eye = neg_tuple(r.direction);
-				color = lightning(xs->object.material, l, position_f(r, xs->t), eye, normal);
+				// eye = neg_tuple(r.direction);
+				// color = lightning(xs->object.material, l, position_f(r, xs->t), eye, normal);
+				color = lightning_no_specular(xs->object.material, l, position_f(r, xs->t), normal);
 				my_mlx_pixel_put(&img, 300 - x,  300 - y, color);
 			}
 			x++;

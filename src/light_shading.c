@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 14:15:55 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/14 16:05:23 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/14 17:34:13 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,30 @@ t_material	material_default()
 	return(m);
 }
 
+float customPow(float base, int exponent) // pow custom pour eviter des nombre trop grand
+{
+    float result;
+	int i;
+
+	result = base;
+	i = 0;
+    if (exponent == 0)
+        return (1);
+    while (i < exponent) 
+	{
+		if (result > 1)
+			return (result);
+        result *= base;
+		i++;
+    }
+    return (result);
+}
+
+/* ************************************************************************** */
+/*	Lightning avec specular													  */
+/* ************************************************************************** */
+
+
 t_color lightning(t_material m, t_light l, t_tuple p, t_tuple eyev, t_tuple normalv)
 {
 	t_color effective_color;
@@ -88,9 +112,34 @@ t_color lightning(t_material m, t_light l, t_tuple p, t_tuple eyev, t_tuple norm
 		if (reflect_dot_eye <= 0) // light reflects away from the eye
 			specular = set_color(0, 0, 0);
 		else
-		{
-			specular = mul_sca_color(mul_sca_color(l.intensity, m.specular), (pow(reflect_dot_eye, m.shininess)));				
-		}
+			specular = mul_sca_color(mul_sca_color(l.intensity, m.specular), customPow(reflect_dot_eye, m.shininess));
 	}
 	return (add_color(add_color(ambiant, diffuse), specular));
+}
+
+
+/* ************************************************************************** */
+/*	Lightning sans specualr													  */
+/* ************************************************************************** */
+
+t_color lightning_no_specular(t_material m, t_light l, t_tuple p, t_tuple normalv)
+{
+	t_color effective_color;
+	t_color ambiant;
+	t_color	diffuse;
+	float	light_dot_normal;
+	t_tuple	lightv;
+
+
+	effective_color = mul_color(m.color, l.intensity); // combine surface color with light color / intensivity
+	lightv = norm(sub_tuple(l.position, p)); // Find the direction to the light source
+	ambiant = mul_sca_color(effective_color, m.ambiant); //ambiant contribution
+	light_dot_normal = dot_product(lightv, normalv);
+	if (light_dot_normal < 0)
+		diffuse = set_color(0, 0, 0);
+	else
+	{
+		diffuse = mul_sca_color(mul_sca_color(effective_color, m.diffuse), light_dot_normal); // diffuse contribution
+	}
+	return (add_color(ambiant, diffuse));
 }
