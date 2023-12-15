@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 13:49:48 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/14 16:01:34 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/15 10:10:56 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ t_sphere sphere()
 	s.transform = identify_matrix(4, 4);
 	s.material = material_default();
 	s.point = point(0, 0, 0);
-	s.radius = 1;
 	s.id = i;
 	i++;
 	return(s);

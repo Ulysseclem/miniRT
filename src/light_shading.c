@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 14:15:55 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/14 17:34:13 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/15 10:31:18 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,10 @@ t_tuple	reflect(t_tuple vector_in, t_tuple normal)
 	return (vector_out);
 }
 
-t_light	light(t_tuple position, t_color color)
+void	light(t_light *l, t_tuple position, t_color color)
 {
-	t_light l;
-
-	l.position = position;
-	l.intensity = color;
-	return (l);
+	l->position = position;
+	l->intensity = color;
 }
 
 t_material	material_default()
@@ -131,15 +128,13 @@ t_color lightning_no_specular(t_material m, t_light l, t_tuple p, t_tuple normal
 	t_tuple	lightv;
 
 
-	effective_color = mul_color(m.color, l.intensity); // combine surface color with light color / intensivity
+	effective_color = mul_color(m.color, l.intensity); // combine surface color with light color / brightness
+	ambiant = mul_sca_color(effective_color, m.ambiant); //ambiant contribution to the final color
 	lightv = norm(sub_tuple(l.position, p)); // Find the direction to the light source
-	ambiant = mul_sca_color(effective_color, m.ambiant); //ambiant contribution
-	light_dot_normal = dot_product(lightv, normalv);
-	if (light_dot_normal < 0)
+	light_dot_normal = dot_product(lightv, normalv); // Represents the cosine of the angle between the light vector and the normal vector.
+	if (light_dot_normal < 0) // if neg = light is on the other side of the surface
 		diffuse = set_color(0, 0, 0);
 	else
-	{
-		diffuse = mul_sca_color(mul_sca_color(effective_color, m.diffuse), light_dot_normal); // diffuse contribution
-	}
+		diffuse = mul_sca_color(mul_sca_color(effective_color, m.diffuse), light_dot_normal); // diffuse contribution to the final color
 	return (add_color(ambiant, diffuse));
 }

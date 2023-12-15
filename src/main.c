@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/14 17:37:18 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/15 13:51:27 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,16 +214,16 @@ int main(void)
 /* ************************************************************************** */
 /*					LIBX LAUCNHER											  */
 /* ************************************************************************** */
-	void	*mlx;
-	void	*mlx_win;
-	t_data	img;
+	// void	*mlx;
+	// void	*mlx_win;
+	// t_data	img;
 
 
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, LENGHT, HEIGHT, "Hello world!");
-	img.img = mlx_new_image(mlx, LENGHT, HEIGHT);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-								&img.endian);
+	// mlx = mlx_init();
+	// mlx_win = mlx_new_window(mlx, LENGHT, HEIGHT, "Hello world!");
+	// img.img = mlx_new_image(mlx, LENGHT, HEIGHT);
+	// img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
+	// 							&img.endian);
 
 /* ************************************************************************** */
 /*					TEST BULLET												  */
@@ -320,66 +320,115 @@ int main(void)
 /*					TEST LIGHT & SHADING									  */
 /* ************************************************************************** */
 
-	t_inter *xs;
-	t_ray	r;
-	t_sphere	s;
-	t_color		color;
-	t_tuple		ray_origin;
-	t_tuple 	position;
-	t_tuple 	normal;
+	// t_inter *xs;
+	// t_ray	r;
+	// t_sphere	s;
+	// t_color		color;
+	// t_tuple		ray_origin;
+	// t_tuple 	position;
+	// t_tuple 	normal;
 	// t_tuple 	eye;
-	t_light l;
-	float	y;
-	float	x;
-	float	w_y;
-	float	w_x;
-	float	half;
-	float 	pixel_size;    // Utile pour eviter que le prog prenne trop de temps
-	float 	wall_size = 7;
-	float	wall_z = 10;
-	float	canva_size = 200;
+	// t_light l;
+	// float	y;
+	// float	x;
+	// float	w_y;
+	// float	w_x;
+	// float	half;
+	// float 	pixel_size;    // Utile pour eviter que le prog prenne trop de temps
+	// float 	wall_size = 7;
+	// float	wall_z = 10;
+	// float	canva_size = 200;
 
-	xs = NULL;
-	ray_origin = point(0, 0, -5);
-	pixel_size = wall_size / canva_size;
-	half = wall_size / 2;
+	// xs = NULL;
+	// ray_origin = point(0, 0, -5);
+	// pixel_size = wall_size / canva_size;
+	// half = wall_size / 2;
 
-	s = sphere();
-	s.material.color = set_color(1, 0.5, 1);
-	set_transform(&s, matrix_scaling(1, 0.5, 1));
+	// s = sphere();
+	// s.material.color = set_color(1, 0.2, 1);
+	// // set_transform(&s, matrix_scaling(1, 0.5, 1));
 
-	l.position = point(-10, 10, -10);
-	l.intensity = set_color (0.5, 0.7, 0.2);
+	// l.position = point(10, -10, -10);
+	// l.intensity = set_color (1, 1, 1);
 
-	y = 0;
-	while (y < canva_size)
+	// y = 0;
+	// while (y < canva_size)
+	// {
+	// 	w_y = half - pixel_size * y;
+	// 	x = 0;
+	// 	while (x < canva_size)
+	// 	{
+	// 		w_x = -half + pixel_size * x;
+	// 		position = point(w_x, w_y, wall_z);
+	// 		ray(&r, ray_origin, norm((sub_tuple(position, ray_origin))));
+	// 		xs = intersect(s, r);
+	// 		if (hit(xs))
+	// 		{
+	// 			normal = normale_at(xs->object, position_f(r, xs->t));
+	// 			eye = neg_tuple(r.direction);
+	// 			color = lightning(xs->object.material, l, position_f(r, xs->t), eye, normal);
+	// 			// color = lightning_no_specular(xs->object.material, l, position_f(r, xs->t), normal);
+	// 			my_mlx_pixel_put(&img, 300 - x,  HEIGHT - y, color);
+	// 		}
+	// 		x++;
+	// 	}
+	// 	y++;
+	// }
+
+
+/* ************************************************************************** */
+/*					MAKING A SCENE											  */
+/* ************************************************************************** */
+
+	t_light		l;
+	t_sphere 	s1;
+	t_sphere 	s2;
+	t_world		w;
+	t_object 	*obj;
+
+	light(&l, point(-10, 10, -10), set_color(1, 1, 1));
+	
+	s1 =sphere();
+	s1.material.color = set_color(0.8, 1, 0.6);
+	s1.material.diffuse = 0.7;
+	s1.material.specular = 0.2;
+	s2 = sphere();
+	set_transform(&s2, matrix_scaling(0.5, 0.5, 0.5));
+
+
+
+	
+	obj = malloc(sizeof(t_object) * 3);
+	obj->count = 2;
+	obj[0].s = s1;
+	obj[1].s = s2;
+
+	w = set_world();
+	w.l = &l;
+	w.obj = obj;
+
+	t_ray r;
+	t_inter *xs;
+
+	ray(&r, point(0, 0, -5), vector(0, 0, 1));
+
+	// xs = intersect(s1, r);	
+	// printf("%f\n", xs[0].t);	
+
+	xs = intersect_world(w, r);
+	
+	int i = 0;
+	while (i < xs->count)
 	{
-		w_y = half - pixel_size * y;
-		x = 0;
-		while (x < canva_size)
-		{
-			w_x = -half + pixel_size * x;
-			position = point(w_x, w_y, wall_z);
-			ray(&r, ray_origin, norm((sub_tuple(position, ray_origin))));
-			xs = intersect(s, r);
-			if (hit(xs))
-			{
-				normal = normale_at(xs->object, position_f(r, xs->t));
-				// eye = neg_tuple(r.direction);
-				// color = lightning(xs->object.material, l, position_f(r, xs->t), eye, normal);
-				color = lightning_no_specular(xs->object.material, l, position_f(r, xs->t), normal);
-				my_mlx_pixel_put(&img, 300 - x,  300 - y, color);
-			}
-			x++;
-		}
-		y++;
+		printf("%f\n", xs[i].t);
+		i++;
 	}
 
 /* ************************************************************************** */
 /*					END TEST											  */
 /* ************************************************************************** */
 
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
-	return(0);
+	// mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+	// mlx_loop(mlx);
+	// return(0);
 }
