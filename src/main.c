@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/15 13:51:27 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/16 16:59:28 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -380,49 +380,31 @@ int main(void)
 /*					MAKING A SCENE											  */
 /* ************************************************************************** */
 
-	t_light		l;
-	t_sphere 	s1;
-	t_sphere 	s2;
-	t_world		w;
-	t_object 	*obj;
+	t_world 	w;
+	t_ray		r;
+	t_color		c;
+	t_sphere	s1;
+	t_sphere	s2;
 
-	light(&l, point(-10, 10, -10), set_color(1, 1, 1));
+	s1 = sphere();
+	s2 = sphere();
 	
-	s1 =sphere();
-	s1.material.color = set_color(0.8, 1, 0.6);
+	s1.material.color = set_color(0.8, 1.0, 0.6);
+	s1.material.ambiant = 1;
 	s1.material.diffuse = 0.7;
 	s1.material.specular = 0.2;
-	s2 = sphere();
-	set_transform(&s2, matrix_scaling(0.5, 0.5, 0.5));
-
-
-
 	
-	obj = malloc(sizeof(t_object) * 3);
-	obj->count = 2;
-	obj[0].s = s1;
-	obj[1].s = s2;
+	s2.transform = matrix_scaling(0.5, 0.5, 0.5);
+	s1.material.ambiant = 1;
 
 	w = set_world();
-	w.l = &l;
-	w.obj = obj;
-
-	t_ray r;
-	t_inter *xs;
-
-	ray(&r, point(0, 0, -5), vector(0, 0, 1));
-
-	// xs = intersect(s1, r);	
-	// printf("%f\n", xs[0].t);	
-
-	xs = intersect_world(w, r);
-	
-	int i = 0;
-	while (i < xs->count)
-	{
-		printf("%f\n", xs[i].t);
-		i++;
-	}
+	w.s = malloc(sizeof(t_sphere) * 2);
+	w.s[0] = s1;
+	w.s[1] = s2;
+	w.count = 2;
+	ray(&r, point(0, 0, 0.75), vector(0, 0, -1));
+	c = color_at(w, r);
+	print_color(c);
 
 /* ************************************************************************** */
 /*					END TEST											  */

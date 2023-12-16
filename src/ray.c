@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 13:49:48 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/15 10:10:56 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/16 16:49:40 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,25 +82,34 @@ t_inter	*intersect(t_sphere s, t_ray r2)
 }
 
 
-t_inter *hit(t_inter *xs)
+t_inter hit(t_inter *xs)
 {
 	int 	i;
-	t_inter	*hit_xs;
+	t_inter	hit_xs;
 
 	i = 0;
 	if (!xs)
-		return(NULL);
-	hit_xs = &xs[i];
+	{
+		hit_xs.hit = false;
+		return(hit_xs);
+	}
+	hit_xs = xs[i];
 	while(i < xs->count)
 	{
-		if (hit_xs->t > xs[i].t && xs[i].t >=0)
-			hit_xs = &xs[i];
+		if (hit_xs.t > xs[i].t && xs[i].t >=0)
+			hit_xs = xs[i];
 		i++;
 	}
-	if (hit_xs->t < 0)
-		return(NULL);
-	else
+	if (hit_xs.t < 0)
+	{
+		hit_xs.hit = false;
 		return(hit_xs);
+	}
+	else
+	{
+		hit_xs.hit = true;
+		return(hit_xs);
+	}
 }
 
 

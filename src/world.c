@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   world.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 10:09:14 by ulysseclem        #+#    #+#             */
-/*   Updated: 2023/12/15 13:56:00 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/16 16:57:16 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,69 +16,117 @@ t_world set_world()
 {
 	t_world w;
 
-	w.l = NULL;
-	w.obj = NULL;
+	w.l.intensity = set_color(1, 1, 1); // test
+	w.l.position = point( -10, 10, -10); // test
+	w.count = 0;
+	w.s = NULL;
 	return(w);
 }
 
-
-
-void	discriminant(t_ray r, t_discri *nbr)
+void	sort_inter(t_inter *xs)
 {
-	t_tuple s_t_r;
+	t_inter tmp;
+	int i;
 
-	s_t_r = sub_tuple(r.origin, point(0 ,0 , 0));
-	nbr->a = dot_product(r.direction, r.direction);
-	nbr->b = dot_product(r.direction, s_t_r) * 2;
-	nbr->c = dot_product(s_t_r, s_t_r) - 1;
-	nbr->d = pow(nbr->b, 2) - (4 * nbr->a * nbr->c);   // si positif = touche l'objet
-}
-
-void count_discri(t_discri *nbr, t_ray r, t_world *w)
-{
-	t_ray 	r_tmp;
-	int		i;
-	
 	i = 0;
-	print_matrix(w->obj[0].s.transform);
-	printf("\n");
-	print_matrix(w->obj[1].s.transform);
-	while (i < w->obj->count)
+	while (i < xs->count -1)
 	{
-		r_tmp = trnsform_ray(r, inverse(w->obj[i].s.transform));
-		discriminant(r_tmp, &w->obj[i].s.nbr);
-		if (w->obj[i].s.nbr.d >= 0)
-			nbr->count++;
+		if (xs[i].t > xs[i + 1].t)
+		{
+			tmp = xs[i];
+			xs[i] = xs[i +1];
+			xs[i + 1] = tmp;
+		}
 		i++;
 	}
-	nbr->count *= 2;
 }
 
-t_inter	*intersect_world(t_world w, t_ray r)
-{
-	t_discri nbr;
-	int		i;
-	t_inter *xs;
-	xs = NULL;
+/* ************************************************************************** */
+/*	Definis et sort toutes les intersection de rays et d'objets dans le world */
+/* ************************************************************************** */
 
-	nbr.count = 0;
-	count_discri(&nbr, r, &w);
-	if (nbr.count == 0)
-		return (0);
-	xs = malloc(sizeof(t_inter) * nbr.count);
+t_inter	*intersect_world(t_world w, t_ray r2)
+{
+
+	t_inter *xs;
+	t_ray r;
+	t_tuple s_t_r;
+	xs = NULL;
+	int i;
+	int	test = 0;
+
+	i = 0;
+	while (i < w.count)
+	{		r = trnsform_ray(r2, inverse(w.s[i].transform));
+		s_t_r = sub_tuple(r.origin, point(0 ,0 , 0));
+		w.s[i].a = dot_product(r.direction, r.direction);
+		w.s[i].b = dot_product(r.direction, s_t_r) * 2;
+		w.s[i].c = dot_product(s_t_r, s_t_r) - 1;
+		w.s[i].d = pow(w.s[i].b, 2) - (4 * w.s[i].a * w.s[i].c);
+		if (w.s[i].d >= 0)
+			test += 2;
+		i++;
+	}
+	if (test == 0)
+		return (NULL);
+	xs = malloc(sizeof(t_inter) * test);
 	if (!xs)
 		return (NULL);
 	i = 0;
-	int j = 0;
-	while (i < nbr.count)
+	while (i < test)
 	{
-		xs[i] = create_inter(((w.obj[j].s.nbr.b * -1) - sqrt(w.obj[j].d)) / (2 * w.obj[j].s.nbr.a), w.obj[j].s); // premiere inter
-		printf("xs %d = %f \n",i, xs[i].t);
-		xs[++i] = create_inter(((w.obj[j].s.nbr.b * -1) + sqrt(w.obj[j].d)) / (2 * w.obj[j].s.nbr.a), w.obj[j].s); // deuxieme inter
-		printf("xs %d = %f\n",i, xs[i].t);
+		xs[i] = create_inter(((w.s[i / 2].b * -1) - sqrt(w.s[i / 2].d)) / (2 * w.s[i / 2].a), w.s[i / 2]); // premiere inter
 		i++;
-		j++;
+		xs[i] = create_inter(((w.s[i / 2].b * -1) + sqrt(w.s[i / 2].d)) / (2 * w.s[i / 2].a), w.s[i / 2]); // deuxieme inter
+		i++;
 	}
-	xs->count = nbr.count;
+	xs->count = test;
+	sort_inter(xs);
 	return(xs);
+}
+
+/* ************************************************************************** */
+/*	precompute pour trouver le Hit											  */
+/* ************************************************************************** */
+t_comps prepare_computation(t_inter xs, t_ray r)
+{
+	t_comps comps;
+
+	comps.t = xs.t;
+	comps.object = xs.object;
+	comps.p = position_f(r, comps.t);
+	comps.eyev = neg_tuple(r.direction);
+	comps.normalv = normale_at(comps.object, comps.p);
+	if (dot_product(comps.normalv, comps.eyev) < 0) // Verifie si le ray n'origine pas de l'interieur de l'objet
+	{
+		comps.inside = true;
+		comps.normalv = neg_tuple(comps.normalv);
+	}
+	else
+		comps.inside = false;
+	return (comps);
+}
+
+t_color shade_hit(t_world w, t_comps c)
+{
+	return (lightning(c.object.material, w.l, c.p, c.eyev, c.normalv));
+}
+
+t_color shade_hit_no_specular(t_world w, t_comps c)
+{
+	return (lightning_no_specular(c.object.material, w.l, c.p, c.normalv));
+}
+
+t_color	color_at(t_world w, t_ray r)
+{	
+	t_inter hit_xs;
+	t_inter *xs;
+	t_comps	c;
+	
+	xs = intersect_world(w, r);
+	if (!xs) // aucune intersection trouve, color = noir.
+		return (set_color(0, 0, 0));
+	hit_xs = hit(xs);
+	c = prepare_computation(hit_xs, r);
+	return (shade_hit(w, c));
 }

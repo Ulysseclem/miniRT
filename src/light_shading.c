@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light_shading.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 14:15:55 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/15 10:31:18 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/16 16:57:56 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 /*	gestion du vecteur NORMAL												  */
 /* ************************************************************************** */
 
+
+// NORMALISER CETTE DAUBE
 t_tuple	normale_at(t_sphere s, t_tuple world_point)
 {
 	t_tuple object_point;
@@ -27,7 +29,7 @@ t_tuple	normale_at(t_sphere s, t_tuple world_point)
 	object_normal = sub_tuple(object_point, world_normal);
 	world_normal = mul_matrix_tuple(transp_matrix(inverse(s.transform)), object_normal);
 	world_normal.w = 0;  // remettre le w a 0 (pour vecteur) car il risque d'avoir ete change.
-	return(world_normal);
+	return(norm(world_normal));
 }
 
 t_tuple	reflect(t_tuple vector_in, t_tuple normal)
