@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/16 16:59:28 by uclement         ###   ########.fr       */
+/*   Updated: 2023/12/17 17:48:27 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, t_color color)
 {
 	char	*dst;
 
-	if (x > LENGHT || y > HEIGHT)
+	if (x > WIDTH || y > HEIGHT)
 	{
 		printf("pixel out of bound");
 		return;
@@ -380,31 +380,44 @@ int main(void)
 /*					MAKING A SCENE											  */
 /* ************************************************************************** */
 
-	t_world 	w;
-	t_ray		r;
-	t_color		c;
-	t_sphere	s1;
-	t_sphere	s2;
+	// t_world 	w;
+	// t_ray		r;
+	// t_color		c;
+	// t_sphere	s1;
+	// t_sphere	s2;
 
-	s1 = sphere();
-	s2 = sphere();
+	// s1 = sphere();
+	// s2 = sphere();
 	
-	s1.material.color = set_color(0.8, 1.0, 0.6);
-	s1.material.ambiant = 1;
-	s1.material.diffuse = 0.7;
-	s1.material.specular = 0.2;
+	// s1.material.color = set_color(0.8, 1.0, 0.6);
+	// s1.material.ambiant = 1;
+	// s1.material.diffuse = 0.7;
+	// s1.material.specular = 0.2;
 	
-	s2.transform = matrix_scaling(0.5, 0.5, 0.5);
-	s1.material.ambiant = 1;
+	// s2.transform = matrix_scaling(0.5, 0.5, 0.5);
+	// s1.material.ambiant = 1;
 
-	w = set_world();
-	w.s = malloc(sizeof(t_sphere) * 2);
-	w.s[0] = s1;
-	w.s[1] = s2;
-	w.count = 2;
-	ray(&r, point(0, 0, 0.75), vector(0, 0, -1));
-	c = color_at(w, r);
-	print_color(c);
+	// w = set_world();
+	// w.s = malloc(sizeof(t_sphere) * 2);
+	// w.s[0] = s1;
+	// w.s[1] = s2;
+	// w.count = 2;
+	// ray(&r, point(0, 0, 0.75), vector(0, 0, -1));
+	// c = color_at(w, r);
+	// print_color(c);
+
+/* ************************************************************************** */
+/*					VIEW TEST												  */
+/* ************************************************************************** */
+
+	float fov;
+	t_camera c;
+
+	fov = PI/2;
+	c = camera(WIDTH, HEIGHT, fov);
+	printf("%f", c.pixel_size);
+	
+	
 
 /* ************************************************************************** */
 /*					END TEST											  */

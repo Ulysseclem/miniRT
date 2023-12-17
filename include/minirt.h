@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/16 16:51:46 by uclement         ###   ########.fr       */
+/*   Updated: 2023/12/17 17:49:49 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,21 @@
 #include <string.h>
 #include <mlx.h>
 
-# ifndef LENGHT
-# define LENGHT 1000
+# ifndef WIDTH
+# define WIDTH 125
 # endif
 
 # ifndef HEIGHT
-# define HEIGHT 1000
+# define HEIGHT 200
 # endif
 
 # ifndef CENTER
 # define CENTER 50
 # endif
 
+# ifndef PI
+# define PI 3.1415
+# endif
 
 typedef struct s_tuple {
 	float	x;
@@ -124,7 +127,15 @@ typedef struct s_comps {
 	bool		inside;
 }	t_comps;
 
-
+typedef struct s_camera {
+	float			hsize;
+	float			vsize;
+	float		fov;
+	t_matrix	*transform;
+	float		half_width;
+	float		half_height;
+	float			pixel_size;
+}	t_camera;
 
 
 //end test
@@ -141,6 +152,7 @@ t_tuple norm(t_tuple t);
 t_tuple	vector(float x, float y, float z);
 t_tuple	neg_tuple(t_tuple a);
 void	print_color(t_color	t);
+t_tuple cross_product(t_tuple a, t_tuple b);
 
 //color
 t_color	add_color(t_color a, t_color b);
@@ -204,5 +216,9 @@ t_comps prepare_computation(t_inter xs, t_ray r);
 t_color shade_hit(t_world w, t_comps c);
 t_color shade_hit_no_specular(t_world w, t_comps c);
 t_color	color_at(t_world w, t_ray r);
+
+// view
+t_matrix *view_transform(t_tuple from, t_tuple to, t_tuple up);
+t_camera	camera(int hsize, int vsize, float fov);
 
 #endif

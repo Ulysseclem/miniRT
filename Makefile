@@ -38,7 +38,8 @@ SRCS        :=	main.c \
 				matrix_transformation.c \
 				ray.c \
 				light_shading.c \
-				world.c
+				world.c \
+				view.c
 
 
 SRCS        := $(SRCS:%=$(SRC_DIR)/%)
