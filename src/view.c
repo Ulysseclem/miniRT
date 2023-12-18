@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   view.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 15:26:52 by ulysseclem        #+#    #+#             */
-/*   Updated: 2023/12/18 14:31:54 by uclement         ###   ########.fr       */
+/*   Updated: 2023/12/18 22:28:33 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,35 +83,27 @@ t_ray	ray_for_pixel(t_camera c, float px, float py)
 	
 	return(r);
 }
-  #include <stdlib.h>
-void	render(t_camera c, t_world w)
+
+void	render(t_camera c, t_world w, t_data *img)
 {
 	int 	x;
 	int 	y;
 	t_color color;
 	t_ray 	r;
 
-	x = 5;
-	y = 5;
-	r = ray_for_pixel(c, x, y);
-	color = color_at(w, r);
-				print_color(color);
-
-	// y = 0;
-	// while (y < c.vsize - 1)
-	// {
-	// 	x = 0;
-	// 	while (x < c.hsize - 1)
-	// 	{
-	// 		r = ray_for_pixel(c, x, y);
-	// 		color = color_at(w, r);
-	// 		// if (x == 1 && y == 1)
-	// 		// {
-	// 			print_color(color);
-	// 			// exit(0);
-	// 		// }
-	// 		x++;
-	// 	}
-	// 	y++;
-	// }
+	y = 0;
+	while (y < c.vsize - 1)
+	{
+		x = 0;
+		while (x < c.hsize - 1)
+		{
+			r = ray_for_pixel(c, x, y);
+			color = color_at(w, r);
+			print_tuple(r.direction);
+			print_color(color);
+			my_mlx_pixel_put(img, x, y, color);
+			x++;
+		}
+		y++;
+	}
 }

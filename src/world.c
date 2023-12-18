@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   world.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 10:09:14 by ulysseclem        #+#    #+#             */
-/*   Updated: 2023/12/18 15:17:53 by uclement         ###   ########.fr       */
+/*   Updated: 2023/12/18 23:04:39 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,5 @@ t_color	color_at(t_world w, t_ray r)
 		return (set_color(0, 0, 0));
 	hit_xs = hit(xs);
 	c = prepare_computation(hit_xs, r);
-	// printf("hit_xs: %f", 	hit_xs.t);
 	return (shade_hit(w, c));
 }
