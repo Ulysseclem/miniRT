@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/18 12:55:47 by uclement         ###   ########.fr       */
+/*   Updated: 2023/12/18 13:40:30 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,6 +222,6 @@ t_color	color_at(t_world w, t_ray r);
 t_matrix *view_transform(t_tuple from, t_tuple to, t_tuple up);
 t_camera	camera(int hsize, int vsize, float fov);
 t_ray	ray_for_pixel(t_camera c, float px, float py);
-void	render(t_camera c, t_world w, t_data *img);
+void	render(t_camera c, t_world w);
 
 #endif

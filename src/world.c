@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 10:09:14 by ulysseclem        #+#    #+#             */
-/*   Updated: 2023/12/16 16:57:16 by uclement         ###   ########.fr       */
+/*   Updated: 2023/12/18 15:17:53 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ t_inter	*intersect_world(t_world w, t_ray r2)
 
 	i = 0;
 	while (i < w.count)
-	{		r = trnsform_ray(r2, inverse(w.s[i].transform));
+	{		
+		r = trnsform_ray(r2, inverse(w.s[i].transform));
 		s_t_r = sub_tuple(r.origin, point(0 ,0 , 0));
 		w.s[i].a = dot_product(r.direction, r.direction);
 		w.s[i].b = dot_product(r.direction, s_t_r) * 2;
@@ -128,5 +129,6 @@ t_color	color_at(t_world w, t_ray r)
 		return (set_color(0, 0, 0));
 	hit_xs = hit(xs);
 	c = prepare_computation(hit_xs, r);
+	// printf("hit_xs: %f", 	hit_xs.t);
 	return (shade_hit(w, c));
 }

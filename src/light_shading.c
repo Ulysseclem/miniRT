@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 14:15:55 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/16 16:57:56 by uclement         ###   ########.fr       */
+/*   Updated: 2023/12/18 15:16:16 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,12 @@ t_color lightning(t_material m, t_light l, t_tuple p, t_tuple eyev, t_tuple norm
 
 
 	effective_color = mul_color(m.color, l.intensity); // combine surface color with light color / intensivity
+
 	lightv = norm(sub_tuple(l.position, p)); // Find the direction to the light source
-	ambiant = mul_sca_color(effective_color, m.ambiant); //ambiant contribution
+	ambiant = mul_sca_color(effective_color, m.ambiant); //ambiant contribution  PROBEME ICI ?
+	printf("m.ambiant %f", m.ambiant);
+		printf("effective colo\n");
+	print_color(ambiant);
 	light_dot_normal = dot_product(lightv, normalv);
 	if (light_dot_normal < 0)
 	{
@@ -113,6 +117,12 @@ t_color lightning(t_material m, t_light l, t_tuple p, t_tuple eyev, t_tuple norm
 		else
 			specular = mul_sca_color(mul_sca_color(l.intensity, m.specular), customPow(reflect_dot_eye, m.shininess));
 	}
+	printf("\n\nasd");
+	print_color(ambiant);
+	print_color(specular);
+	print_color(diffuse);
+	printf("\n\n");
+
 	return (add_color(add_color(ambiant, diffuse), specular));
 }
 

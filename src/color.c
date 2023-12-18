@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 19:21:49 by ulysseclem        #+#    #+#             */
-/*   Updated: 2023/11/30 21:48:24 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/18 14:59:03 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ t_color	sub_color(t_color a, t_color b)
 t_color	mul_sca_color(t_color a, float mul)
 {
 	a.r *= mul;
+	// printf("mul :%f, r = %f", mul, a.r);
 	a.g *= mul;
 	a.b *= mul;
 	return (a);	
