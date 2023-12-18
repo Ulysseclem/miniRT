@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/17 17:48:27 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/18 13:01:59 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,16 +214,16 @@ int main(void)
 /* ************************************************************************** */
 /*					LIBX LAUCNHER											  */
 /* ************************************************************************** */
-	// void	*mlx;
-	// void	*mlx_win;
-	// t_data	img;
+	void	*mlx;
+	void	*mlx_win;
+	t_data	img;
 
 
-	// mlx = mlx_init();
-	// mlx_win = mlx_new_window(mlx, LENGHT, HEIGHT, "Hello world!");
-	// img.img = mlx_new_image(mlx, LENGHT, HEIGHT);
-	// img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-	// 							&img.endian);
+	mlx = mlx_init();
+	mlx_win = mlx_new_window(mlx, WIDTH, HEIGHT, "Hello world!");
+	img.img = mlx_new_image(mlx, WIDTH, HEIGHT);
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
+								&img.endian);
 
 /* ************************************************************************** */
 /*					TEST BULLET												  */
@@ -412,18 +412,39 @@ int main(void)
 
 	float fov;
 	t_camera c;
+	t_world	w;
 
+	t_sphere	s1;
+	t_sphere	s2;
+	w = set_world();
+
+	s1 = sphere();
+	s2 = sphere();	
+	s1.material.color = set_color(0.8, 1.0, 0.6);
+	s1.material.ambiant = 1;
+	s1.material.diffuse = 0.7;
+	s1.material.specular = 0.2;
+	
+	s2.transform = matrix_scaling(0.5, 0.5, 0.5);
+	s1.material.ambiant = 1;
+	w = set_world();
+	w.s = malloc(sizeof(t_sphere) * 2);
+	w.s[0] = s1;
+	w.s[1] = s2;
+	w.count = 2;
+
+	
 	fov = PI/2;
 	c = camera(WIDTH, HEIGHT, fov);
-	printf("%f", c.pixel_size);
-	
-	
+	c.transform = view_transform(point(0,0,-5), point(0,0,0), vector(0,1,0));
+	render(c, w, &img);
+
 
 /* ************************************************************************** */
 /*					END TEST											  */
 /* ************************************************************************** */
 
 	// mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	// mlx_loop(mlx);
+	mlx_loop(mlx);
 	// return(0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/17 17:49:49 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/18 12:55:47 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@
 #include <mlx.h>
 
 # ifndef WIDTH
-# define WIDTH 125
+# define WIDTH 11
 # endif
 
 # ifndef HEIGHT
-# define HEIGHT 200
+# define HEIGHT 11
 # endif
 
 # ifndef CENTER
@@ -153,6 +153,7 @@ t_tuple	vector(float x, float y, float z);
 t_tuple	neg_tuple(t_tuple a);
 void	print_color(t_color	t);
 t_tuple cross_product(t_tuple a, t_tuple b);
+void	my_mlx_pixel_put(t_data *data, int x, int y, t_color color);
 
 //color
 t_color	add_color(t_color a, t_color b);
@@ -220,5 +221,7 @@ t_color	color_at(t_world w, t_ray r);
 // view
 t_matrix *view_transform(t_tuple from, t_tuple to, t_tuple up);
 t_camera	camera(int hsize, int vsize, float fov);
+t_ray	ray_for_pixel(t_camera c, float px, float py);
+void	render(t_camera c, t_world w, t_data *img);
 
 #endif
