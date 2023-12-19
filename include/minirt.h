@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/18 23:00:00 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/19 11:12:24 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@
 #include <mlx.h>
 
 # ifndef WIDTH
-# define WIDTH 200
+# define WIDTH 300
 # endif
 
 # ifndef HEIGHT
-# define HEIGHT 100
+# define HEIGHT 150
 # endif
 
 # ifndef CENTER

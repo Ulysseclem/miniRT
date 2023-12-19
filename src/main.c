@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/18 23:02:50 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/19 11:19:12 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -423,17 +423,17 @@ int main(void)
 	f1.material.color = set_color(1, 0.9, 0.9);
 	f1.material.specular = 0;
 	
-	// t_sphere l_wall;
+	t_sphere l_wall;
 	
-	// l_wall = sphere();
-	// l_wall.transform = mul_matrix(mul_matrix(mul_matrix(matrix_translation(0, 0, 5), matrix_rotation_y(-45)), matrix_rotation_x(90)), matrix_scaling(10, 0.01, 10));
-	// l_wall.material = f1.material;
+	l_wall = sphere();
+	l_wall.transform = mul_matrix(mul_matrix(mul_matrix(matrix_translation(0, 0, 5), matrix_rotation_y(-45)), matrix_rotation_x(90)), matrix_scaling(10, 0.01, 10));
+	l_wall.material = f1.material;
 
-	// t_sphere r_wall;
+	t_sphere r_wall;
 	
-	// r_wall = sphere();
-	// r_wall.transform = mul_matrix(mul_matrix(mul_matrix(matrix_translation(0, 0, 5), matrix_rotation_y(45)), matrix_rotation_x(90)), matrix_scaling(10, 0.01, 10));
-	// r_wall.material = f1.material;
+	r_wall = sphere();
+	r_wall.transform = mul_matrix(mul_matrix(mul_matrix(matrix_translation(0, 0, 5), matrix_rotation_y(45)), matrix_rotation_x(90)), matrix_scaling(10, 0.01, 10));
+	r_wall.material = f1.material;
 	
 	t_sphere middle;
 
@@ -465,15 +465,16 @@ int main(void)
 
 
 	w = set_world();
-	w.s = malloc(sizeof(t_sphere) * 4);
-	// w.s[5] = l_wall;
-	// w.s[1] = r_wall;
-	w.s[1] = middle;
-	w.s[0] = right;
+	w.s = malloc(sizeof(t_sphere) * 6);
+	w.s[0] = middle;
+	w.s[1] = right;
 	w.s[2] = left;
 	w.s[3] = f1;
+	w.s[4] = l_wall;
+	w.s[5] = r_wall;
 
-	w.count = 4;
+
+	w.count = 6;
 	
 	fov = PI/3;
 	c = camera(WIDTH, HEIGHT, fov);

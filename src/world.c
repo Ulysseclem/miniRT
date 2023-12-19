@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 10:09:14 by ulysseclem        #+#    #+#             */
-/*   Updated: 2023/12/18 23:04:39 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/19 11:16:58 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	sort_inter(t_inter *xs)
 	int i;
 
 	i = 0;
-	while (i < xs->count -1)
+	while (i < xs[0].count -1)
 	{
 		if (xs[i].t > xs[i + 1].t)
 		{
@@ -74,11 +74,17 @@ t_inter	*intersect_world(t_world w, t_ray r2)
 	if (!xs)
 		return (NULL);
 	i = 0;
-	while (i < test)
+	int j = 0;
+	xs[0].count = test;
+	while (i < w.count)
 	{
-		xs[i] = create_inter(((w.s[i / 2].b * -1) - sqrt(w.s[i / 2].d)) / (2 * w.s[i / 2].a), w.s[i / 2]); // premiere inter
-		i++;
-		xs[i] = create_inter(((w.s[i / 2].b * -1) + sqrt(w.s[i / 2].d)) / (2 * w.s[i / 2].a), w.s[i / 2]); // deuxieme inter
+		if (w.s[i].d >= 0)
+		{
+			xs[j] = create_inter(((w.s[i].b * -1) - sqrt(w.s[i].d)) / (2 * w.s[i].a), w.s[i]); // premiere inter
+			j++;
+			xs[j] = create_inter(((w.s[i].b * -1) + sqrt(w.s[i].d)) / (2 * w.s[i].a), w.s[i]); // deuxieme inter
+			j++;
+		}
 		i++;
 	}
 	xs->count = test;
@@ -94,6 +100,7 @@ t_comps prepare_computation(t_inter xs, t_ray r)
 	t_comps comps;
 
 	comps.t = xs.t;
+			printf("id %d\n", xs.object.id);
 	comps.object = xs.object;
 	comps.p = position_f(r, comps.t);
 	comps.eyev = neg_tuple(r.direction);
@@ -128,6 +135,8 @@ t_color	color_at(t_world w, t_ray r)
 	if (!xs) // aucune intersection trouve, color = noir.
 		return (set_color(0, 0, 0));
 	hit_xs = hit(xs);
+	if (hit_xs.hit == false)
+		return (set_color(0, 0, 0));
 	c = prepare_computation(hit_xs, r);
 	return (shade_hit(w, c));
 }

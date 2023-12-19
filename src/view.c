@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 15:26:52 by ulysseclem        #+#    #+#             */
-/*   Updated: 2023/12/18 22:28:33 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/19 10:24:29 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,6 @@ void	render(t_camera c, t_world w, t_data *img)
 		{
 			r = ray_for_pixel(c, x, y);
 			color = color_at(w, r);
-			print_tuple(r.direction);
-			print_color(color);
 			my_mlx_pixel_put(img, x, y, color);
 			x++;
 		}
