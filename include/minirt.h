@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/19 11:12:24 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/27 18:38:14 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,15 @@
 #include <errno.h>
 #include <string.h>
 #include <mlx.h>
+#include <X11/X.h>
+#include <X11/keysym.h>
 
 # ifndef WIDTH
-# define WIDTH 300
+# define WIDTH 1000
 # endif
 
 # ifndef HEIGHT
-# define HEIGHT 150
+# define HEIGHT 500
 # endif
 
 # ifndef CENTER
@@ -37,6 +39,11 @@
 # ifndef PI
 # define PI 3.1415
 # endif
+
+typedef struct s_prog {
+	void		*mlx;
+	void		*win;
+}	t_prog;
 
 typedef struct s_tuple {
 	float	x;

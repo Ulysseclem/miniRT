@@ -49,8 +49,8 @@ OBJS        := $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 DEPS        := $(OBJS:.o=.d)
 # -fsanitize=thread
 
-CC          := clang 
-CFLAGS      := -Wall -Wextra -Werror -g
+CC          := gcc 
+CFLAGS      := -Wall -Wextra -Werror -pg
 CPPFLAGS    := $(addprefix -I,$(INCS)) -MMD -MP
 LDFLAGS     := $(addprefix -L,$(dir $(LIBS_TARGET)))
 LDLIBS      := $(addprefix -l,$(LIBS))
@@ -83,7 +83,7 @@ DIR_DUP     = mkdir -p $(@D)
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBS_TARGET)
-	$(CC) $(LDFLAGS) $(OBJS) -Lmlx_linux -lmlx_Linux $(LDLIBS) -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
+	$(CC) $(LDFLAGS) $(OBJS) -Lmlx_linux -lmlx_Linux $(LDLIBS) -pg -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
 	$(info CREATED $(NAME))
 
 $(LIBS_TARGET):

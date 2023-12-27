@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/19 11:19:12 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/27 18:26:51 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,19 +209,34 @@ void	print_color(t_color	t)
 
 
 
+int	handle_exit(t_prog *prog)
+{
+	mlx_destroy_window(prog->mlx, prog->win);
+	mlx_destroy_display(prog->mlx);
+	return (0);
+}
+
+int	handle_keypress(int key, t_prog *prog)
+{
+	if (key == XK_Escape)
+	{
+		handle_exit(prog);
+	}
+	return (0);
+}
+
 int main(void)
 {
 /* ************************************************************************** */
 /*					LIBX LAUCNHER											  */
 /* ************************************************************************** */
-	void	*mlx;
-	void	*mlx_win;
+	t_prog prog;
 	t_data	img;
 
 
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, WIDTH, HEIGHT, "Hello world!");
-	img.img = mlx_new_image(mlx, WIDTH, HEIGHT);
+	prog.mlx = mlx_init();
+	prog.win = mlx_new_window(prog.mlx, WIDTH, HEIGHT, "Hello world!");
+	img.img = mlx_new_image(prog.mlx, WIDTH, HEIGHT);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 								&img.endian);
 
@@ -485,8 +500,10 @@ int main(void)
 /* ************************************************************************** */
 /*					END TEST											  */
 /* ************************************************************************** */
+	mlx_put_image_to_window(prog.mlx, prog.win, img.img, 0, 0);
 
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
+	// mlx_hook(prog.mlx, KeyPress, KeyPressMask, &handle_keypress, &prog);
+	// mlx_hook(prog.mlx, 17, 1L << 1, &handle_exit, &prog);
+	mlx_loop(prog.mlx);
 	return(0);
 }

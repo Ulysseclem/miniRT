@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matrix.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 11:43:53 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/09 16:03:40 by uclement         ###   ########.fr       */
+/*   Updated: 2023/12/21 14:39:36 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_matrix *create_matrix(int r, int c)
 	t_matrix	*matrix;
 
 	matrix = malloc(sizeof(t_matrix));
-	if (!matrix->data)
+	if (!matrix)
 		return(NULL);
 	matrix->r = r;
 	matrix->c = c;
