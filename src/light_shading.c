@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 14:15:55 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/18 19:52:14 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/28 17:25:49 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,18 @@ t_tuple	normale_at(t_sphere s, t_tuple world_point)
 	t_tuple object_point;
 	t_tuple object_normal;
 	t_tuple world_normal;
+	t_matrix	*inverted;
+	t_matrix	*transposed;
 	
+	inverted = inverse(s.transform);
 	world_normal = vector(0, 0, 0);
-	object_point = mul_matrix_tuple(inverse(s.transform), world_point); // obtenir le point and object space
+	object_point = mul_matrix_tuple(inverted, world_point); // obtenir le point and object space
 	object_normal = sub_tuple(object_point, world_normal);
-	world_normal = mul_matrix_tuple(transp_matrix(inverse(s.transform)), object_normal);
+	transposed = transp_matrix(inverted);
+	world_normal = mul_matrix_tuple(transposed, object_normal);
 	world_normal.w = 0;  // remettre le w a 0 (pour vecteur) car il risque d'avoir ete change.
+	free_matrix(inverted);
+	free_matrix(transposed);
 	return(norm(world_normal));
 }
 
@@ -82,7 +88,7 @@ float customPow(float base, int exponent) // pow custom pour eviter des nombre t
 /* ************************************************************************** */
 
 
-t_color lightning(t_material m, t_light l, t_tuple p, t_tuple eyev, t_tuple normalv)
+t_color lightning(t_material m, t_light l, t_tuple p, t_tuple eyev, t_tuple normalv, bool in_shadow)
 {
 	t_color effective_color;
 	t_color ambiant;
@@ -99,7 +105,7 @@ t_color lightning(t_material m, t_light l, t_tuple p, t_tuple eyev, t_tuple norm
 	lightv = norm(sub_tuple(l.position, p)); // Find the direction to the light source
 	ambiant = mul_sca_color(effective_color, m.ambiant); //ambiant contribution  PROBEME ICI ?
 	light_dot_normal = dot_product(lightv, normalv);
-	if (light_dot_normal < 0)
+	if (light_dot_normal < 0 || in_shadow == true)
 	{
 		diffuse = set_color(0, 0, 0);
 		specular = set_color(0, 0, 0);
@@ -122,7 +128,7 @@ t_color lightning(t_material m, t_light l, t_tuple p, t_tuple eyev, t_tuple norm
 /*	Lightning sans specualr													  */
 /* ************************************************************************** */
 
-t_color lightning_no_specular(t_material m, t_light l, t_tuple p, t_tuple normalv)
+t_color lightning_no_specular(t_material m, t_light l, t_tuple p, t_tuple normalv, bool in_shadow)
 {
 	t_color effective_color;
 	t_color ambiant;
@@ -135,7 +141,7 @@ t_color lightning_no_specular(t_material m, t_light l, t_tuple p, t_tuple normal
 	ambiant = mul_sca_color(effective_color, m.ambiant); //ambiant contribution to the final color
 	lightv = norm(sub_tuple(l.position, p)); // Find the direction to the light source
 	light_dot_normal = dot_product(lightv, normalv); // Represents the cosine of the angle between the light vector and the normal vector.
-	if (light_dot_normal < 0) // if neg = light is on the other side of the surface
+	if (light_dot_normal < 0 || in_shadow == true) // if neg = light is on the other side of the surface
 		diffuse = set_color(0, 0, 0);
 	else
 		diffuse = mul_sca_color(mul_sca_color(effective_color, m.diffuse), light_dot_normal); // diffuse contribution to the final color

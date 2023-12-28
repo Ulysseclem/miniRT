@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 15:26:52 by ulysseclem        #+#    #+#             */
-/*   Updated: 2023/12/28 12:28:10 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/28 16:22:36 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,16 @@ t_ray	ray_for_pixel(t_camera c, float px, float py)
 	t_tuple	origin;
 	t_tuple	pixel;
 	t_ray r;
+	t_matrix	*inverted;
 
 	xoffset = (px + 0.5) * c.pixel_size; // +0.5 poura voir le centre du pixel
 	yoffset = (py + 0.5) * c.pixel_size;
 	world_x = c.half_width - xoffset; // ajuste le pixel par rapport a la camera
 	world_y = c.half_height - yoffset;
-	pixel = mul_matrix_tuple(inverse(c.transform), point(world_x, world_y, -1)); // -1 is for the nearest plan
-	origin = mul_matrix_tuple(inverse(c.transform), point(0, 0, 0));
+	inverted = inverse(c.transform);
+	pixel = mul_matrix_tuple(inverted, point(world_x, world_y, -1)); // -1 is for the nearest plan
+	origin = mul_matrix_tuple(inverted, point(0, 0, 0));
+	free_matrix(inverted);
 	direction = norm(sub_tuple(pixel, origin));
 	ray(&r, origin, direction);
 	
@@ -101,7 +104,6 @@ void	render(t_camera c, t_world w, t_data *img)
 		{
 			r = ray_for_pixel(c, x, y);
 			color = color_at(w, r);
-			print_color(color);
 			my_mlx_pixel_put(img, x, y, color);
 			x++;
 		}

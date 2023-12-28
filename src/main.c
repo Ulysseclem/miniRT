@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/27 18:26:51 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/28 19:30:51 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,6 +225,8 @@ int	handle_keypress(int key, t_prog *prog)
 	return (0);
 }
 
+
+
 int main(void)
 {
 /* ************************************************************************** */
@@ -239,6 +241,11 @@ int main(void)
 	img.img = mlx_new_image(prog.mlx, WIDTH, HEIGHT);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 								&img.endian);
+
+    clock_t start, end;
+    double cpu_time_used;
+
+	start = clock();
 
 /* ************************************************************************** */
 /*					TEST BULLET												  */
@@ -453,7 +460,7 @@ int main(void)
 	t_sphere middle;
 
 	middle = sphere();
-	middle.transform = matrix_translation(-0.5, 1, 0.5);
+	middle.transform = mul_matrix(matrix_translation(-1, 0.5, 1), matrix_scaling(0.5, 0.5, 0.5));
 	middle.material = material_default();
 	middle.material.color = set_color(0.1, 1, 0.5);
 	middle.material.diffuse = 0.7;
@@ -462,7 +469,7 @@ int main(void)
 	t_sphere right;
 
 	right = sphere();
-	right.transform = mul_matrix(matrix_translation(1.5, 0.5, -0.5), matrix_scaling(0.5, 0.5, 0.5));
+	right.transform = mul_matrix(matrix_translation(-2, 0.8, -0.5), matrix_scaling(0.8, 0.8, 0.8));
 	right.material = material_default();
 	right.material.color = set_color(0.5, 1, 0.1);
 	right.material.diffuse = 0.7;
@@ -471,7 +478,7 @@ int main(void)
 	t_sphere left;
 
 	left = sphere();
-	left.transform = mul_matrix(matrix_translation(-1.5, 0.33, -0.75), matrix_scaling(0.33, 0.33, 0.33));
+	left.transform = mul_matrix(matrix_translation(0, 2, 0.5), matrix_scaling(0.5, 0.5, 0.5));
 	left.material = material_default();
 	left.material.color = set_color(1, 0.8, 0.1);
 	left.material.diffuse = 0.7;
@@ -498,12 +505,111 @@ int main(void)
 
 
 /* ************************************************************************** */
+/*					SHADOW TEST												  */
+/* ************************************************************************** */
+	//*******************
+	// test 1
+	//*******************
+	
+	// t_tuple	eyev = vector(0, 0, -1);
+	// t_tuple	normalv = vector(0, 0 ,-1);
+	// t_light l;
+	// bool	in_shadow = true;
+	// t_sphere s;
+
+	// s.material = material_default();
+	// light(&l, point(0, 0 ,-10), set_color(1, 1, 1));
+
+	// print_color(lightning(s.material, l, point(0, 0, 0), eyev, normalv, in_shadow));
+
+	//*******************
+	//test 2
+	//*******************
+	
+	// t_world 	w;
+	// t_sphere	s1;
+	// t_sphere	s2;
+
+	// s1 = sphere();
+	// s2 = sphere();
+	
+	// s1.material.color = set_color(0.8, 1.0, 0.6);
+	// s1.material.ambiant = 1;
+	// s1.material.diffuse = 0.7;
+	// s1.material.specular = 0.2;
+	
+	// s2.transform = matrix_scaling(0.5, 0.5, 0.5);
+	// s1.material.ambiant = 1;
+
+	// w = set_world();
+	// w.s = malloc(sizeof(t_sphere) * 2);
+	// w.s[0] = s1;
+	// w.s[1] = s2;
+	// w.count = 2;
+
+	// printf ("%d\n", is_shadowed(w, point(0, 10, 0)));
+	// printf ("%d\n", is_shadowed(w, point(10, -10, 10)));
+	// printf ("%d\n", is_shadowed(w, point(-20, 20, -20)));
+	// printf ("%d\n", is_shadowed(w, point(-2, 2, -2)));
+
+	//*******************
+	//test 3
+	//*******************
+
+	// t_world 	w;
+	// t_sphere	s1;
+	// t_sphere	s2;
+
+	// s1 = sphere();
+	// s2 = sphere();
+	
+	// s1.material.color = set_color(0.8, 1.0, 0.6);
+	// s1.material.ambiant = 1;
+	// s1.material.diffuse = 0.7;
+	// s1.material.specular = 0.2;
+	
+	// s2.transform = matrix_translation(0, 0, 1);
+
+	// w = set_world();
+	// w.s = malloc(sizeof(t_sphere) * 2);
+	// w.s[0] = s1;
+	// w.s[1] = s2;
+	// w.count = 2;
+
+	// t_ray	r;
+	// r.direction = vector(0,0,-5);
+	// r.origin = point(0,0,1);
+	
+	// t_inter i;
+	// i.t = 5;
+	// i.object = s2;
+
+	// t_comps c;
+	// c = prepare_computation(i, r);
+	// if (c.over_p.z < -0.00001/2)
+	// 	printf("true");
+	// else
+	// 	printf("false");
+	// if (c.over_p.z < c.p.z)
+	// 	printf("true");
+
+	
+
+/* ************************************************************************** */
 /*					END TEST											  */
 /* ************************************************************************** */
 	mlx_put_image_to_window(prog.mlx, prog.win, img.img, 0, 0);
 
 	// mlx_hook(prog.mlx, KeyPress, KeyPressMask, &handle_keypress, &prog);
 	// mlx_hook(prog.mlx, 17, 1L << 1, &handle_exit, &prog);
+
+	
+	end = clock();
+    cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+    printf("CPU time used: %f seconds\n", cpu_time_used);
+
+
+	
 	mlx_loop(prog.mlx);
 	return(0);
 }

@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 10:09:14 by ulysseclem        #+#    #+#             */
-/*   Updated: 2023/12/19 20:08:13 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/28 19:13:54 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,14 @@ t_inter	*intersect_world(t_world w, t_ray r2)
 	xs = NULL;
 	int i;
 	int	test = 0;
+	t_matrix	*inverted;
 
 	i = 0;
 	while (i < w.count)
-	{		
-		r = trnsform_ray(r2, inverse(w.s[i].transform));
+	{	
+		inverted = inverse(w.s[i].transform); // retour NULL a gerer
+		r = trnsform_ray(r2, inverted);
+		free_matrix(inverted);
 		s_t_r = sub_tuple(r.origin, point(0 ,0 , 0));
 		w.s[i].a = dot_product(r.direction, r.direction);
 		w.s[i].b = dot_product(r.direction, s_t_r) * 2;
@@ -100,11 +103,11 @@ t_comps prepare_computation(t_inter xs, t_ray r)
 	t_comps comps;
 
 	comps.t = xs.t;
-			printf("id %d\n", xs.object.id);
 	comps.object = xs.object;
 	comps.p = position_f(r, comps.t);
 	comps.eyev = neg_tuple(r.direction);
 	comps.normalv = normale_at(comps.object, comps.p);
+	comps.over_p = add_tuple(comps.p, mul_sca_tuple(comps.normalv, 0.00001)); // pour regler l'acne
 	if (dot_product(comps.normalv, comps.eyev) < 0) // Verifie si le ray n'origine pas de l'interieur de l'objet
 	{
 		comps.inside = true;
@@ -117,12 +120,18 @@ t_comps prepare_computation(t_inter xs, t_ray r)
 
 t_color shade_hit(t_world w, t_comps c)
 {
-	return (lightning(c.object.material, w.l, c.p, c.eyev, c.normalv));
+	bool	shadowed;
+
+	shadowed = is_shadowed(w, c.over_p);
+	return (lightning(c.object.material, w.l, c.p, c.eyev, c.normalv, shadowed));
 }
 
 t_color shade_hit_no_specular(t_world w, t_comps c)
 {
-	return (lightning_no_specular(c.object.material, w.l, c.p, c.normalv));
+	bool	shadowed;
+
+	shadowed = is_shadowed(w, c.over_p);
+	return (lightning_no_specular(c.object.material, w.l, c.p, c.normalv, shadowed));
 }
 
 t_color	color_at(t_world w, t_ray r)
@@ -135,6 +144,7 @@ t_color	color_at(t_world w, t_ray r)
 	if (!xs) // aucune intersection trouve, color = noir.
 		return (set_color(0, 0, 0));
 	hit_xs = hit(xs);
+	free(xs);
 	if (hit_xs.hit == false)
 		return (set_color(0, 0, 0));
 	c = prepare_computation(hit_xs, r);

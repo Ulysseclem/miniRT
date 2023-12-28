@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/28 12:37:14 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/28 19:05:02 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include <mlx.h>
 #include <X11/X.h>
 #include <X11/keysym.h>
+#include <time.h> // to remove
 
 # ifndef WIDTH
 # define WIDTH 1000
@@ -129,6 +130,7 @@ typedef struct s_comps {
 	t_sphere	object;
 	float		t;
 	t_tuple		p;
+	t_tuple		over_p;
 	t_tuple		eyev;
 	t_tuple		normalv;
 	bool		inside;
@@ -161,6 +163,7 @@ t_tuple	neg_tuple(t_tuple a);
 void	print_color(t_color	t);
 t_tuple cross_product(t_tuple a, t_tuple b);
 void	my_mlx_pixel_put(t_data *data, int x, int y, t_color color);
+float magnitude(t_tuple t);
 
 //color
 t_color	add_color(t_color a, t_color b);
@@ -183,7 +186,7 @@ t_matrix	*transp_matrix(t_matrix *m);
 float determinant(t_matrix *m);
 t_matrix *submatrix(t_matrix *m, int r, int c);
 float minor(t_matrix *m, int r, int c);
-float cofactor(t_matrix *m, int r, int c);
+// float cofactor(t_matrix *m, int r, int c);
 t_matrix *inverse(t_matrix *m);
 
 // matrix tranformation
@@ -214,8 +217,8 @@ t_tuple	normale_at(t_sphere s, t_tuple p);
 t_tuple	reflect(t_tuple vector_in, t_tuple normal);
 void	light(t_light *l, t_tuple position, t_color color);
 t_material	material_default();
-t_color lightning(t_material m, t_light l, t_tuple p, t_tuple eyev, t_tuple normalv);
-t_color lightning_no_specular(t_material m, t_light l, t_tuple p, t_tuple normalv);
+t_color lightning(t_material m, t_light l, t_tuple p, t_tuple eyev, t_tuple normalv, bool in_shadow);
+t_color lightning_no_specular(t_material m, t_light l, t_tuple p, t_tuple normalv, bool in_shadow);
 
 //world
 t_world set_world();
@@ -232,5 +235,7 @@ t_ray	ray_for_pixel(t_camera c, float px, float py);
 void	render(t_camera c, t_world w, t_data *img);
 
 void free_matrix(t_matrix *mat);
+
+bool	is_shadowed(t_world w, t_tuple point);
 
 #endif
