@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 15:26:52 by ulysseclem        #+#    #+#             */
-/*   Updated: 2023/12/27 18:27:29 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/28 12:28:10 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ t_matrix *view_transform(t_tuple from, t_tuple to, t_tuple up)
 	left = cross_product(forward, norm(up));
 	true_up = cross_product(left, forward);
 	orientation = identify_matrix(4, 4);
-	orientation->data[0] = left.x;
-	orientation->data[1] = left.y;
-	orientation->data[2] = left.z;
-	orientation->data[4] = true_up.x;
-	orientation->data[5] = true_up.y;
-	orientation->data[6] = true_up.z;
-	orientation->data[8] = -forward.x;
-	orientation->data[9] = -forward.y;
-	orientation->data[10] = -forward.z;
+	orientation->data[0][0] = left.x;
+	orientation->data[0][1] = left.y;
+	orientation->data[0][2] = left.z;
+	orientation->data[1][0] = true_up.x;
+	orientation->data[1][1] = true_up.y;
+	orientation->data[1][2] = true_up.z;
+	orientation->data[2][0] = -forward.x;
+	orientation->data[2][1] = -forward.y;
+	orientation->data[2][2] = -forward.z;
 	return(mul_matrix(orientation, matrix_translation(-from.x, -from.y, -from.z)));
 }
 

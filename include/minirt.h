@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/27 18:38:14 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/28 12:37:14 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct s_matrix
 {
 	int	r;
 	int	c;
-	float	*data;
+	float	**data;
 }	t_matrix;
 
 typedef struct s_ray {
@@ -171,7 +171,7 @@ t_color	set_color(float x, float y, float z);
 
 //matrix
 t_matrix	*create_matrix(int r, int c);
-void		fill_matrix(t_matrix *m, float *value);
+void 		fill_matrix(t_matrix *m, float **value);
 void		print_matrix(t_matrix *matrix);
 int			equal_matrix(t_matrix *a, t_matrix *b);
 t_matrix *mul_matrix(t_matrix *a, t_matrix *b);
@@ -230,5 +230,7 @@ t_matrix *view_transform(t_tuple from, t_tuple to, t_tuple up);
 t_camera	camera(int hsize, int vsize, float fov);
 t_ray	ray_for_pixel(t_camera c, float px, float py);
 void	render(t_camera c, t_world w, t_data *img);
+
+void free_matrix(t_matrix *mat);
 
 #endif

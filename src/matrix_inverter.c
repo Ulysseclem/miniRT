@@ -6,173 +6,117 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 21:36:16 by ulysseclem        #+#    #+#             */
-/*   Updated: 2023/12/27 18:37:49 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/28 13:11:09 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-// t_matrix *submatrix(t_matrix *m, int r, int c)
-// {
-// 	t_matrix	*new_m;
-// 	float		*value;
-// 	int			mul;
-// 	int			i;
-// 	int			j;
-	
-// 	new_m = create_matrix(m->r - 1, m->c - 1);
-// 	value = malloc(sizeof(int) * ((m->r - 1) * (m->c - 1)));
-// 	if (!value || !new_m)
-// 		return (free(value), NULL);
-// 	i = 0;
-// 	j = -1;
-// 	mul = 0;
-// 	while (i < (m->r * m->c))
-// 	{
-// 		if (i == c + (m->c * mul)) // avoid la colonne
-// 		{
-// 			i++;
-// 			mul++;
-// 		}
-// 		else if (i >= (r * m->c) && i < (r * m->c + m->c)) // avoid la ligne
-// 			i++;
-// 		else
-// 		{
-// 			value[++j] = m->data[i];
-// 			i++;
-// 		}
-// 	}
-// 	fill_matrix(new_m, value);
-// 	free(value);
-// 	return (new_m);
+// void perform_row_operations(t_matrix *m, int pivot_row, int pivot_col) {
+//     int i = 0;
+//     while (i < m->r) {
+//         if (i != pivot_row) {
+//             float factor = m->data[i][pivot_col] / m->data[pivot_row][pivot_col];
+//             int j = 0;
+//             while (j < m->c) {
+//                 m->data[i][j] -= m->data[pivot_row][j] * factor;
+//                 j++;
+//             }
+//         }
+//         i++;
+//     }
 // }
 
-// float determinant(t_matrix *m)
+// // Function to calculate the inverse matrix using Gauss-Jordan method
+// t_matrix* inverse(t_matrix *m) 
 // {
-// 	float	det = 0;
-// 	int		i = 0;
+//     if (m->r != 4 || m->c != 4) {
+//         printf("Invalid matrix dimensions. Expected 4x4 matrix.\n");
+//         return NULL;
+//     }
 
-// 	if (m->c * m->r == 4)
-// 		return(m->data[0]*m->data[3] - m->data[1]*m->data[2]);
-// 	else
-// 	{
-// 		while (i < m->c)
-// 		{
-// 			det = det + (m->data[0 + i] * cofactor(m, 0, i));
-// 			i++;
-// 		}
-// 	}
-// 	return (det);
+//     t_matrix *inverse = create_matrix(4, 4);
+
+//     // Initialize the inverse matrix as an identity matrix
+//     int i = 0;
+//     while (i < 4) {
+//         int j = 0;
+//         while (j < 4) {
+//             inverse->data[i][j] = (i == j) ? 1.0f : 0.0f;
+//             j++;
+//         }
+//         i++;
+//     }
+
+//     i = 0;
+//     while (i < 4) {
+//         if (m->data[i][i] == 0.0f) {
+//             printf("The matrix is singular, inverse does not exist.\n");
+//             free_matrix(inverse);
+//             return NULL;
+//         }
+
+//         // Normalize the pivot row
+//         float pivot = m->data[i][i];
+//         int j = 0;
+//         while (j < 4) {
+//             m->data[i][j] /= pivot;
+//             inverse->data[i][j] /= pivot;
+//             j++;
+//         }
+
+//         // Perform row operations to get zeros above and below the pivot
+//         perform_row_operations(m, i, i);
+//         perform_row_operations(inverse, i, i);
+
+//         i++;
+//     }
+
+//     return inverse;
 // }
 
-// float minor(t_matrix *m, int r, int c)
-// {
-// 	t_matrix	*sub;
-// 	float		det;
+t_matrix* inverse(t_matrix *m) {
+	t_matrix* copy;
+	t_matrix* identity;
+	int			i;
+	int			j;
+	int 		k;
+	float 		scalar;
+	float		factor;
 
-// 	sub = submatrix(m, r, c);
-// 	det = determinant(sub);
-// 	free(sub->data);
-// 	return (det);
-// }
+	copy = create_matrix(4, 4);
+	fill_matrix(copy, m->data);
+	identity = identify_matrix(4, 4);
 
-// float cofactor(t_matrix *m, int r, int c)
-// {
-// 	float nbr;
-	
-// 	nbr = minor(m, r, c);
-// 	if ((r + c) % 2 == 0)
-// 		return (nbr);
-// 	else 
-// 		return (nbr * -1);
-// }
-
-// t_matrix *inverse(t_matrix *m)
-// {
-// 	int			r;
-// 	int			c;
-// 	float		cof;
-	
-// 	r = 0;
-// 	if (determinant(m) == 0) // Matrice non inversible
-// 		return(NULL);
-// 	while (r < m->r)
-// 	{
-// 		c = 0;
-// 		while (c < m->c)
-// 		{
-// 			cof = cofactor(m, r, c);
-// 			m->data[r + (c * m->c)] = cof / determinant(m); // R et C sont inverse pour accomplir la transposition
-// 			c++;
-// 		}
-// 		r++;
-// 	}
-// 	return (m);
-// }
-
-t_matrix *inverse(t_matrix *m) {
-    // Ensure the matrix is 4x4
-    if (m->r != 4 || m->c != 4) {
-        printf("Invalid matrix size. Must be 4x4.\n");
-        return NULL;
-    }
-
-    // Create an augmented matrix [A | I] where A is the original matrix and I is the identity matrix
-    t_matrix *augmentedMatrix = (t_matrix *)malloc(sizeof(t_matrix));
-    augmentedMatrix->r = 4;
-    augmentedMatrix->c = 8; // Twice the columns for the augmented matrix [A | I]
-    augmentedMatrix->data = (float *)malloc(augmentedMatrix->r * augmentedMatrix->c * sizeof(float));
-
-    // Initialize the augmented matrix with the original matrix and the identity matrix
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
-            augmentedMatrix->data[i * augmentedMatrix->c + j] = m->data[i * m->c + j];
-            augmentedMatrix->data[i * augmentedMatrix->c + j + 4] = (i == j) ? 1.0 : 0.0;
-        }
-    }
-
-    // Gauss-Jordan elimination
-    for (int i = 0; i < 4; i++) {
-        // Pivoting
-        if (augmentedMatrix->data[i * augmentedMatrix->c + i] == 0.0) {
-            printf("Matrix is not invertible.\n");
-            free(augmentedMatrix->data);
-            free(augmentedMatrix);
-            return NULL;
-        }
-
-        for (int j = 0; j < 4; j++) {
-            if (i != j) {
-                float ratio = augmentedMatrix->data[j * augmentedMatrix->c + i] / augmentedMatrix->data[i * augmentedMatrix->c + i];
-                for (int k = 0; k < 2 * 4; k++) {
-                    augmentedMatrix->data[j * augmentedMatrix->c + k] -= ratio * augmentedMatrix->data[i * augmentedMatrix->c + k];
-                }
-            }
-        }
-    }
-
-    // Dividing each row by its diagonal element
-    for (int i = 0; i < 4; i++) {
-        float div = augmentedMatrix->data[i * augmentedMatrix->c + i];
-        for (int j = 0; j < 2 * 4; j++) {
-            augmentedMatrix->data[i * augmentedMatrix->c + j] /= div;
-        }
-    }
-
-    // Extracting the inverted matrix from the augmented matrix
-    t_matrix *invertedMatrix = (t_matrix *)malloc(sizeof(t_matrix));
-    invertedMatrix->r = 4;
-    invertedMatrix->c = 4;
-    invertedMatrix->data = (float *)malloc(4 * 4 * sizeof(float));
-
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
-            invertedMatrix->data[i * 4 + j] = augmentedMatrix->data[i * augmentedMatrix->c + j + 4];
-        }
-    }
-
-    // Free the memory allocated for the augmented matrix
-    free(augmentedMatrix->data);
-    free(augmentedMatrix);
-    return invertedMatrix;
+	// Gaussian elimination to transform 'copy' into an upper triangular matrix
+	i = 0;
+	while (i < 4) 
+	{
+		scalar = 1.0 / copy->data[i][i];
+		j = 0;
+		while (j < 4) 
+		{
+			copy->data[i][j] *= scalar;
+			identity->data[i][j] *= scalar;
+			j++;
+		}
+		k = 0;
+		while (k < 4)
+		{
+			if (k != i) {
+				factor = copy->data[k][i];
+				j = 0;
+				while (j < 4) 
+				{
+					copy->data[k][j] -= factor * copy->data[i][j];
+					identity->data[k][j] -= factor * identity->data[i][j];
+					j++;
+				}
+			}
+			k++;
+		}
+		i++;
+	}
+	free_matrix(copy);
+	return identity;
 }

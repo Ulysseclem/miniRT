@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 16:26:14 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/14 16:16:18 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/28 12:48:40 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ t_matrix *matrix_translation(float x, float y, float z)
 	t_matrix	*m;
 	
 	m = identify_matrix(4, 4);
-	m->data[3] = x;
-	m->data[7] = y;
-	m->data[11] = z;
+	m->data[0][3] = x; // 3
+	m->data[1][3] = y; //7
+	m->data[2][3] = z; // 11
 	return (m);
 }
 t_matrix *matrix_scaling(float x, float y, float z)
@@ -27,9 +27,9 @@ t_matrix *matrix_scaling(float x, float y, float z)
 	t_matrix	*m;
 
 	m = identify_matrix(4, 4);
-	m->data[0] = x;
-	m->data[5] = y;
-	m->data[10] = z;
+	m->data[0][0] = x;
+	m->data[1][1] = y; // 5
+	m->data[2][2] = z; // 10
 	return (m);
 }
 float	d_to_r(float deg)  // converter degree to radian
@@ -44,10 +44,10 @@ t_matrix *matrix_rotation_x(float d)
 	
 	r = d_to_r(d);
 	m = identify_matrix(4, 4);
-	m->data[5] = cos(r);
-	m->data[6] = sin(r) * -1;
-	m->data[9] = sin(r);
-	m->data[10] = cos(r);
+	m->data[1][1] = cos(r);      //5
+	m->data[1][2] = sin(r) * -1; //6
+	m->data[2][1] = sin(r); //9
+	m->data[2][2] = cos(r); // 10
 	return (m);	
 }
 
@@ -58,10 +58,10 @@ t_matrix *matrix_rotation_y(float d)
 	
 	r = d_to_r(d);
 	m = identify_matrix(4, 4);
-	m->data[0] = cos(r);
-	m->data[2] = sin(r);
-	m->data[8] = sin(r) * -1;
-	m->data[10] = cos(r);
+	m->data[0][0] = cos(r);
+	m->data[0][2] = sin(r);
+	m->data[2][0] = sin(r) * -1;
+	m->data[2][2] = cos(r);
 	return (m);	
 }
 
@@ -72,10 +72,10 @@ t_matrix *matrix_rotation_z(float d)
 	
 	r = d_to_r(d);
 	m = identify_matrix(4, 4);
-	m->data[0] = cos(r);
-	m->data[1] = sin(r) * -1;
-	m->data[4] = sin(r);
-	m->data[5] = cos(r);
+	m->data[0][0] = cos(r);
+	m->data[0][1] = sin(r) * -1;
+	m->data[1][0] = sin(r);
+	m->data[1][1] = cos(r);
 	return (m);	
 }
 t_tuple matrix_rotation(t_tuple t, float x, float y, float z)
@@ -94,11 +94,11 @@ t_matrix *matrix_shearing(float xy, float xz, float yx, float yz, float zx, floa
 	t_matrix	*m;
 	
 	m = identify_matrix(4, 4);
-	m->data[1] = xy;
-	m->data[2] = xz;
-	m->data[4] = yx;
-	m->data[6] = yz;
-	m->data[8] = zx;
-	m->data[9] = zy;
+	m->data[0][1] = xy;
+	m->data[0][2] = xz;
+	m->data[1][0] = yx;
+	m->data[1][2] = yz;
+	m->data[2][0] = zx;
+	m->data[2][1] = zy;
 	return (m);	
 }
