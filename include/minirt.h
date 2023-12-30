@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/28 19:05:02 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/30 12:48:35 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 #include <X11/X.h>
 #include <X11/keysym.h>
 #include <time.h> // to remove
+#include <stdint.h>
+
 
 # ifndef WIDTH
 # define WIDTH 1000
@@ -92,10 +94,16 @@ typedef struct s_light {
 	t_color	intensity;
 }	t_light;
 
+typedef struct s_shape {
+	t_matrix 	*transform;
+	t_material	material;
+}	t_shape;
+
 typedef struct s_sphere {
 	t_tuple 	point;
 	t_matrix 	*transform;
 	t_material	material;
+	t_shape		shape;
 	int		id;
 	float	a;
 	float	b;
@@ -208,7 +216,7 @@ t_inter	create_inter(float t, t_sphere s);
 t_inter *intersections(int count, t_inter *inter);
 t_inter hit(t_inter *xs);
 t_ray trnsform_ray(t_ray r, t_matrix *m);
-void set_transform(t_sphere *s, t_matrix *m);
+void set_transform(t_shape *shape, t_matrix *m);
 t_tuple position_f(t_ray r, float t);
 
 //light & shading

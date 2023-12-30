@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 13:49:48 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/28 18:04:00 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/30 12:42:30 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ t_ray trnsform_ray(t_ray r, t_matrix *m)
 	return (r2);
 }
 
-void set_transform(t_sphere *s, t_matrix *m)
+void set_transform(t_shape *shape, t_matrix *m)
 {
-	s->transform = m;
+	shape->transform = m;
 }

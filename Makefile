@@ -40,7 +40,8 @@ SRCS        :=	main.c \
 				light_shading.c \
 				world.c \
 				view.c \
-				shadow.c
+				shadow.c \
+				place.c
 
 
 SRCS        := $(SRCS:%=$(SRC_DIR)/%)
