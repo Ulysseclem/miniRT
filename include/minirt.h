@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/30 12:48:35 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/30 21:08:08 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,16 +94,8 @@ typedef struct s_light {
 	t_color	intensity;
 }	t_light;
 
-typedef struct s_shape {
-	t_matrix 	*transform;
-	t_material	material;
-}	t_shape;
-
 typedef struct s_sphere {
 	t_tuple 	point;
-	t_matrix 	*transform;
-	t_material	material;
-	t_shape		shape;
 	int		id;
 	float	a;
 	float	b;
@@ -111,18 +103,31 @@ typedef struct s_sphere {
 	float	d;
 } t_sphere;
 
+typedef struct s_shape t_shape;
+
+typedef struct s_inter {
+	float		t;
+	t_shape		*shape;
+	int			count;
+	bool		hit;
+} t_inter;
+
+typedef struct s_shape {
+	char		*content;
+	t_matrix 	*transform;
+	t_material	material;
+	t_ray		saved_ray;
+	t_sphere	sphere;
+	t_inter		*xs;
+}t_shape;
+
 typedef struct s_world {
-	t_sphere	*s;
+	t_shape		*shape;
 	t_light		l;
 	int			count;
 } t_world;
 
-typedef struct s_inter {
-	float		t;
-	t_sphere	object;
-	int			count;
-	bool		hit;
-} t_inter;
+
 
 typedef struct s_proj {
 	t_tuple	pos;
@@ -135,7 +140,7 @@ typedef struct s_env {
 }	t_env;
 
 typedef struct s_comps {
-	t_sphere	object;
+	t_shape		shape;
 	float		t;
 	t_tuple		p;
 	t_tuple		over_p;
@@ -210,9 +215,9 @@ t_matrix *matrix_rotation_z(float d);
 //ray
 void 	ray(t_ray *r, t_tuple p, t_tuple v);
 // float	discriminant(t_ray r, float a, float b, t_tuple s_t_r);
-t_inter	*intersect(t_sphere s, t_ray r2);
+t_inter *intersect(t_shape shape, t_ray ray);
 t_sphere sphere();
-t_inter	create_inter(float t, t_sphere s);
+t_inter	create_inter(float t, t_shape s);
 t_inter *intersections(int count, t_inter *inter);
 t_inter hit(t_inter *xs);
 t_ray trnsform_ray(t_ray r, t_matrix *m);
@@ -221,7 +226,7 @@ t_tuple position_f(t_ray r, float t);
 
 //light & shading
 
-t_tuple	normale_at(t_sphere s, t_tuple p);
+t_tuple	normale_at(t_shape shape, t_tuple world_point);
 t_tuple	reflect(t_tuple vector_in, t_tuple normal);
 void	light(t_light *l, t_tuple position, t_color color);
 t_material	material_default();
@@ -230,7 +235,7 @@ t_color lightning_no_specular(t_material m, t_light l, t_tuple p, t_tuple normal
 
 //world
 t_world set_world();
-t_inter	*intersect_world(t_world w, t_ray r2);
+t_inter *intersect_world(t_world w, t_ray ray);
 t_comps prepare_computation(t_inter xs, t_ray r);
 t_color shade_hit(t_world w, t_comps c);
 t_color shade_hit_no_specular(t_world w, t_comps c);
@@ -245,5 +250,8 @@ void	render(t_camera c, t_world w, t_data *img);
 void free_matrix(t_matrix *mat);
 
 bool	is_shadowed(t_world w, t_tuple point);
+
+t_shape	test_shape();
+void	sort_inter(t_inter *xs);
 
 #endif

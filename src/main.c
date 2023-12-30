@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/28 22:07:20 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/30 20:38:01 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,20 +232,20 @@ int main(void)
 /* ************************************************************************** */
 /*					LIBX LAUCNHER											  */
 /* ************************************************************************** */
-	t_prog prog;
-	t_data	img;
+	// t_prog prog;
+	// t_data	img;
 
 
-	prog.mlx = mlx_init();
-	prog.win = mlx_new_window(prog.mlx, WIDTH, HEIGHT, "Hello world!");
-	img.img = mlx_new_image(prog.mlx, WIDTH, HEIGHT);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-								&img.endian);
+	// prog.mlx = mlx_init();
+	// prog.win = mlx_new_window(prog.mlx, WIDTH, HEIGHT, "Hello world!");
+	// img.img = mlx_new_image(prog.mlx, WIDTH, HEIGHT);
+	// img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
+	// 							&img.endian);
 
-    clock_t start, end;
-    double cpu_time_used;
+    // clock_t start, end;
+    // double cpu_time_used;
 
-	start = clock();
+	// start = clock();
 
 /* ************************************************************************** */
 /*					TEST BULLET												  */
@@ -432,76 +432,76 @@ int main(void)
 /*					VIEW TEST												  */
 /* ************************************************************************** */
 
-	float fov;
-	t_camera c;
-	t_world	w;
+	// float fov;
+	// t_camera c;
+	// t_world	w;
 
 
-	t_sphere	f1;
+	// t_sphere	f1;
 	
-	f1 = sphere();
-	f1.transform = matrix_scaling(10, 0.01, 10);
-	f1.material = material_default();
-	f1.material.color = set_color(1, 0.9, 0.9);
-	f1.material.specular = 0;
+	// f1 = sphere();
+	// f1.transform = matrix_scaling(10, 0.01, 10);
+	// f1.material = material_default();
+	// f1.material.color = set_color(1, 0.9, 0.9);
+	// f1.material.specular = 0;
 	
-	t_sphere l_wall;
+	// t_sphere l_wall;
 	
-	l_wall = sphere();
-	l_wall.transform = mul_matrix(mul_matrix(mul_matrix(matrix_translation(0, 0, 5), matrix_rotation_y(-45)), matrix_rotation_x(90)), matrix_scaling(10, 0.01, 10));
-	l_wall.material = f1.material;
+	// l_wall = sphere();
+	// l_wall.transform = mul_matrix(mul_matrix(mul_matrix(matrix_translation(0, 0, 5), matrix_rotation_y(-45)), matrix_rotation_x(90)), matrix_scaling(10, 0.01, 10));
+	// l_wall.material = f1.material;
 
-	t_sphere r_wall;
+	// t_sphere r_wall;
 	
-	r_wall = sphere();
-	r_wall.transform = mul_matrix(mul_matrix(mul_matrix(matrix_translation(0, 0, 5), matrix_rotation_y(45)), matrix_rotation_x(90)), matrix_scaling(10, 0.01, 10));
-	r_wall.material = f1.material;
+	// r_wall = sphere();
+	// r_wall.transform = mul_matrix(mul_matrix(mul_matrix(matrix_translation(0, 0, 5), matrix_rotation_y(45)), matrix_rotation_x(90)), matrix_scaling(10, 0.01, 10));
+	// r_wall.material = f1.material;
 	
-	t_sphere middle;
+	// t_sphere middle;
 
-	middle = sphere();
-	middle.transform = mul_matrix(matrix_translation(-1, 0.5, 1), matrix_scaling(0.5, 0.5, 0.5));
-	middle.material = material_default();
-	middle.material.color = set_color(0.1, 1, 0.5);
-	middle.material.diffuse = 0.7;
-	middle.material.specular = 0.3;
+	// middle = sphere();
+	// middle.transform = mul_matrix(matrix_translation(-1, 0.5, 1), matrix_scaling(0.5, 0.5, 0.5));
+	// middle.material = material_default();
+	// middle.material.color = set_color(0.1, 1, 0.5);
+	// middle.material.diffuse = 0.7;
+	// middle.material.specular = 0.3;
 
-	t_sphere right;
+	// t_sphere right;
 
-	right = sphere();
-	right.transform = mul_matrix(matrix_translation(-2, 0.8, -0.5), matrix_scaling(0.8, 0.8, 0.8));
-	right.material = material_default();
-	right.material.color = set_color(0.5, 1, 0.1);
-	right.material.diffuse = 0.7;
-	right.material.specular = 0.3;
+	// right = sphere();
+	// right.transform = mul_matrix(matrix_translation(-2, 0.8, -0.5), matrix_scaling(0.8, 0.8, 0.8));
+	// right.material = material_default();
+	// right.material.color = set_color(0.5, 1, 0.1);
+	// right.material.diffuse = 0.7;
+	// right.material.specular = 0.3;
 
-	t_sphere left;
+	// t_sphere left;
 
-	left = sphere();
-	left.transform = mul_matrix(matrix_translation(0, 2, 0.5), matrix_scaling(0.5, 0.5, 0.5));
-	left.material = material_default();
-	left.material.color = set_color(1, 0.8, 0.1);
-	left.material.diffuse = 0.7;
-	left.material.specular = 0.3;
-
-
-
-	w = set_world();
-	w.s = malloc(sizeof(t_sphere) * 6);
-	w.s[0] = middle;
-	w.s[1] = right;
-	w.s[2] = left;
-	w.s[3] = f1;
-	w.s[4] = l_wall;
-	w.s[5] = r_wall;
+	// left = sphere();
+	// left.transform = mul_matrix(matrix_translation(0, 2, 0.5), matrix_scaling(0.5, 0.5, 0.5));
+	// left.material = material_default();
+	// left.material.color = set_color(1, 0.8, 0.1);
+	// left.material.diffuse = 0.7;
+	// left.material.specular = 0.3;
 
 
-	w.count = 6;
+
+	// w = set_world();
+	// w.s = malloc(sizeof(t_sphere) * 6);
+	// w.s[0] = middle;
+	// w.s[1] = right;
+	// w.s[2] = left;
+	// w.s[3] = f1;
+	// w.s[4] = l_wall;
+	// w.s[5] = r_wall;
+
+
+	// w.count = 6;
 	
-	fov = PI/3;
-	c = camera(WIDTH, HEIGHT, fov);
-	c.transform = view_transform(point(0,1.5,-5), point(0,1,0), vector(0,1,0));
-	render(c, w, &img);
+	// fov = PI/3;
+	// c = camera(WIDTH, HEIGHT, fov);
+	// c.transform = view_transform(point(0,1.5,-5), point(0,1,0), vector(0,1,0));
+	// render(c, w, &img);
 
 
 /* ************************************************************************** */
@@ -593,23 +593,77 @@ int main(void)
 	// if (c.over_p.z < c.p.z)
 	// 	printf("true");
 
+
+/* ************************************************************************** */
+/*					END PLANE												  */
+/* ************************************************************************** */
+
+	// t_sphere s;
+	// t_inter *xs;
+	// t_ray	ray;
+
+	// ray.direction = vector(0, 0, 1);
+	// ray.origin = point( 0, 0, -5);
+	// s = sphere();
+	// set_transform(&s, matrix_scaling(2,2,2));
+
+	// xs = intersect (s, ray);
+	// print_tuple(xs[0].object.saved_ray.origin);
+	
+	//test 2
+
+	t_world	w;
+	t_ray	r;
+	t_shape	*shape;
+	t_sphere s;
+	t_inter *xs;
+	t_sphere s2;
+
+	r.direction = vector(0, 0, 1);
+	r.origin = point(0, 0, -5);
+
+	shape = malloc(sizeof(t_shape) * 2);
+
+	shape[0] = test_shape();
+	s = sphere();
+	shape[0].sphere = s;
+
+	shape[1] = test_shape();
+	s2 = sphere();
+	shape[1].transform = matrix_scaling(0.5 ,0.5 , 0.5);
+	shape[1].sphere = s2;
+	
+	w = set_world();
+	w.shape = shape;
+	w.count = 2;
+
+	xs = intersect_world(w, r);
+	if (!xs)
+		printf("NULL");
+	else
+	{
+		printf("test : %f\n", xs[0].t);
+		printf("test : %f\n", xs[1].t);
+		printf("test : %f\n", xs[2].t);
+		printf("test : %f\n", xs[3].t);
+	}
 	
 
 /* ************************************************************************** */
 /*					END TEST											  */
 /* ************************************************************************** */
-	mlx_put_image_to_window(prog.mlx, prog.win, img.img, 0, 0);
+	// mlx_put_image_to_window(prog.mlx, prog.win, img.img, 0, 0);
 
 	// mlx_hook(prog.mlx, KeyPress, KeyPressMask, &handle_keypress, &prog);
 	// mlx_hook(prog.mlx, 17, 1L << 1, &handle_exit, &prog);
 
 	
-	end = clock();
-    cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-    printf("CPU time used: %f seconds\n", cpu_time_used);
+	// end = clock();
+    // cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+    // printf("CPU time used: %f seconds\n", cpu_time_used);
 
 
 	
-	mlx_loop(prog.mlx);
+	// mlx_loop(prog.mlx);
 	return(0);
 }

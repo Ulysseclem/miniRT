@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 14:15:55 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/28 17:25:49 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2023/12/30 20:47:46 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,25 @@
 
 
 // NORMALISER CETTE DAUBE
-t_tuple	normale_at(t_sphere s, t_tuple world_point)
-{
-	t_tuple object_point;
-	t_tuple object_normal;
-	t_tuple world_normal;
-	t_matrix	*inverted;
-	t_matrix	*transposed;
+// t_tuple	normale_at(t_sphere s, t_tuple world_point)
+// {
+// 	t_tuple object_point;
+// 	t_tuple object_normal;
+// 	t_tuple world_normal;
+// 	t_matrix	*inverted;
+// 	t_matrix	*transposed;
 	
-	inverted = inverse(s.transform);
-	world_normal = vector(0, 0, 0);
-	object_point = mul_matrix_tuple(inverted, world_point); // obtenir le point and object space
-	object_normal = sub_tuple(object_point, world_normal);
-	transposed = transp_matrix(inverted);
-	world_normal = mul_matrix_tuple(transposed, object_normal);
-	world_normal.w = 0;  // remettre le w a 0 (pour vecteur) car il risque d'avoir ete change.
-	free_matrix(inverted);
-	free_matrix(transposed);
-	return(norm(world_normal));
-}
+// 	inverted = inverse(s.transform);
+// 	world_normal = vector(0, 0, 0);
+// 	object_point = mul_matrix_tuple(inverted, world_point); // obtenir le point and object space
+// 	object_normal = sub_tuple(object_point, world_normal);
+// 	transposed = transp_matrix(inverted);
+// 	world_normal = mul_matrix_tuple(transposed, object_normal);
+// 	world_normal.w = 0;  // remettre le w a 0 (pour vecteur) car il risque d'avoir ete change.
+// 	free_matrix(inverted);
+// 	free_matrix(transposed);
+// 	return(norm(world_normal));
+// }
 
 t_tuple	reflect(t_tuple vector_in, t_tuple normal)
 {

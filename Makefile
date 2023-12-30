@@ -41,7 +41,7 @@ SRCS        :=	main.c \
 				world.c \
 				view.c \
 				shadow.c \
-				place.c
+				plane.c
 
 
 SRCS        := $(SRCS:%=$(SRC_DIR)/%)
