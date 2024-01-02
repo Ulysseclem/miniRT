@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   world.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 10:09:14 by ulysseclem        #+#    #+#             */
-/*   Updated: 2023/12/30 21:02:21 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2024/01/02 13:56:56 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,10 @@ t_comps prepare_computation(t_inter xs, t_ray r)
 	t_comps comps;
 
 	comps.t = xs.t;
-	comps.shape = *(xs.shape);
+	comps.shape = *xs.shape; // erreur ici 
 	comps.p = position_f(r, comps.t);
 	comps.eyev = neg_tuple(r.direction);
-	comps.normalv = normale_at(comps.shape, comps.p);
+	comps.normalv = normale_at(comps.shape, comps.p); // le normal at va dependre du type de la shape
 	comps.over_p = add_tuple(comps.p, mul_sca_tuple(comps.normalv, 0.00001)); // pour regler l'acne
 	if (dot_product(comps.normalv, comps.eyev) < 0) // Verifie si le ray n'origine pas de l'interieur de l'objet
 	{
@@ -142,13 +142,15 @@ t_color	color_at(t_world w, t_ray r)
 	t_inter *xs;
 	t_comps	c;
 	
+	write(1, "2\n", 2);
+
 	xs = intersect_world(w, r);
 	if (!xs) // aucune intersection trouve, color = noir.
 		return (set_color(0, 0, 0));
 	hit_xs = hit(xs);
 	free(xs);
 	if (hit_xs.hit == false)
-		return (set_color(0, 0, 0));
+		return (set_color(0, 0, 0));	
 	c = prepare_computation(hit_xs, r);
 	return (shade_hit(w, c));
 }

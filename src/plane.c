@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 12:49:30 by ulysseclem        #+#    #+#             */
-/*   Updated: 2023/12/30 21:10:07 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2024/01/02 14:02:06 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,12 @@ t_inter	*sphere_intersect(t_shape shape, t_ray local_ray)
 	if (!xs)
 		return (NULL);
 	xs[0] = create_inter(((b * -1) - sqrt(d)) / (2 * a), shape); // premiere inter
+	// xs[0].shape = &shape; 
 	xs[1] = create_inter(((b * -1) + sqrt(d)) / (2 * a), shape); // deuxieme inter
+	// xs[1].shape = &shape; 
 	xs->count = 2;
 	shape.xs = xs;
-	shape.xs->shape = &shape;
+	// shape.xs.shape = shape;
 	return (xs);
 }
 
@@ -119,7 +121,7 @@ t_inter *intersect_world(t_world w, t_ray ray)
 			w.shape[i].xs = xs_local;
 		}
 		i++;
-	}
+	}      
 	if (size == 0)
 		return (NULL);
 	xs = malloc(sizeof(t_shape) * size);
@@ -131,6 +133,7 @@ t_inter *intersect_world(t_world w, t_ray ray)
 		while (w.shape[i].xs && j < w.shape[i].xs->count)
 		{
 			xs[k] = w.shape[i].xs[j];
+			xs[k].shape =  &w.shape[i];
 			j++;
 			k++;
 		}
