@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
+/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2024/01/04 17:01:08 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2024/01/04 18:11:02 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@
 
 
 # ifndef WIDTH
-# define WIDTH 100
+# define WIDTH 500
 # endif
 
 # ifndef HEIGHT
-# define HEIGHT 50
+# define HEIGHT 250
 # endif
 
 # ifndef CENTER
@@ -254,6 +254,7 @@ t_inter *local_intersect(t_shape *s, t_ray ray);
 t_inter	create_inter_new(float nbr, t_shape shape);
 t_shape	test_shape();
 t_inter* sort_inter(t_inter *xs, int size);
+t_inter hit2(t_inter *xs);
 
 
 

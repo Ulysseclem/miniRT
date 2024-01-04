@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
+/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 12:49:30 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/01/04 16:34:56 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2024/01/04 18:01:18 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,8 @@ t_tuple	normale_at(t_shape s, t_tuple world_point)
 	
 	object_point = mul_matrix_tuple(inverted, world_point); // obtenir le point and object space
 	object_normal = sub_tuple(object_point, world_normal);
-	
+
 	transposed = transp_matrix(inverted);
-	
 	world_normal = mul_matrix_tuple(transposed, object_normal);
 	world_normal.w = 0;  // remettre le w a 0 (pour vecteur) car il risque d'avoir ete change.
 	free_matrix(inverted);
