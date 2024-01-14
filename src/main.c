@@ -6,7 +6,7 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2024/01/14 13:10:03 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2024/01/14 15:30:02 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -484,7 +484,7 @@ int main(void)
 	t_shape *shape;
 
 	shape = malloc(sizeof(t_shape) * 6);
-	shape[0] = init_shape("sphere");
+	shape[0] = init_shape("sphere"); // TYPEDEF enumeration
 	shape[1] = init_shape("sphere");
 	shape[2] = init_shape("sphere");
 	shape[3] = init_shape("sphere");
@@ -502,32 +502,26 @@ int main(void)
 
 	shape[5].transform = mul_matrix(mul_matrix(mul_matrix(matrix_translation(0, 0, 5), matrix_rotation_y(45)), matrix_rotation_x(90)), matrix_scaling(10, 0.01, 10));
 	shape[5].material = shape[0].material;
-	
 
 	shape[1].transform = mul_matrix(matrix_translation(-2, 0.8, -0.5), matrix_scaling(0.8, 0.8, 0.8));
 	shape[1].material = material_default();
 	shape[1].material.color = set_color(0.5, 1, 0.1);
 	shape[1].material.diffuse = 0.7;
-	shape[1].material.specular = 0.3;
-
 
 	shape[2].transform = mul_matrix(matrix_translation(0, 2, 0.5), matrix_scaling(0.5, 0.5, 0.5));
 	shape[2].material = material_default();
 	shape[2].material.color = set_color(1, 0.8, 0.1);
 	shape[2].material.diffuse = 0.7;
-	shape[2].material.specular = 0.3;
 
 	
 	shape[0].transform = mul_matrix(matrix_translation(-1, 0.5, 1), matrix_scaling(0.5, 0.5, 0.5));
 	shape[0].material = material_default();
 	shape[0].material.color = set_color(0.1, 1, 0.5);
 	shape[0].material.diffuse = 0.7;
-	shape[0].material.specular = 0.3;
 
 
 	w = set_world();
 	w.shape = shape;
-
 	w.count = 6;
 	
 	fov = PI/3;
