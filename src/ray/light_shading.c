@@ -6,37 +6,13 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 14:15:55 by uclement          #+#    #+#             */
-/*   Updated: 2024/01/04 12:46:07 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2024/01/14 13:09:12 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "struct.h"
 
-/* ************************************************************************** */
-/*	gestion du vecteur NORMAL												  */
-/* ************************************************************************** */
-
-
-// NORMALISER CETTE DAUBE
-// t_tuple	normale_at(t_sphere s, t_tuple world_point)
-// {
-// 	t_tuple object_point;
-// 	t_tuple object_normal;
-// 	t_tuple world_normal;
-// 	t_matrix	*inverted;
-// 	t_matrix	*transposed;
-	
-// 	inverted = inverse(s.transform);
-// 	world_normal = vector(0, 0, 0);
-// 	object_point = mul_matrix_tuple(inverted, world_point); // obtenir le point and object space
-// 	object_normal = sub_tuple(object_point, world_normal);
-// 	transposed = transp_matrix(inverted);
-// 	world_normal = mul_matrix_tuple(transposed, object_normal);
-// 	world_normal.w = 0;  // remettre le w a 0 (pour vecteur) car il risque d'avoir ete change.
-// 	free_matrix(inverted);
-// 	free_matrix(transposed);
-// 	return(norm(world_normal));
-// }
 
 t_tuple	reflect(t_tuple vector_in, t_tuple normal)
 {
@@ -52,17 +28,7 @@ void	light(t_light *l, t_tuple position, t_color color)
 	l->intensity = color;
 }
 
-t_material	material_default()
-{
-	t_material	m;
 
-	m.color = set_color(1, 1, 1);
-	m.ambiant = 0.1;
-	m.diffuse = 0.9;
-	m.specular = 0.9;
-	m.shininess = 200;
-	return(m);
-}
 
 float customPow(float base, int exponent) // pow custom pour eviter des nombre trop grand
 {
@@ -101,7 +67,6 @@ t_color lightning(t_material m, t_light l, t_tuple p, t_tuple eyev, t_tuple norm
 
 
 	effective_color = mul_color(m.color, l.intensity); // combine surface color with light color / intensivity
-
 	lightv = norm(sub_tuple(l.position, p)); // Find the direction to the light source
 	ambiant = mul_sca_color(effective_color, m.ambiant); //ambiant contribution  PROBEME ICI ?
 	light_dot_normal = dot_product(lightv, normalv);

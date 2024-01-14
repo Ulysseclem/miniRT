@@ -6,11 +6,13 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 19:21:49 by ulysseclem        #+#    #+#             */
-/*   Updated: 2023/12/28 16:24:22 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2024/01/14 13:09:45 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "struct.h"
+
 
 t_color	set_color(float x, float y, float z)
 {

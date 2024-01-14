@@ -6,11 +6,13 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 11:43:53 by uclement          #+#    #+#             */
-/*   Updated: 2024/01/04 13:10:59 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2024/01/14 13:09:09 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "struct.h"
+
 
 t_matrix *create_matrix(int r, int c) // ok
 {
@@ -181,32 +183,6 @@ t_matrix	*transp_matrix(t_matrix *m)
 	return (transpose);
 }
 
-void free_matrix(t_matrix *mat) 
-{
-    for (int i = 0; i < mat->r; i++) {
-        free(mat->data[i]);
-    }
-    free(mat->data);
-    free(mat);
-}
 
-// PRINT
-// void print_matrix(t_matrix *matrix) 
-// {
-// 	int i;
-// 	int j;
 
-// 	i = 0;
-// 	while (i < matrix->r)
-// 	{
-// 		j = 0;
-// 		while (j < matrix->c)
-// 		{
-// 			printf("%f ", matrix->data[i * matrix->c + j]);
-// 			j++;
-// 		}
-// 		printf("\n");
-// 		i++;
-// 	}
-// }
 

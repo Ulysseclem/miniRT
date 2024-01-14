@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   world.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 10:09:14 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/01/04 18:13:28 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/01/14 13:11:42 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "struct.h"
 
 t_world set_world()
 {
@@ -23,63 +24,26 @@ t_world set_world()
 	return(w);
 }
 
-// /* ************************************************************************** */
-// /*	Definis et sort toutes les intersection de rays et d'objets dans le world */
-// /* ************************************************************************** */
+t_tuple	normale_at(t_shape s, t_tuple world_point)
+{
+	t_tuple object_point;
+	t_tuple object_normal;
+	t_tuple world_normal;
+	t_matrix	*inverted;
+	t_matrix	*transposed;
+	
+	inverted = inverse(s.transform);
+	world_normal = vector(0, 0, 0);
+	object_point = mul_matrix_tuple(inverted, world_point); // obtenir le point and object space
+	object_normal = sub_tuple(object_point, world_normal);
+	transposed = transp_matrix(inverted);
+	world_normal = mul_matrix_tuple(transposed, object_normal);
+	world_normal.w = 0;  // remettre le w a 0 (pour vecteur) car il risque d'avoir ete change.
+	free_matrix(inverted);
+	free_matrix(transposed);
+	return(norm(world_normal));
+}
 
-// t_inter	*intersect_world(t_world w, t_ray r2)
-// {
-
-// 	t_inter *xs;
-// 	t_ray r;
-// 	t_tuple s_t_r;
-// 	xs = NULL;
-// 	int i;
-// 	int	test = 0;
-// 	t_matrix	*inverted;
-
-// 	i = 0;
-// 	while (i < w.count)
-// 	{	
-// 		inverted = inverse(w.s[i].transform); // retour NULL a gerer
-// 		r = trnsform_ray(r2, inverted);
-// 		free_matrix(inverted);
-// 		s_t_r = sub_tuple(r.origin, point(0 ,0 , 0));
-// 		w.s[i].a = dot_product(r.direction, r.direction);
-// 		w.s[i].b = dot_product(r.direction, s_t_r) * 2;
-// 		w.s[i].c = dot_product(s_t_r, s_t_r) - 1;
-// 		w.s[i].d = pow(w.s[i].b, 2) - (4 * w.s[i].a * w.s[i].c);
-// 		if (w.s[i].d >= 0)
-// 			test += 2;
-// 		i++;
-// 	}
-// 	if (test == 0)
-// 		return (NULL);
-// 	xs = malloc(sizeof(t_inter) * test);
-// 	if (!xs)
-// 		return (NULL);
-// 	i = 0;
-// 	int j = 0;
-// 	xs[0].count = test;
-// 	while (i < w.count)
-// 	{
-// 		if (w.s[i].d >= 0)
-// 		{
-// 			xs[j] = create_inter(((w.s[i].b * -1) - sqrt(w.s[i].d)) / (2 * w.s[i].a), w.s[i]); // premiere inter
-// 			j++;
-// 			xs[j] = create_inter(((w.s[i].b * -1) + sqrt(w.s[i].d)) / (2 * w.s[i].a), w.s[i]); // deuxieme inter
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// 	xs->count = test;
-// 	sort_inter(xs);
-// 	return(xs);
-// }
-
-/* ************************************************************************** */
-/*	precompute pour trouver le Hit											  */
-/* ************************************************************************** */
 t_comps prepare_computation(t_inter xs, t_ray r)
 {
 	t_comps comps;
@@ -108,7 +72,7 @@ t_color shade_hit(t_world w, t_comps c)
 	return (lightning(c.shape.material, w.l, c.p, c.eyev, c.normalv, shadowed));
 }
 
-t_color shade_hit_no_specular(t_world w, t_comps c)
+t_color shade_hit_no_specular(t_world w, t_comps c) // enleve le specular
 {
 	bool	shadowed;
 

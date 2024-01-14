@@ -32,16 +32,22 @@ INCS        := include    \
 
 SRC_DIR     := src
 SRCS        :=	main.c \
-				color.c \
-				matrix.c \
-				matrix_inverter.c \
-				matrix_transformation.c \
-				ray.c \
-				light_shading.c \
-				world.c \
-				view.c \
-				shadow.c \
-				plane.c
+				Tuples/color.c \
+				Matrix/matrix.c \
+				Matrix/matrix_inverter.c \
+				Matrix/matrix_transformation.c \
+				ray/ray.c \
+				ray/light_shading.c \
+				Render/world.c \
+				Render/camera.c \
+				ray/shadow.c \
+				Shape/shape.c \
+				Shape/sphere.c \
+				Utils/utils_to_delete.c \
+				Utils/utils.c \
+				Render/intersection.c \
+				Render/render.c \
+				Tuples/tuple.c
 
 
 SRCS        := $(SRCS:%=$(SRC_DIR)/%)

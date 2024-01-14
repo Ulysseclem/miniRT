@@ -6,11 +6,13 @@
 /*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 16:26:14 by uclement          #+#    #+#             */
-/*   Updated: 2023/12/28 12:48:40 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2024/01/14 13:09:05 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "struct.h"
+
 
 t_matrix *matrix_translation(float x, float y, float z)
 {
@@ -31,10 +33,6 @@ t_matrix *matrix_scaling(float x, float y, float z)
 	m->data[1][1] = y; // 5
 	m->data[2][2] = z; // 10
 	return (m);
-}
-float	d_to_r(float deg)  // converter degree to radian
-{
-	return((deg / 180) * 3.141592);
 }
 
 t_matrix *matrix_rotation_x(float d)

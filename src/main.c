@@ -3,186 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2024/01/04 18:01:52 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/01/14 13:10:03 by ulysseclem       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "struct.h"
 
-/* ************************************************************************** */
-/*					Magrnitude & norm pour normer des tuples				  */
-/* ************************************************************************** */
-float magnitude(t_tuple t)
-{
-	return sqrt(t.x * t.x + t.y * t.y + t.z * t.z + t.w * t.w);
-}
-
-t_tuple norm(t_tuple t)
-{
-	float mag = magnitude(t);
-
-	if (mag != 0)
-	{
-		t.x = t.x / mag;
-		t.y = t.y / mag;
-		t.z = t.z / mag;
-		t.w = t.w / mag;
-	}
-	return (t);
-}
-
-/* ************************************************************************** */
-/*					Cree les tuples Point & Vecteur							  */
-/* ************************************************************************** */
-t_tuple	point(float x, float y, float z)
-{
-	t_tuple p;
-	
-	p.x = x;
-	p.y = y;
-	p.z = z;
-	p.w = 1;
-	return (p);
-}
-
-t_tuple	vector(float x, float y, float z)
-{
-	t_tuple v;
-	
-	v.x = x;
-	v.y = y;
-	v.z = z;
-	v.w = 0;
-	return (v);
-}
-
-/* ************************************************************************** */
-/*					Arithmetie de Tuple (+, -, *, neg)						  */
-/* ************************************************************************** */
-t_tuple	add_tuple(t_tuple a, t_tuple b)
-{
-	t_tuple c;
-	
-	c.x = a.x + b.x;
-	c.y = a.y + b.y;
-	c.z = a.z + b.z;
-	c.w = a.w + b.w;
-	// if (c.w == 2)
-	// {
-	// 	perror("w = 2");
-	// 	exit(1);
-	// }
-	return(c);
-}
-
-t_tuple	sub_tuple(t_tuple a, t_tuple b)
-{
-	t_tuple c;
-	
-	c.x = a.x - b.x;
-	c.y = a.y - b.y;
-	c.z = a.z - b.z;
-	c.w = a.w - b.w;
-	// if (c.w == -1)
-	// {
-	// 	perror("w = -1");
-	// 	exit(1);
-	// }
-	return(c);
-}
-t_tuple	neg_tuple(t_tuple a)
-{	
-	a.x *= -1;
-	a.y *= -1;
-	a.z *= -1;
-	a.w *= -1;
-	return(a);
-}
-
-t_tuple	mul_sca_tuple(t_tuple a, float mul)
-{
-	a.x *= mul;
-	a.y *= mul;
-	a.z *= mul;
-	a.w *= mul;
-	return (a);	
-}
-
-t_tuple cross_product(t_tuple a, t_tuple b)
-{
-	t_tuple c;
-
-	c.x = a.y * b.z - a.z * b.y;
-	c.y = a.z * b.x - a.x * b.z;
-	c.z = a.x * b.y - a.y * b.x;
-	return(c);
-}
-
-float dot_product(t_tuple a, t_tuple b)
-{
-	float nbr;
-
-	nbr = (a.x * b.x) + (a.y * b.y) + (a.z * b.z) + (a.w * b.w);
-	return (nbr);
-}
-
-/* ************************************************************************** */
-/*					Permet de verifier l'egalite des floats					  */
-/* ************************************************************************** */
-bool	equal(float a, float b)
-{
-	float epsilon;
-
-	epsilon = 0.00001;
-	if ((a - b) < epsilon)
-		return true;
-	else
-		return false;
-}
-
-bool	equal_tuple(t_tuple a, t_tuple b)
-{
-	if (equal(a.x, b.x) && equal(a.y, b.y) && equal(a.z, b.z))
-		return true;
-	else
-		return false;
-}
-
-/* ************************************************************************** */
-/*					gestion des couleurs									  */
-/* ************************************************************************** */
-int RGB_to_hex(t_color c) 
-{
-	long long int red;
-	long long int green;
-	long long int blue;
-	long long int hex_value;
-
-	red = (long long int)(c.r * 255);
-	green = (long long int)(c.g * 255);
-	blue = (long long int)(c.b * 255);
-	red = (red < 0) ? 0 : (red > 255) ? 255 : red;
-	green = (green < 0) ? 0 : (green > 255) ? 255 : green;
-	blue = (blue < 0) ? 0 : (blue > 255) ? 255 : blue;
-	hex_value = (red << 16) + (green << 8) + blue;
-	return (hex_value);
-}
-
-void	my_mlx_pixel_put(t_data *data, int x, int y, t_color color)
-{
-	char	*dst;
-
-	if (x > WIDTH || y > HEIGHT)
-	{
-		printf("pixel out of bound");
-		return;
-	}
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = RGB_to_hex(color);
-}
 
 /* ************************************************************************** */
 /*					Pour le test BULLET										  */
@@ -195,19 +25,6 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, t_color color)
 // 	new_proj.vel = add_tuple(add_tuple(proj.vel, env.grav), env.wind);
 // 	return (new_proj);
 // }
-
-void	print_tuple(t_tuple	t)
-{
-	printf("(%f, %f, %f, %d)\n", t.x, t.y, t.z, t.w);
-}
-
-void	print_color(t_color	t)
-{
-	printf("(%f, %f, %f)\n", t.r, t.g, t.b);
-}
-
-
-
 
 int	handle_exit(t_prog *prog)
 {
@@ -667,63 +484,45 @@ int main(void)
 	t_shape *shape;
 
 	shape = malloc(sizeof(t_shape) * 6);
-	shape[0] = test_shape();
-	shape[1] = test_shape();
-	shape[2] = test_shape();
-	shape[3] = test_shape();
-	shape[4] = test_shape();
-	shape[5] = test_shape();
+	shape[0] = init_shape("sphere");
+	shape[1] = init_shape("sphere");
+	shape[2] = init_shape("sphere");
+	shape[3] = init_shape("sphere");
+	shape[4] = init_shape("sphere");
+	shape[5] = init_shape("sphere");
 
 
-	t_sphere f1_s;
-	f1_s = sphere();
-	shape[0].transform = matrix_scaling(10, 0.01, 10);
-	shape[0].material = material_default();
-	shape[0].material.color = set_color(1, 0.9, 0.9);
-	shape[0].material.specular = 0;
-	shape[0].sphere = f1_s;
-	
-	t_sphere l_wall;
-	l_wall = sphere();
-	shape[1].transform = mul_matrix(mul_matrix(mul_matrix(matrix_translation(0, 0, 5), matrix_rotation_y(-45)), matrix_rotation_x(90)), matrix_scaling(10, 0.01, 10));
-	shape[1].material = shape[0].material;
-	shape[1].sphere = l_wall;
-
-	t_sphere r_wall;
-	r_wall = sphere();
-	shape[2].transform = mul_matrix(mul_matrix(mul_matrix(matrix_translation(0, 0, 5), matrix_rotation_y(45)), matrix_rotation_x(90)), matrix_scaling(10, 0.01, 10));
-	shape[2].material = shape[0].material;
-	shape[2].sphere = r_wall;
-	
-	t_sphere right;
-
-	right = sphere();
-	shape[3].transform = mul_matrix(matrix_translation(-2, 0.8, -0.5), matrix_scaling(0.8, 0.8, 0.8));
+	shape[3].transform = matrix_scaling(10, 0.01, 10);
 	shape[3].material = material_default();
-	shape[3].material.color = set_color(0.5, 1, 0.1);
-	shape[3].material.diffuse = 0.7;
-	shape[3].material.specular = 0.3;
-	shape[3].sphere = right;
-
-	t_sphere left;
-
-	left = sphere();
-	shape[4].transform = mul_matrix(matrix_translation(0, 2, 0.5), matrix_scaling(0.5, 0.5, 0.5));
-	shape[4].material = material_default();
-	shape[4].material.color = set_color(1, 0.8, 0.1);
-	shape[4].material.diffuse = 0.7;
-	shape[4].material.specular = 0.3;
-	shape[4].sphere = left;
-
-	t_sphere middle;
+	shape[3].material.color = set_color(1, 0.9, 0.9);
+	shape[3].material.specular = 0;
 	
-	middle = sphere();
-	shape[5].transform = matrix_translation(0, 0, 0.2);
-	shape[5].material = material_default();
-	shape[5].material.color = set_color(1, 0.8, 0.1);
-	shape[5].material.diffuse = 0.7;
-	shape[5].material.specular = 0.3;
-	shape[5].sphere = middle; 
+	shape[4].transform = mul_matrix(mul_matrix(mul_matrix(matrix_translation(0, 0, 5), matrix_rotation_y(-45)), matrix_rotation_x(90)), matrix_scaling(10, 0.01, 10));
+	shape[4].material = shape[0].material;
+
+	shape[5].transform = mul_matrix(mul_matrix(mul_matrix(matrix_translation(0, 0, 5), matrix_rotation_y(45)), matrix_rotation_x(90)), matrix_scaling(10, 0.01, 10));
+	shape[5].material = shape[0].material;
+	
+
+	shape[1].transform = mul_matrix(matrix_translation(-2, 0.8, -0.5), matrix_scaling(0.8, 0.8, 0.8));
+	shape[1].material = material_default();
+	shape[1].material.color = set_color(0.5, 1, 0.1);
+	shape[1].material.diffuse = 0.7;
+	shape[1].material.specular = 0.3;
+
+
+	shape[2].transform = mul_matrix(matrix_translation(0, 2, 0.5), matrix_scaling(0.5, 0.5, 0.5));
+	shape[2].material = material_default();
+	shape[2].material.color = set_color(1, 0.8, 0.1);
+	shape[2].material.diffuse = 0.7;
+	shape[2].material.specular = 0.3;
+
+	
+	shape[0].transform = mul_matrix(matrix_translation(-1, 0.5, 1), matrix_scaling(0.5, 0.5, 0.5));
+	shape[0].material = material_default();
+	shape[0].material.color = set_color(0.1, 1, 0.5);
+	shape[0].material.diffuse = 0.7;
+	shape[0].material.specular = 0.3;
 
 
 	w = set_world();
