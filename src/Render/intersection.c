@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersection.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 12:29:59 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/01/14 13:09:25 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2024/01/24 17:16:14 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,29 @@ int intersect_shape(t_shape *shape, t_ray ray)
 		return(0);
 }
 
-void	sort_inter(t_inter *xs, int size) // pas bon mais fonctionne pour le moment - ne fonctionnera pas si on veut faire des reflets
-{
-	t_inter tmp;
-	int i;
 
-	i = 0;
-	while (i < size -1)
-	{
-		if (xs[i].t > xs[i + 1].t)
-		{
-			tmp = xs[i];
-			xs[i] = xs[i +1];
-			xs[i + 1] = tmp;
-		}
-		i++;
-	}
+void swap(t_inter *xp, t_inter *yp) {
+    t_inter temp = *xp;
+    *xp = *yp;
+    *yp = temp;
+}
+
+void bubbleSort(t_inter *xs, int n) // FOR IN IT TO FIX
+{
+    int i, j;
+    bool swapped = false;
+    for (i = 0; i < n - 1; i++) {
+        swapped = false;
+        for (j = 0; j < n - i - 1; j++) {
+            if (xs[j].t > xs[j + 1].t) {
+                swap(&xs[j], &xs[j + 1]);
+				xs[j].count = n;
+                swapped = true;
+            }
+        }
+        if (swapped == false)
+            break;
+    }
 }
 
 t_inter	*inter_world(t_world w, t_ray ray)
@@ -73,6 +80,8 @@ t_inter	*inter_world(t_world w, t_ray ray)
 		size += intersect_shape(&(w.shape[i]), ray);	
 		i++;
 	}
+	if (size == 0)
+		return (NULL);
 	xs = malloc(sizeof(t_inter) * size);
 	i = 0;
 	j = 0;
@@ -87,7 +96,11 @@ t_inter	*inter_world(t_world w, t_ray ray)
 		}
 		i++;
 	}
-	xs->count = size;
-	sort_inter(xs, size);
+	i = -1;
+	while (++i < w.count)
+	{
+		xs[i].count = size;
+	}
+	bubbleSort(xs, size);
 	return (xs);
 }

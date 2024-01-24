@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2024/01/14 13:11:00 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2024/01/24 17:15:58 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,10 @@
 
 # ifndef PI
 # define PI 3.1415
+# endif
+
+# ifndef EPSILON
+# define EPSILON 0.0001
 # endif
 
 /* ************************************************************************** */
@@ -103,7 +107,7 @@ t_ray		ray_for_pixel(t_camera c, float px, float py);
 
 // intersection
 t_inter		*inter_world(t_world w, t_ray ray);
-void		sort_inter(t_inter *xs, int size);
+void 		bubbleSort(t_inter *xs, int n); // FOR IN IT TO FIX
 int 		intersect_shape(t_shape *shape, t_ray ray);
 t_inter		create_inter_new(float nbr, t_shape shape);
 

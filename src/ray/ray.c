@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 13:49:48 by uclement          #+#    #+#             */
-/*   Updated: 2024/01/14 13:09:15 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2024/01/24 16:49:59 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,29 +31,19 @@ t_inter hit(t_inter *xs)
 	int 	i;
 	t_inter	hit_xs;
 
+	hit_xs = xs[xs->count - 1];
 	i = 0;
-	if (!xs)
-	{
-		hit_xs.hit = false;
-		return(hit_xs);
-	}
-	hit_xs = xs[i];
-	while(i < xs[0].count) // to change back to xs->count !!!
+	while(i < xs->count)
 	{
 		if (hit_xs.t > xs[i].t && xs[i].t >=0)
 			hit_xs = xs[i];
 		i++;
 	}
 	if (hit_xs.t < 0)
-	{
 		hit_xs.hit = false;
-		return(hit_xs);
-	}
 	else
-	{
 		hit_xs.hit = true;
-		return(hit_xs);
-	}
+	return(hit_xs);
 }
 
 t_ray trnsform_ray(t_ray r, t_matrix *m)

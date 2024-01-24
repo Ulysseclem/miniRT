@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   world.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 10:09:14 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/01/14 14:26:14 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2024/01/24 17:11:03 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_comps prepare_computation(t_inter xs, t_ray r)
 	comps.p = position_f(r, comps.t);
 	comps.eyev = neg_tuple(r.direction);
 	comps.normalv = normale_at(comps.shape, comps.p);
-	comps.over_p = add_tuple(comps.p, mul_sca_tuple(comps.normalv, 0.00001)); // pour regler l'acne
+	comps.over_p = add_tuple(comps.p, mul_sca_tuple(comps.normalv, 0.001)); // pour regler l'acne
 	if (dot_product(comps.normalv, comps.eyev) < 0) // Verifie si le ray n'origine pas de l'interieur de l'objet
 	{
 		comps.inside = true;

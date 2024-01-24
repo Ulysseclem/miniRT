@@ -19,7 +19,7 @@ t_sphere sphere()
 	t_sphere	s;
 	static int	i = 0;
 
-	s.point = point(0, 0, 0);
+	// s.point = point(0, 0, 0);
 	s.id = i;
 	i++;
 	return(s);

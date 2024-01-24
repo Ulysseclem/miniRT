@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_to_delete.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 12:08:54 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/01/14 13:09:55 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2024/01/24 16:23:17 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
