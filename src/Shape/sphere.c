@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 12:13:20 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/01/14 15:29:02 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2024/01/25 13:15:11 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,5 @@ t_inter *sphere_intersect(t_shape *s, t_ray r) // inter de Sphere
 		return (NULL);
 	xs[0] = create_inter_new(((s->sphere.b * -1) - sqrt(s->sphere.d)) / (2 * s->sphere.a), *s); // premiere inter
 	xs[1] = create_inter_new(((s->sphere.b * -1) + sqrt(s->sphere.d)) / (2 * s->sphere.a), *s); // deuxieme inter
-	xs->count = 2;
 	return(xs);	
 }

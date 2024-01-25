@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matrix.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 11:43:53 by uclement          #+#    #+#             */
-/*   Updated: 2024/01/14 13:09:09 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2024/01/25 12:05:55 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,8 +136,8 @@ t_matrix* mul_matrix(t_matrix *a, t_matrix *b)
 		}
 		i++;
 	}
-	// free_matrix(a); //maybe
-	// free_matrix(b); //maybe
+	free_matrix(a);
+	free_matrix(b);
 	return (result);
 }
 

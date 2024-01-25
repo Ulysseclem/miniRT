@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 12:29:59 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/01/24 17:16:14 by uclement         ###   ########.fr       */
+/*   Updated: 2024/01/25 13:18:43 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_inter	create_inter_new(float t, t_shape shape)
 
 	xs.t = t;
 	xs.shape = shape;
+	xs.hit = false;
 	return (xs);
 }
 
@@ -48,7 +49,7 @@ void swap(t_inter *xp, t_inter *yp) {
     *yp = temp;
 }
 
-void bubbleSort(t_inter *xs, int n) // FOR IN IT TO FIX
+void bubbleSort(t_inter *xs, int n) // FOR TO FIX
 {
     int i, j;
     bool swapped = false;
@@ -83,6 +84,8 @@ t_inter	*inter_world(t_world w, t_ray ray)
 	if (size == 0)
 		return (NULL);
 	xs = malloc(sizeof(t_inter) * size);
+	if (!xs)
+		return (NULL);
 	i = 0;
 	j = 0;
 	while (i < w.count)
@@ -96,10 +99,11 @@ t_inter	*inter_world(t_world w, t_ray ray)
 		}
 		i++;
 	}
-	i = -1;
-	while (++i < w.count)
+	i = 0;
+	while (i < size)
 	{
 		xs[i].count = size;
+		i++;
 	}
 	bubbleSort(xs, size);
 	return (xs);

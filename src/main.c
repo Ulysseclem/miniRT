@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2024/01/24 17:16:55 by uclement         ###   ########.fr       */
+/*   Updated: 2024/01/25 13:21:38 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -483,36 +483,41 @@ int main(void)
 	t_world	w;
 	t_shape *shape;
 
-	shape = malloc(sizeof(t_shape) * 3);
+	shape = malloc(sizeof(t_shape) * 6);
 	shape[0] = init_shape("sphere"); // TYPEDEF enumeration
 	shape[1] = init_shape("sphere");
 	shape[2] = init_shape("sphere");
-	// shape[3] = init_shape("sphere");
-	// shape[4] = init_shape("sphere");
-	// shape[5] = init_shape("sphere");
+	shape[3] = init_shape("sphere");
+	shape[4] = init_shape("sphere");
+	shape[5] = init_shape("sphere");
 
+	free_matrix(shape[3].transform);
+	shape[3].transform = matrix_scaling(10, 0.01, 10);
+	shape[3].material = material_default();
+	shape[3].material.color = set_color(1, 0.9, 0.9);
+	shape[3].material.specular = 0;
 
-	// shape[3].transform = matrix_scaling(10, 0.01, 10);
-	// shape[3].material = material_default();
-	// shape[3].material.color = set_color(1, 0.9, 0.9);
-	// shape[3].material.specular = 0;
-	
-	// shape[4].transform = mul_matrix(mul_matrix(mul_matrix(matrix_translation(0, 0, 5), matrix_rotation_y(-45)), matrix_rotation_x(90)), matrix_scaling(10, 0.01, 10));
-	// shape[4].material = shape[0].material;
+	free_matrix(shape[4].transform);
+	shape[4].transform = mul_matrix(mul_matrix(mul_matrix(matrix_translation(0, 0, 5), matrix_rotation_y(-45)), matrix_rotation_x(90)), matrix_scaling(10, 0.01, 10));
+	shape[4].material = shape[0].material;
 
-	// shape[5].transform = mul_matrix(mul_matrix(mul_matrix(matrix_translation(0, 0, 5), matrix_rotation_y(45)), matrix_rotation_x(90)), matrix_scaling(10, 0.01, 10));
-	// shape[5].material = shape[0].material;
+	free_matrix(shape[5].transform);
+	shape[5].transform = mul_matrix(mul_matrix(mul_matrix(matrix_translation(0, 0, 5), matrix_rotation_y(45)), matrix_rotation_x(90)), matrix_scaling(10, 0.01, 10));
+	shape[5].material = shape[0].material;
 
+	free_matrix(shape[1].transform);
 	shape[1].transform = mul_matrix(matrix_translation(-2, 0.8, -0.5), matrix_scaling(0.8, 0.8, 0.8));
 	shape[1].material = material_default();
 	shape[1].material.color = set_color(0.5, 1, 0.1);
 	shape[1].material.diffuse = 0.7;
 
+	free_matrix(shape[2].transform);
 	shape[2].transform = mul_matrix(matrix_translation(-1, 0.8, 0.5), matrix_scaling(0.5, 0.5, 0.5));
 	shape[2].material = material_default();
 	shape[2].material.color = set_color(1, 0.8, 0.1);
 	shape[2].material.diffuse = 0.7;
 	
+	free_matrix(shape[0].transform);
 	shape[0].transform = mul_matrix(matrix_translation(-0.5, 0, 0), matrix_scaling(0.5, 0.5, 0.5));
 	shape[0].material = material_default();
 	shape[0].material.color = set_color(0.1, 1, 0.5);
@@ -521,12 +526,17 @@ int main(void)
 
 	w = set_world();
 	w.shape = shape;
-	w.count = 3;
+	w.count = 6;
 	
 	fov = PI/3;
 	c = camera(WIDTH, HEIGHT, fov);
 	c.transform = view_transform(point(0,5,-5), point(0,0,0), vector(0,1,0));
 	render(c, w, &img);
+	
+	free_matrix(shape[0].transform);
+	free_matrix(shape[1].transform);
+	free_matrix(shape[2].transform);
+	free_matrix(c.transform);
 	
 	// test 6 shadowed
 
