@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 12:29:59 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/01/25 13:18:43 by uclement         ###   ########.fr       */
+/*   Updated: 2024/01/26 15:33:13 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int intersect_shape(t_shape *shape, t_ray ray)
 	free_matrix(inverted);
 	if (strcmp(shape->type, "sphere") == 0)
 		shape->xs = sphere_intersect(shape, local_ray);
-	// else if (strcmp(shape->type, "plane") == 0) 
-	// 	shape->xs = plane_intersect(shape, local_ray)
+	else if (strcmp(shape->type, "plane") == 0) 
+		shape->xs = plane_intersect(shape, local_ray);
 	if (shape->xs != NULL)
 		return(2);
 	else

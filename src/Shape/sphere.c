@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 12:13:20 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/01/25 13:15:11 by uclement         ###   ########.fr       */
+/*   Updated: 2024/01/26 16:41:42 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,38 @@ t_inter *sphere_intersect(t_shape *s, t_ray r) // inter de Sphere
 	xs[0] = create_inter_new(((s->sphere.b * -1) - sqrt(s->sphere.d)) / (2 * s->sphere.a), *s); // premiere inter
 	xs[1] = create_inter_new(((s->sphere.b * -1) + sqrt(s->sphere.d)) / (2 * s->sphere.a), *s); // deuxieme inter
 	return(xs);	
+}
+
+t_plane plane()
+{
+	static int i = 0;
+	t_plane 	p;
+
+	p.normal = vector(0,1,0);
+	p.id = i;
+	return (p);
+}
+
+
+t_inter *plane_intersect(t_shape *s, t_ray r)
+{
+
+	t_inter *xs;
+	float	tmp_y;
+
+	tmp_y = r.direction.y;
+	if ( tmp_y < 0)
+		tmp_y *=  -1;
+	if (tmp_y < 0.00001)
+		return (NULL);
+	xs = malloc(sizeof(t_inter) * 2);
+	xs[0] = create_inter_new(-r.origin.y/r.direction.y, *s);
+	xs[1] = create_inter_new(-r.origin.y/r.direction.y, *s);
+	return(xs);	
+}
+
+t_tuple plane_normal(t_plane p, t_tuple point)
+{
+	(void)point ;
+	return (p.normal);
 }

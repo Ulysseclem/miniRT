@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2024/01/25 12:01:56 by uclement         ###   ########.fr       */
+/*   Updated: 2024/01/26 14:59:19 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@
 
 
 # ifndef WIDTH
-# define WIDTH 200
+# define WIDTH 1000
 # endif
 
 # ifndef HEIGHT
-# define HEIGHT 100
+# define HEIGHT 500
 # endif
 
 # ifndef CENTER
@@ -137,6 +137,10 @@ t_material	material_default();
 t_inter 	*sphere_intersect(t_shape *s, t_ray r);
 t_sphere 	sphere();
 
+//plane
+t_plane plane();
+t_tuple plane_normal(t_plane p, t_tuple point);
+t_inter *plane_intersect(t_shape *s, t_ray r);
 
 /* ************************************************************************** */
 /*								TUPLES										  */

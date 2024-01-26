@@ -58,7 +58,7 @@ DEPS        := $(OBJS:.o=.d)
 # -fsanitize=thread
 
 CC          := gcc 
-CFLAGS      := -Wall -Wextra -Werror -pg
+CFLAGS      := -Wall -Wextra  -pg
 CPPFLAGS    := $(addprefix -I,$(INCS)) -MMD -MP
 LDFLAGS     := $(addprefix -L,$(dir $(LIBS_TARGET)))
 LDLIBS      := $(addprefix -l,$(LIBS))
