@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 12:29:59 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/01/26 15:33:13 by uclement         ###   ########.fr       */
+/*   Updated: 2024/01/29 15:42:59 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_inter	create_inter_new(float t, t_shape shape)
 
 	xs.t = t;
 	xs.shape = shape;
-	xs.hit = false;
+	xs.hit = true;
 	return (xs);
 }
 

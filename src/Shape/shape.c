@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 12:49:30 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/01/25 12:14:42 by uclement         ###   ########.fr       */
+/*   Updated: 2024/01/29 14:13:18 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ t_shape	init_shape(char *type)
 	shape.type = type;
 	if (strcmp(type, "sphere") == 0)
 		shape.sphere = sphere();
+	else if (strcmp(type, "plane") == 0)
+		shape.plane = plane();
 	return(shape);
 }
 

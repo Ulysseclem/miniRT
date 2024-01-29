@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 12:13:20 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/01/26 16:41:42 by uclement         ###   ########.fr       */
+/*   Updated: 2024/01/29 15:40:24 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,18 @@ t_inter *plane_intersect(t_shape *s, t_ray r)
 	t_inter *xs;
 	float	tmp_y;
 
+	// print_tuple(r.origin);
+
 	tmp_y = r.direction.y;
 	if ( tmp_y < 0)
 		tmp_y *=  -1;
 	if (tmp_y < 0.00001)
 		return (NULL);
 	xs = malloc(sizeof(t_inter) * 2);
+	// print_tuple(r.direction);
 	xs[0] = create_inter_new(-r.origin.y/r.direction.y, *s);
 	xs[1] = create_inter_new(-r.origin.y/r.direction.y, *s);
+		// printf("t : %f", xs[0].t);
 	return(xs);	
 }
 

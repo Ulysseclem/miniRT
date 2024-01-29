@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 10:09:14 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/01/26 16:44:29 by uclement         ###   ########.fr       */
+/*   Updated: 2024/01/29 15:57:53 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,20 @@ t_world set_world()
 
 t_tuple	normale_at(t_shape s, t_tuple world_point)
 {
-	t_tuple object_point;
-	t_tuple object_normal;
+	t_tuple local_point;
+	t_tuple local_normal;
 	t_tuple world_normal;
 	t_matrix	*inverted;
 	t_matrix	*transposed;
 	
 	inverted = inverse(s.transform);
-	world_normal = vector(0, 0, 0);
-	object_point = mul_matrix_tuple(inverted, world_point); // obtenir le point and object space
-	// if (strcmp(s.type, "plane") == 0)
-	// 	object_normal = plane_normal(s.plane, world_normal);
-	// else
-		object_normal = sub_tuple(object_point, world_normal);
+	local_point = mul_matrix_tuple(inverted, world_point); // obtenir le point and object space
+	if (strcmp(s.type, "sphere") == 0)
+		local_normal = sub_tuple(local_point, world_normal); // Cehck if PLANE ou SPHERE ?
+	else if (strcmp(s.type, "plane") == 0)
+		local_normal = vector(0, 1, 0);
 	transposed = transp_matrix(inverted);
-	world_normal = mul_matrix_tuple(transposed, object_normal);
+	world_normal = mul_matrix_tuple(transposed, local_normal);
 	world_normal.w = 0;  // remettre le w a 0 (pour vecteur) car il risque d'avoir ete change.
 	free_matrix(inverted);
 	free_matrix(transposed);
@@ -55,10 +54,7 @@ t_comps prepare_computation(t_inter xs, t_ray r)
 	comps.shape = xs.shape;
 	comps.p = position_f(r, comps.t);
 	comps.eyev = neg_tuple(r.direction);
-	if (strcmp(xs.shape.type, "plane") == 0)
-		comps.normalv = plane_normal(xs.shape.plane, comps.p);
-	else
-		comps.normalv = normale_at(comps.shape, comps.p);
+	comps.normalv = normale_at(comps.shape, comps.p);
 	comps.over_p = add_tuple(comps.p, mul_sca_tuple(comps.normalv, 0.001)); // pour regler l'acne
 	if (dot_product(comps.normalv, comps.eyev) < 0) // Verifie si le ray n'origine pas de l'interieur de l'objet
 	{
@@ -98,7 +94,7 @@ t_color	color_at(t_world w, t_ray r)
 	hit_xs = hit(xs);
 	free(xs);
 	if (hit_xs.hit == false)
-		return (set_color(0, 0, 0));
+		return (set_color(0, 0, 0));	
 	c = prepare_computation(hit_xs, r);
 	return (shade_hit(w, c));
 }
