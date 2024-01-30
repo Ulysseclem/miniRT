@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersection.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 12:29:59 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/01/26 15:33:13 by uclement         ###   ########.fr       */
+/*   Updated: 2024/01/28 17:19:23 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,19 @@ int intersect_shape(t_shape *shape, t_ray ray)
 	t_ray local_ray;
 	t_matrix *inverted;
 
+	//printf("intersect_shape :\n");
 	inverted = inverse(shape->transform); // if NULL a gerer
 	local_ray = trnsform_ray(ray, inverted);
 	free_matrix(inverted);
-	if (strcmp(shape->type, "sphere") == 0)
+	if (shape->type == SPHERE)
 		shape->xs = sphere_intersect(shape, local_ray);
-	else if (strcmp(shape->type, "plane") == 0) 
-		shape->xs = plane_intersect(shape, local_ray);
+	// else if (shape->type == PLANE)
+	// 	shape->xs = plane_intersect(shape, local_ray);
 	if (shape->xs != NULL)
 		return(2);
 	else
 		return(0);
 }
-
 
 void swap(t_inter *xp, t_inter *yp) {
     t_inter temp = *xp;
@@ -81,6 +81,7 @@ t_inter	*inter_world(t_world w, t_ray ray)
 		size += intersect_shape(&(w.shape[i]), ray);	
 		i++;
 	}
+
 	if (size == 0)
 		return (NULL);
 	xs = malloc(sizeof(t_inter) * size);

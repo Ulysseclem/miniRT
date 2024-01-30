@@ -47,7 +47,18 @@ SRCS        :=	main.c \
 				Utils/utils.c \
 				Render/intersection.c \
 				Render/render.c \
-				Tuples/tuple.c
+				Tuples/tuple.c \
+				parsing/check.c\
+				parsing/checkInfo.c\
+				parsing/checkShape.c\
+				parsing/save.c\
+				parsing/saveInfo.c\
+				parsing/saveShape.c\
+				parsing/string_utils.c\
+				parsing/gnl.c\
+				parsing/strto.c\
+				parsing/valid.c\
+
 
 
 SRCS        := $(SRCS:%=$(SRC_DIR)/%)
@@ -58,7 +69,7 @@ DEPS        := $(OBJS:.o=.d)
 # -fsanitize=thread
 
 CC          := gcc 
-CFLAGS      := -Wall -Wextra  -pg
+CFLAGS      := -Wall -Wextra  -pg -g
 CPPFLAGS    := $(addprefix -I,$(INCS)) -MMD -MP
 LDFLAGS     := $(addprefix -L,$(dir $(LIBS_TARGET)))
 LDLIBS      := $(addprefix -l,$(LIBS))

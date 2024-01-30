@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 12:37:12 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/01/24 16:21:49 by uclement         ###   ########.fr       */
+/*   Updated: 2024/01/28 17:03:30 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ void	render(t_camera c, t_world w, t_data *img)
 	t_color color;
 	t_ray 	r;
 
-
-	(void) img;
 	y = 0;
 	while (y < c.vsize - 1)
 	{

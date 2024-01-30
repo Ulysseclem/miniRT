@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2024/01/26 14:59:19 by uclement         ###   ########.fr       */
+/*   Updated: 2024/01/28 15:38:44 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 #include <time.h> // to remove
 #include <stdint.h>
 #include "struct.h"
+# include <fcntl.h>
+# include <unistd.h>
 
 
 # ifndef WIDTH
@@ -182,5 +184,66 @@ void		print_xs(t_inter *xs);
 void		print_tuple(t_tuple	t);
 void		print_color(t_color	t);
 void		print_matrix(t_matrix *matrix);
+
+/* ************************************************************************** */
+/*								PARSING										  */
+/* ************************************************************************** */
+
+//check.c
+char     **checkfile(int argc, char **argv);
+//checkInfo.c
+int    check_A(char **line, const int n);
+int    check_C(char **line, const int n);
+int    check_L(char **line, const int n);
+//checkShape.c
+int    check_sp(char **line, const int n);
+int    check_cy(char **line, const int n);
+int    check_pl(char **line, const int n);
+
+// valid.c
+int     valid_rgb(char *str);
+int     valid_float(char *str);
+int     valid_range(char *str, float min, float max);
+int     valid_tuple(char *str,  float min, float max);
+
+
+//save.c
+int init(char **file, t_shape **s);
+void free_shape(t_shape *s, int nshapes);
+
+//saveInfo.c
+//int		init_camera(int id, const char **param);
+//int		init_world(int id, const char **param);
+//saveShape
+int init_sp(char **param, t_shape *shape);
+int init_pl(char **param, t_shape *shape);
+int init_cy(char **param, t_shape *shape);
+
+// strto.c
+t_color	str_to_color(const char *str);
+t_material	str_to_material(const char *str);
+t_tuple	str_to_point(const char *str);
+t_tuple	str_to_vector(const char *str);
+
+//string_utils.c
+int     ft_isdigit(int c);
+int     len_2(char **tab);
+void    free_2(char **tab);
+int     is_empty(char *str);
+size_t	ft_strlen(const char *s);
+char	*ft_strdup(const char *s);
+char	*ft_strndup(const char *s, size_t n);
+void	*ft_calloc(size_t nmemb, size_t size);
+float   ft_strtof(const char *str);
+void	print_error(const char *error, const int n);
+int		ft_strncat(char *dest, char *src, unsigned int nb);
+char	*ft_strncpy(char *dest, const char *src, unsigned int n);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+int     add_string_to_array(char ***array, const char *str);
+
+//split.c
+//char **ft_split(char *str, char delimiter);
+//gnl.c
+char	*get_next_line(int fd);
 
 #endif

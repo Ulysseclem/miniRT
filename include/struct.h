@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2024/01/26 16:35:57 by uclement         ###   ########.fr       */
+/*   Updated: 2024/01/28 17:51:47 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,29 +66,43 @@ typedef struct s_light {
 	t_color	intensity;
 }	t_light;
 
+typedef enum type {
+    PLANE,
+	SPHERE,
+    CYLINDER
+} t_type;
 
-typedef struct s_sphere {
-	t_tuple 	point;
-	int		id;
-	float	a;
-	float	b;
-	float	c;
-	float	d;
-} t_sphere;
+// typedef struct s_sphere {
+// 	t_tuple 	point;
+// 	int		id;
+// 	float	a;
+// 	float	b;
+// 	float	c;
+// 	float	d;
+// } t_sphere;
 
-typedef struct s_plane {
-	t_tuple 	normal;
-	int		id;
-} t_plane;
+// typedef struct s_plane {
+// 	t_tuple 	normal;
+// 	int		id;
+// } t_plane;
 
 typedef struct s_inter t_inter;
 
+// typedef struct s_shape {
+// 	t_matrix 	*transform;
+// 	t_material	material;
+// 	char *		type;
+// 	t_sphere	sphere;
+// 	t_plane		plane;
+// 	t_inter		*xs;
+// }	t_shape;
+
+
 typedef struct s_shape {
+	t_type		type;
+	void		*ptrType;
 	t_matrix 	*transform;
 	t_material	material;
-	char *		type;
-	t_sphere	sphere;
-	t_plane		plane;
 	t_inter		*xs;
 }	t_shape;
 
@@ -134,5 +148,38 @@ typedef struct s_camera {
 	float		half_height;
 	float			pixel_size;
 }	t_camera;
+
+
+// ----------------------------------------------------------
+
+# define FALSE 0
+# define TRUE 1
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
+
+typedef struct s_sphere {
+	t_tuple 	point;
+	float	diameter;  
+	int		id;
+	float	a;
+	float	b;
+	float	c;
+	float	d;
+} t_sphere;
+
+typedef struct s_plane {
+	int		id;
+    t_tuple 	point;
+    t_tuple   directions;
+} t_plane;
+
+typedef struct s_cylinder {
+    t_tuple 	point;
+	int	        id;
+    float	diameter; 
+    float	height; 
+    t_tuple   directions;
+} t_cylinder;
 
 #endif
