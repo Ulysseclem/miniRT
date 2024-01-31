@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2024/01/29 16:09:25 by uclement         ###   ########.fr       */
+/*   Updated: 2024/01/31 15:47:21 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -478,15 +478,15 @@ int main(void)
 
 	//test 5
 	
-	float fov;
-	t_camera c;
-	t_world	w;
-	t_shape *shape;
+	// float fov;
+	// t_camera c;
+	// t_world	w;
+	// t_shape *shape;
 
-	shape = malloc(sizeof(t_shape) * 3);
-	shape[0] = init_shape("sphere"); // TYPEDEF enumeration
-	shape[1] = init_shape("plane");
-	shape[2] = init_shape("plane");
+	// shape = malloc(sizeof(t_shape) * 3);
+	// shape[0] = init_shape("sphere"); // TYPEDEF enumeration
+	// shape[1] = init_shape("plane");
+	// shape[2] = init_shape("plane");
 	// shape[3] = init_shape("plane");
 	// shape[4] = init_shape("sphere");
 	// shape[5] = init_shape("sphere");
@@ -517,11 +517,11 @@ int main(void)
 	// shape[2].material.color = set_color(1, 0.8, 0.1);
 	// shape[2].material.diffuse = 0.7;
 	
-	free_matrix(shape[0].transform);
-	shape[0].transform = mul_matrix(matrix_translation(-0.5, 10/10, 0), matrix_scaling(0.5, 0.5, 0.5));
-	shape[0].material = material_default();
-	shape[0].material.color = set_color(0.1, 1, 0.5);
-	shape[0].material.diffuse = 0.7;
+	// free_matrix(shape[0].transform);
+	// shape[0].transform = mul_matrix(matrix_translation(-0.5, 10/10, 0), matrix_scaling(0.5, 0.5, 0.5));
+	// shape[0].material = material_default();
+	// shape[0].material.color = set_color(0.1, 1, 0.5);
+	// shape[0].material.diffuse = 0.7;
 
 	// // free_matrix(shape[1].transform);
 	// shape[1].transform = mul_matrix( matrix_translation(0, 0, 3), matrix_rotation_x(-90));
@@ -530,28 +530,28 @@ int main(void)
 	// shape[1].material.color = set_color(0, 0, 1);
 	// shape[1].material.diffuse = 0.7;
 
-	free_matrix(shape[1].transform);
-	shape[1].transform =matrix_translation(0, 0.5, 0);
+	// free_matrix(shape[1].transform);
+	// shape[1].transform =matrix_translation(0, 0, 0);
 	// print_matrix(shape[2].transform);
-	shape[1].material = material_default();
-	shape[1].material.color = set_color(1, 0, 0);
-	shape[1].material.diffuse = 0.7;
+	// shape[1].material = material_default();
+	// shape[1].material.color = set_color(1, 0, 0);
+	// shape[1].material.diffuse = 0.7;
 
-	free_matrix(shape[2].transform);
-	shape[2].transform = mul_matrix(mul_matrix(matrix_translation(2, 0, 0), matrix_rotation_x(-90)),matrix_rotation_z(90) );
+	// free_matrix(shape[2].transform);
+	// shape[2].transform = mul_matrix(mul_matrix(matrix_translation(2, 0, 0), matrix_rotation_x(-90)),matrix_rotation_z(90) );
 	// print_matrix(shape[3].transform);
-	shape[2].material = material_default();
-	shape[2].material.color = set_color(1, 1, 1);
-	shape[2].material.diffuse = 0.7;
+	// shape[2].material = material_default();
+	// shape[2].material.color = set_color(1, 1, 1);
+	// shape[2].material.diffuse = 0.7;
 
-	w = set_world();
-	w.shape = shape;
-	w.count = 3;
+	// w = set_world();
+	// w.shape = shape;
+	// w.count = 3;
 	
-	fov = PI/3;
-	c = camera(WIDTH, HEIGHT, fov);
-	c.transform = view_transform(point(0,1.5,-5), point(0,1,0), vector(0,1,0));
-	render(c, w, &img);
+	// fov = PI/3;
+	// c = camera(WIDTH, HEIGHT, fov);	
+	// c.transform = view_transform(point(-4, 1, 2), point(0,1,2), vector(0,1,0));
+	// render(c, w, &img);
 	
 	// free_matrix(shape[0].transform);
 	// free_matrix(shape[1].transform);
@@ -559,8 +559,109 @@ int main(void)
 	// free_matrix(c.transform);
 	
 
+	// test camera anngl
+	
+	float fov;
+	t_camera c;
+	t_world	w;
+	t_shape *shape;
+
+	shape = malloc(sizeof(t_shape) * 4);
+	shape[0] = init_shape("sphere"); // TYPEDEF enumeration
+	shape[1] = init_shape("sphere");
+	shape[2] = init_shape("sphere");
+	shape[3] = init_shape("sphere");
+	// shape[4] = init_shape("sphere");
+	// shape[5] = init_shape("sphere");
+	// shape[6] = init_shape("sphere");
+	// shape[7] = init_shape("sphere");
 
 
+	// free_matrix(shape[3].transform);
+	// shape[3].transform = matrix_scaling(10, 0.01, 10);
+	// shape[3].material = material_default();
+	// shape[3].material.color = set_color(1, 0.9, 0.9);
+	// shape[3].material.specular = 0;
+
+	// free_matrix(shape[4].transform);
+	// shape[4].transform = mul_matrix(mul_matrix(mul_matrix(matrix_translation(0, 0, 5), matrix_rotation_y(-45)), matrix_rotation_x(90)), matrix_scaling(10, 0.01, 10));
+	// shape[4].material = shape[0].material;
+
+	// free_matrix(shape[5].transform);
+	// shape[5].transform = mul_matrix(mul_matrix(mul_matrix(matrix_translation(0, 0, 5), matrix_rotation_y(45)), matrix_rotation_x(90)), matrix_scaling(10, 0.01, 10));
+	// shape[5].material = shape[0].material;
+
+	// free_matrix(shape[1].transform);
+	// shape[1].transform = mul_matrix(matrix_translation(-2, 0.8, -0.5), matrix_scaling(0.8, 0.8, 0.8));
+	// shape[1].material = material_default();
+	// shape[1].material.color = set_color(0.5, 1, 0.1);
+	// shape[1].material.diffuse = 0.7;
+
+	// free_matrix(shape[2].transform);
+	// shape[2].transform = mul_matrix(matrix_translation(-1, 0.8, 0.5), matrix_scaling(0.5, 0.5, 0.5));
+	// shape[2].material = material_default();
+	// shape[2].material.color = set_color(1, 0.8, 0.1);
+	// shape[2].material.diffuse = 0.7;
+	
+	// free_matrix(shape[0].transform);
+	shape[0].transform = matrix_translation(0, 0, 10);
+	shape[0].material = material_default();
+	shape[0].material.color = set_color(0.1, 1, 0.5);
+	shape[0].material.diffuse = 0.7;
+
+	// free_matrix(shape[1].transform);
+	shape[1].transform =  matrix_translation(0, 0, -10);
+	shape[1].material = material_default();
+	shape[1].material.color = set_color(1, 0.1, 0.5);
+	shape[1].material.diffuse = 0.7;
+
+	// free_matrix(shape[2].transform);
+	shape[2].transform = matrix_translation(5, 0, 10);
+	shape[2].material = material_default();
+	shape[2].material.color = set_color(1, 0.1, 1);
+	shape[2].material.diffuse = 0.7;
+
+	// free_matrix(shape[2].transform);
+	shape[3].transform = matrix_translation(-5, 0, 10);
+	shape[3].material = material_default();
+	shape[3].material.color = set_color(1, 1, 1);
+	shape[3].material.diffuse = 0.7;
+	
+	// free_matrix(shape[4].transform);
+	// shape[4].transform = mul_matrix(matrix_translation(1, 0, 0), matrix_scaling(0.5, 0.5, 0.5));
+	// shape[4].material = material_default();
+	// shape[4].material.color = set_color(0.1, 1, 0.5);
+	// shape[4].material.diffuse = 0.7;
+
+	// free_matrix(shape[5].transform);
+	// shape[5].transform = mul_matrix(matrix_translation(1, 0, 0), matrix_scaling(0.5, 0.5, 0.5));
+	// shape[5].material = material_default();
+	// shape[5].material.color = set_color(0.1, 1, 0.5);
+	// shape[5].material.diffuse = 0.7;
+
+	// free_matrix(shape[6].transform);
+	// shape[6].transform = mul_matrix(matrix_translation(1, 0, 0), matrix_scaling(0.5, 0.5, 0.5));
+	// shape[6].material = material_default();
+	// shape[6].material.color = set_color(0.1, 1, 0.5);
+	// shape[6].material.diffuse = 0.7;
+
+	// free_matrix(shape[7].transform);
+	// shape[7].transform = mul_matrix(matrix_translation(1, 0, 0), matrix_scaling(0.5, 0.5, 0.5));
+	// shape[7].material = material_default();
+	// shape[7].material.color = set_color(0.1, 1, 0.5);
+	// shape[7].material.diffuse = 0.7;
+
+	w = set_world();
+	w.shape = shape;
+	w.count = 4;
+	
+	fov = PI/3;
+	c = camera(WIDTH, HEIGHT, fov);
+	c.transform = mul_matrix(view_transform(point(0, 0, 0), point(0,0,1), vector(-0,1,0)), matrix_rotation_z(25));
+	render(c, w, &img);
+	
+	// Fix le to a (0,0,1)
+	// up (x * 100,1, 0);
 	
 	// test 6 shadowed
 

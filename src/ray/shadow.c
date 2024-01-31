@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 17:29:09 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/01/29 15:39:57 by uclement         ###   ########.fr       */
+/*   Updated: 2024/01/31 10:57:28 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ bool	is_shadowed(t_world w, t_tuple point)
 	ray.origin = point;
 	distance = magnitude(sub_tuple(w.l.position, point));
 	ray.direction  = norm(sub_tuple(w.l.position, point));
-	printf("is-sahs \n");
-	print_tuple(ray.origin);
 	xs = inter_world(w, ray);
 	if (!xs)
 		return false;

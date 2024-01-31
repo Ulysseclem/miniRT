@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2024/01/29 14:35:26 by uclement         ###   ########.fr       */
+/*   Updated: 2024/01/31 13:36:25 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # endif
 
 # ifndef HEIGHT
-# define HEIGHT 250
+# define HEIGHT 500
 # endif
 
 # ifndef CENTER
