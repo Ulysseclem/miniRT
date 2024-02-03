@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 12:49:30 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/01/29 14:13:18 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/03 15:21:15 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 #include "struct.h"
 
 
-t_shape	init_shape(char *type)
-{
-	t_shape shape;
+// t_shape	init_shape(char *type)
+// {
+// 	t_shape shape;
 	
-	shape.transform = identify_matrix(4, 4); //no need if there is a transformation
-	shape.material = material_default();
-	shape.type = type;
-	if (strcmp(type, "sphere") == 0)
-		shape.sphere = sphere();
-	else if (strcmp(type, "plane") == 0)
-		shape.plane = plane();
-	return(shape);
-}
+// 	shape.transform = identify_matrix(4, 4); //no need if there is a transformation
+// 	shape.material = material_default();
+// 	shape.type = type;
+// 	if (type == SPHERE)
+// 		shape.sphere = sphere();
+// 	else if (type == PLANE)
+// 		shape.plane = plane();
+// 	return(shape);
+// }
 
 t_material	material_default()
 {

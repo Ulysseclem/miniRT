@@ -6,12 +6,14 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 12:29:59 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/01/29 15:42:59 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/03 15:37:32 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "struct.h"
+
+
 
 
 t_inter	create_inter_new(float t, t_shape shape)
@@ -32,9 +34,9 @@ int intersect_shape(t_shape *shape, t_ray ray)
 	inverted = inverse(shape->transform); // if NULL a gerer
 	local_ray = trnsform_ray(ray, inverted);
 	free_matrix(inverted);
-	if (strcmp(shape->type, "sphere") == 0)
+	if (shape->type == SPHERE)
 		shape->xs = sphere_intersect(shape, local_ray);
-	else if (strcmp(shape->type, "plane") == 0) 
+	else if (shape->type == PLANE) 
 		shape->xs = plane_intersect(shape, local_ray);
 	if (shape->xs != NULL)
 		return(2);
