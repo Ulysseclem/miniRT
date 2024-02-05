@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/03 16:20:15 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/05 12:13:21 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 #include <mlx.h>
 #include <X11/X.h>
 #include <X11/keysym.h>
-#include <time.h> // to remove
 #include <stdint.h>
 #include "struct.h"
 # include <fcntl.h>

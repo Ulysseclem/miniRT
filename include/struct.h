@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/05 10:37:39 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/05 12:00:47 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,18 @@
 
 #include "minirt.h"
 
+typedef struct	s_data {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_data;
+
 typedef struct s_prog {
 	void		*mlx;
 	void		*win;
+	t_data		data;
 }	t_prog;
 
 typedef struct s_tuple {
@@ -33,13 +42,7 @@ typedef struct s_color {
 	float	b;
 }	t_color;
 
-typedef struct	s_data {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_data;
+
 
 typedef struct s_matrix
 {
