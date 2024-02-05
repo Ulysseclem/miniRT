@@ -12,11 +12,12 @@ int init_sp(char **param, t_shape *shape)
     sphere->diameter = ft_strtof(param[2]);
 
     shape->material = str_to_material(param[3]);
-    shape->transform = identify_matrix(4, 4);
+	shape->transform = matrix_translation(shape->point.x, shape->point.y, shape->point.z);
     shape->ptrType = sphere;
     shape->type = SPHERE;
 	return(1);
 }
+
 
 int init_pl(char **param, t_shape *shape)
 {
@@ -26,10 +27,9 @@ int init_pl(char **param, t_shape *shape)
     if (!plane)
         return (0);
     shape->point = str_to_point(param[1]);
-    plane->directions = str_to_vector(param[2]);
-
+	shape->pl_dir = str_to_vector(param[2]);
     shape->material = str_to_material(param[3]);
-    shape->transform = identify_matrix(4, 4);
+	shape->transform = identify_matrix(4,4);
     shape->ptrType = plane;
     shape->type = PLANE;
     return (1);

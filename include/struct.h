@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/03 15:43:52 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/05 10:37:39 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct s_shape {
 	t_matrix 	*transform;
 	t_material	material;
 	t_inter		*xs;
+	t_tuple		pl_dir;
 }	t_shape;
 
 typedef struct s_inter {
@@ -157,8 +158,8 @@ typedef struct s_sphere {
 } t_sphere;
 
 typedef struct s_plane {
-	int		id;
-    t_tuple   directions;
+	int			id;
+    t_tuple		directions;
 } t_plane;
 
 typedef struct s_cylinder {

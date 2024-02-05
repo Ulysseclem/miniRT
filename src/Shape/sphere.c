@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 12:13:20 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/02/03 15:25:50 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/05 10:43:14 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,46 @@ t_inter *sphere_intersect(t_shape *s, t_ray r) // inter de Sphere
 	return(xs);	
 }
 
+// t_inter *plane_intersect(t_shape *s, t_ray r)
+// {
+
+// 	t_inter *xs;
+// 	float	tmp_y;
+
+// 	tmp_y = r.direction.y;
+// 	if ( tmp_y < 0)
+// 		tmp_y *=  -1;
+// 	if (tmp_y < 0.00001)
+// 		return (NULL);
+// 	xs = malloc(sizeof(t_inter) * 2);
+// 	xs[0] = create_inter_new(-r.origin.y/r.direction.y, *s);
+// 	xs[1] = create_inter_new(-r.origin.y/r.direction.y, *s);
+// 	return(xs);	
+// }
+
 t_inter *plane_intersect(t_shape *s, t_ray r)
 {
-
 	t_inter *xs;
-	float	tmp_y;
+	t_tuple normal;
+	float	dot;
+	float	distance;
 
-	tmp_y = r.direction.y;
-	if ( tmp_y < 0)
-		tmp_y *=  -1;
-	if (tmp_y < 0.00001)
+	normal = s->pl_dir;
+	dot = dot_product(r.direction, normal);
+	if (dot == 0.0f)
 		return (NULL);
-	xs = malloc(sizeof(t_inter) * 2);
-	xs[0] = create_inter_new(-r.origin.y/r.direction.y, *s);
-	xs[1] = create_inter_new(-r.origin.y/r.direction.y, *s);
-	return(xs);	
+	distance = ((s->point.x - r.origin.x) * normal.x +
+                (s->point.y - r.origin.y) * normal.y +
+                (s->point.z - r.origin.z) * normal.z) / dot;
+	if (distance >= 0.0f) 
+	{
+		xs = malloc(sizeof(t_inter) * 2);
+		xs[0] = create_inter_new(distance, *s);
+		xs[1] = create_inter_new(distance, *s);
+		return (xs);
+	}
+	else
+        return (NULL);
 }
 
 // t_tuple plane_normal(t_plane p, t_tuple point)

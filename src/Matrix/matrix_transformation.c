@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 16:26:14 by uclement          #+#    #+#             */
-/*   Updated: 2024/01/29 15:11:26 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/04 16:39:11 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ t_matrix *matrix_rotation_x(float d)
 	
 	r = d_to_r(d);
 	m = identify_matrix(4, 4);
+	if (d == 0)
+		return(m);
 	m->data[1][1] = cos(r);      //5
 	m->data[1][2] = sin(r) * -1; //6
 	m->data[2][1] = sin(r); //9
@@ -56,10 +58,13 @@ t_matrix *matrix_rotation_y(float d)
 	
 	r = d_to_r(d);
 	m = identify_matrix(4, 4);
+	if (d == 0)
+		return(m);
 	m->data[0][0] = cos(r);
 	m->data[0][2] = sin(r);
 	m->data[2][0] = sin(r) * -1;
 	m->data[2][2] = cos(r);
+
 	return (m);	
 }
 
@@ -70,6 +75,8 @@ t_matrix *matrix_rotation_z(float d)
 	
 	r = d_to_r(d);
 	m = identify_matrix(4, 4);
+	if (d == 0)
+		return(m);
 	m->data[0][0] = cos(r);
 	m->data[0][1] = sin(r) * -1;
 	m->data[1][0] = sin(r);

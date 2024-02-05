@@ -6,23 +6,12 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/03 16:25:14 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/04 13:46:30 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "struct.h"
-
-
-void set_objects(t_shape **shape, int n)
-{
-	while (n > 0)
-	{
-		(*shape)->transform = matrix_translation((*shape)->point.x/10, \
-		(*shape)->point.y/10, (*shape)->point.z/10);
-		n--;
-	}
-}
 
 
 int	handle_exit(t_prog *prog)
@@ -91,15 +80,10 @@ int main(int argc, char **argv)
 		return (1);
 
 	w = set_world();
-	set_objects(&shape, n);
 	w.shape = shape;
 	w.count = n;
-	
-	// c.transform = view_transform(point(0, 1.5, -5), point(0,1,0), vector(0,1,0));
 	render(c, w, &img);
 	
-
-
 	mlx_put_image_to_window(prog.mlx, prog.win, img.img, 0, 0);
 	// mlx_hook(prog.mlx, KeyPress, KeyPressMask, &handle_keypress, &prog);
 	// mlx_hook(prog.mlx, 17, 1L << 1, &handle_exit, &prog);
