@@ -3,31 +3,33 @@
 
 t_color	str_to_color(const char *str)
 {
-	t_color p;
-	int c;
-	char **tmp;
+	t_color		p;
+	float		c;
+	char		**tmp;
 
 	tmp = ft_split(str, ',');
-    if (tmp)
+	if (tmp)
 	{
-		c = atoi(tmp[0]);
+		c = ft_strtof(tmp[0]);
 		p.r = c / 255;
-		c = atoi(tmp[1]);
+		c = ft_strtof(tmp[1]);
 		p.g = c / 255;
-		c = atoi(tmp[2]);
+		c = ft_strtof(tmp[2]);
 		p.b = c / 255;
 		free_2(tmp);
 	}
 	return (p);
 }
 
-t_material	str_to_material(const char *str)
+t_material	str_to_material(const char *str, t_world *w)
 {
 	t_material	m;
-
+	t_color c;
+		
+	c = str_to_color(str);
+	m.ambiant = mul_color(c, w->ambiant);
 	m.color = str_to_color(str);
-	m.ambiant = 0.1;
-	m.diffuse = 0.7;
+	m.diffuse = 0.9;
 	m.specular = 0.9;
 	m.shininess = 200;
 	return(m);

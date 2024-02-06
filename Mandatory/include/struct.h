@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/06 11:19:49 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:03:36 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_ray {
 
 typedef struct s_material {
 	t_color	color;
-	float ambiant;
+	t_color	ambiant;
 	float diffuse;
 	float specular;
 	float shininess;
@@ -64,7 +64,7 @@ typedef struct s_material {
 
 typedef struct s_light {
 	t_tuple	position;
-	t_color	intensity;
+	t_color	color;
 }	t_light;
 
 typedef enum type {
@@ -109,6 +109,7 @@ typedef struct s_inter {
 typedef struct s_world {
 	t_shape		*shape;
 	t_light		l;
+	t_color		ambiant;
 	int			count;
 } t_world;
 

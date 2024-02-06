@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light_shading.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 14:15:55 by uclement          #+#    #+#             */
-/*   Updated: 2024/01/14 13:09:12 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2024/02/06 15:14:08 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,6 @@ t_tuple	reflect(t_tuple vector_in, t_tuple normal)
 	vector_out = sub_tuple(vector_in, mul_sca_tuple(normal, dot_product(vector_in, normal) * 2));
 	return (vector_out);
 }
-
-void	light(t_light *l, t_tuple position, t_color color)
-{
-	l->position = position;
-	l->intensity = color;
-}
-
-
 
 float customPow(float base, int exponent) // pow custom pour eviter des nombre trop grand
 {
@@ -66,9 +58,10 @@ t_color lightning(t_material m, t_light l, t_tuple p, t_tuple eyev, t_tuple norm
 	t_tuple	reflectv;
 
 
-	effective_color = mul_color(m.color, l.intensity); // combine surface color with light color / intensivity
+	effective_color = mul_color(m.color, l.color); // combine surface color with light color / intensivity
+	ambiant = add_color(effective_color, m.ambiant);
 	lightv = norm(sub_tuple(l.position, p)); // Find the direction to the light source
-	ambiant = mul_sca_color(effective_color, m.ambiant); //ambiant contribution  PROBEME ICI ?
+	// ambiant = mul_sca_color(effective_color, m.ambiant); //ambiant contribution  PROBEME ICI ?
 	light_dot_normal = dot_product(lightv, normalv);
 	if (light_dot_normal < 0 || in_shadow == true)
 	{
@@ -83,32 +76,7 @@ t_color lightning(t_material m, t_light l, t_tuple p, t_tuple eyev, t_tuple norm
 		if (reflect_dot_eye <= 0) // light reflects away from the eye
 			specular = set_color(0, 0, 0);
 		else
-			specular = mul_sca_color(mul_sca_color(l.intensity, m.specular), customPow(reflect_dot_eye, m.shininess));
+			specular = mul_sca_color(mul_sca_color(l.color, m.specular), customPow(reflect_dot_eye, m.shininess));
 	}
 	return (add_color(add_color(ambiant, diffuse), specular));
-}
-
-
-/* ************************************************************************** */
-/*	Lightning sans specualr													  */
-/* ************************************************************************** */
-
-t_color lightning_no_specular(t_material m, t_light l, t_tuple p, t_tuple normalv, bool in_shadow)
-{
-	t_color effective_color;
-	t_color ambiant;
-	t_color	diffuse;
-	float	light_dot_normal;
-	t_tuple	lightv;
-
-
-	effective_color = mul_color(m.color, l.intensity); // combine surface color with light color / brightness
-	ambiant = mul_sca_color(effective_color, m.ambiant); //ambiant contribution to the final color
-	lightv = norm(sub_tuple(l.position, p)); // Find the direction to the light source
-	light_dot_normal = dot_product(lightv, normalv); // Represents the cosine of the angle between the light vector and the normal vector.
-	if (light_dot_normal < 0 || in_shadow == true) // if neg = light is on the other side of the surface
-		diffuse = set_color(0, 0, 0);
-	else
-		diffuse = mul_sca_color(mul_sca_color(effective_color, m.diffuse), light_dot_normal); // diffuse contribution to the final color
-	return (add_color(ambiant, diffuse));
 }

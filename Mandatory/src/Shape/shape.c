@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 12:49:30 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/02/03 15:21:15 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:40:29 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,3 @@
 // 	return(shape);
 // }
 
-t_material	material_default()
-{
-	t_material	m;
-
-	m.color = set_color(1, 1, 1);
-	m.ambiant = 0.1;
-	m.diffuse = 0.9;
-	m.specular = 0.9;
-	m.shininess = 200;
-	return(m);
-}

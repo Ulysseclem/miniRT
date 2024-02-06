@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/05 12:26:13 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:19:39 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ t_matrix 	*matrix_rotation_z(float d);
 
 // light & shading
 t_tuple		reflect(t_tuple vector_in, t_tuple normal);
-void		light(t_light *l, t_tuple position, t_color color);
 t_material	material_default();
 t_color 	lightning(t_material m, t_light l, t_tuple p, t_tuple eyev, t_tuple normalv, bool in_shadow);
 t_color 	lightning_no_specular(t_material m, t_light l, t_tuple p, t_tuple normalv, bool in_shadow);
@@ -188,9 +187,9 @@ void		print_matrix(t_matrix *matrix);
 //check.c
 char     **checkfile(int argc, char **argv);
 //checkInfo.c
-int    check_A(char **line, const int n);
-int    check_C(char **line, const int n);
-int    check_L(char **line, const int n);
+int    check_a(char **line, const int n);
+int    check_c(char **line, const int n);
+int    check_l(char **line, const int n);
 //checkShape.c
 int    check_sp(char **line, const int n);
 int    check_cy(char **line, const int n);
@@ -205,21 +204,23 @@ int     valid_tuple(char *str,  float min, float max);
 
 //save.c
 int init(char **file, t_shape **s, t_camera *cam);
+int	initWorld(char **file, t_world *w);
+int	initCamera(char **file, t_camera *c);
 void free_shape(t_shape *s, int nshapes);
 
 //saveInfo.c
 //int		init_camera(int id, const char **param);
 //int		init_world(int id, const char **param);
 //saveShape
-int init_sp(char **param, t_shape *shape);
-int init_pl(char **param, t_shape *shape);
-int init_cy(char **param, t_shape *shape);
+int	init_sp(char **param, t_shape *shape, t_world *world);
+int	init_pl(char **param, t_shape *shape, t_world *world);
+int	init_cy(char **param, t_shape *shape, t_world *world);
 int init_cam(char **param, t_camera *c);
 
 
 // strto.c
 t_color	str_to_color(const char *str);
-t_material	str_to_material(const char *str);
+t_material	str_to_material(const char *str, t_world *w);
 t_tuple	str_to_point(const char *str);
 t_tuple	str_to_vector(const char *str);
 
@@ -244,4 +245,8 @@ int     add_string_to_array(char ***array, const char *str);
 //gnl.c
 char	*get_next_line(int fd);
 
+t_color intense(float intensity, t_color color); // mul_sca_color
+t_light	light(t_tuple position, t_color color);
+int init_light(char **param, t_world *w);
+int init_ambiant(char **param, t_world *w);
 #endif

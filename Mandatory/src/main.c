@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/05 12:13:40 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:43:41 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,42 @@ int main(int argc, char **argv)
 {
 	t_prog prog;
 	t_data	img;
+
 	char **file;
 	t_camera c;
-    t_shape *shape;
 	t_world	w;
-	int n = 0;
+	
+    file = checkfile(argc, argv);
+    if (!file)
+		return (1);
+    if (!initWorld(file, &w))
+		return (free_2(file), 1);
+	if (!initCamera(file, &c))
+		return (free_2(file), 1); // gerer memoire world
+	free_2(file);
+ 
+
+ 	printf("World:\n");
+    printf("Light position: (%.2f, %.2f, %.2f)(x,y,z)\n", w.l.position.x, w.l.position.y, w.l.position.z);
+    printf("Light color: %.2f, %.2f, %.2f (unit RGB)\n", w.l.color.r, w.l.color.g, w.l.color.b);
+    printf("Ambiant color: %.2f, %.2f, %.2f (unit RGB)\n", w.ambiant.r, w.ambiant.g, w.ambiant.b);
+    printf("Shape count: %d\n", w.count);
+    printf("\nCamera:\n");
+    printf("HSize: %.f\n", c.hsize);
+    printf("VSize: %.2f\n", c.vsize);
+    printf("FOV: %.2f\n", c.fov);
+    printf("Half Width: %.2f\n", c.half_width);
+    printf("Half Height: %.2f\n", c.half_height);
+    printf("Pixel Size: %.2f\n", c.pixel_size);
+
+	for (int j = 0; j < w.count; j++) {
+		t_shape shape = w.shape[j];
+		printf("Shape %d:\n", j);
+		(void)shape;
+		printf("	type: %d\n", shape.type);
+		printf("	color: %.2f, %.2f, %.2f (unit RGB)\n", shape.material.color.r, shape.material.color.g, shape.material.color.b);
+		printf("	position: (%.2f, %.2f, %.2f)(x,y,z)\n", shape.point.x, shape.point.y, shape.point.z);
+	}
 
 	prog.mlx = mlx_init();
 	if (prog.mlx == NULL)
@@ -46,29 +77,9 @@ int main(int argc, char **argv)
 	prog.win = mlx_new_window(prog.mlx, WIDTH, HEIGHT, "miniRT!");
 	img.img = mlx_new_image(prog.mlx, WIDTH, HEIGHT);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-								&img.endian);
+				&img.endian);
 	prog.data = img;
-	shape = NULL;
-    file = checkfile(argc, argv);
-    if (file)
-    {
-        n = init(file, &shape, &c);
-		if (n)
-		{
-			for (int i = 0; i < n; i++) {
-				printf("Shape %d:\n", i + 1);
-				printf("Type: %d\n", shape[i].type);
-        	}
-		}
-		free_2(file);
-		if (!n)
-			return (1);
-    }
-	else
-		return (1);
-	w = set_world();
-	w.shape = shape;
-	w.count = n;
+	
 	render(c, w, &img);
 	
 	mlx_put_image_to_window(prog.mlx, prog.win, img.img, 0, 0);
