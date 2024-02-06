@@ -60,7 +60,6 @@ SRCS        :=	main.c \
 				parsing/valid.c\
 
 
-
 SRCS        := $(SRCS:%=$(SRC_DIR)/%)
 BUILD_DIR   := .build
 OBJS        := $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
@@ -69,7 +68,7 @@ DEPS        := $(OBJS:.o=.d)
 # -fsanitize=thread
 
 CC          := gcc 
-CFLAGS      := -Wall -Wextra  -pg -g
+CFLAGS      := -Wall -Wextra -Werror -g
 CPPFLAGS    := $(addprefix -I,$(INCS)) -MMD -MP
 LDFLAGS     := $(addprefix -L,$(dir $(LIBS_TARGET)))
 LDLIBS      := $(addprefix -l,$(LIBS))

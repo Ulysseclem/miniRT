@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 17:29:09 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/01/24 17:16:30 by uclement         ###   ########.fr       */
+/*   Updated: 2024/01/31 10:57:28 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,7 @@ bool	is_shadowed(t_world w, t_tuple point)
 	hit_xs = hit(xs);
 	free(xs);
 	if (hit_xs.hit == true && hit_xs.t < distance)
-	{
 		return true;
-	}
 	else
 		return false;
 }

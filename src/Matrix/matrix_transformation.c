@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matrix_transformation.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 16:26:14 by uclement          #+#    #+#             */
-/*   Updated: 2024/01/14 13:09:05 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2024/01/29 15:11:26 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

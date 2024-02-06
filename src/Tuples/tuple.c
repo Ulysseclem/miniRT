@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tuple.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysseclem <ulysseclem@student.42.fr>      +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 12:34:57 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/01/14 13:09:50 by ulysseclem       ###   ########.fr       */
+/*   Updated: 2024/01/31 15:04:53 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_tuple	sub_tuple(t_tuple a, t_tuple b)
 	c.x = a.x - b.x;
 	c.y = a.y - b.y;
 	c.z = a.z - b.z;
-	c.w = a.w - b.w;
+	// c.w = a.w - b.w;
 	// if (c.w == -1)
 	// {
 	// 	perror("w = -1");

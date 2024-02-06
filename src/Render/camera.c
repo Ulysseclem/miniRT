@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 15:26:52 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/01/28 17:44:22 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/03 16:01:23 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ t_camera	camera(int hsize, int vsize, float fov)
 	c.hsize = hsize;
 	c.vsize = vsize;
 	c.fov = fov;
-	// c.transform = identify_matrix(4, 4); // no need
 	half_view = tan(fov / 2);
 	aspect = c.hsize / c.vsize;
 	if (aspect >= 1)

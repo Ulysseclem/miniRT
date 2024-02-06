@@ -6,7 +6,7 @@
 /*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2024/01/28 17:33:58 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/04 17:28:06 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,16 @@
 #include "struct.h"
 
 
-/* ************************************************************************** */
-/*					Pour le test BULLET										  */
-/* ************************************************************************** */
-// t_proj tick(t_env env, t_proj proj)
-// {
-// 	t_proj	new_proj;
+void set_objects(t_shape **shape, int n)
+{
+	while (n > 0)
+	{
+		(*shape)->transform = matrix_translation((*shape)->point.x/10, \
+		(*shape)->point.y/10, (*shape)->point.z/10);
+		n--;
+	}
+}
 
-// 	new_proj.pos = add_tuple(proj.pos, proj.vel);
-// 	new_proj.vel = add_tuple(add_tuple(proj.vel, env.grav), env.wind);
-// 	return (new_proj);
-// }
 
 int	handle_exit(t_prog *prog)
 {
@@ -43,6 +42,7 @@ int	handle_keypress(int key, t_prog *prog)
 }
 
 
+
 int main(int argc, char **argv)
 {
 /* ************************************************************************** */
@@ -50,71 +50,61 @@ int main(int argc, char **argv)
 /* ************************************************************************** */
 	t_prog prog;
 	t_data	img;
+    clock_t start, end;
+    double cpu_time_used;
+	start = clock();
+
+
+	char **file;
+	t_camera c;
+	t_world	w;
+	
+    file = checkfile(argc, argv);
+    if (!file)
+		return (1);
+    if (!initWorld(file, &w))
+		return (free_2(file), 1);
+	if (!initCamera(file, &c))
+		return (free_2(file), 1); // gerer memoire world
+	free_2(file);
+ 
+
+ 	printf("World:\n");
+    printf("Light position: (%.2f, %.2f, %.2f)(x,y,z)\n", w.l.position.x, w.l.position.y, w.l.position.z);
+    printf("Light color: %.2f, %.2f, %.2f (unit RGB)\n", w.l.color.r, w.l.color.g, w.l.color.b);
+    printf("Ambiant color: %.2f, %.2f, %.2f (unit RGB)\n", w.ambiant.r, w.ambiant.g, w.ambiant.b);
+    printf("Shape count: %d\n", w.count);
+    printf("\nCamera:\n");
+    printf("HSize: %.f\n", c.hsize);
+    printf("VSize: %.2f\n", c.vsize);
+    printf("FOV: %.2f\n", c.fov);
+    printf("Half Width: %.2f\n", c.half_width);
+    printf("Half Height: %.2f\n", c.half_height);
+    printf("Pixel Size: %.2f\n", c.pixel_size);
+
+	for (int j = 0; j < w.count; j++) {
+		t_shape shape = w.shape[j];
+		printf("Shape %d:\n", j);
+		(void)shape;
+		printf("	type: %d\n", shape.type);
+		printf("	color: %.2f, %.2f, %.2f (unit RGB)\n", shape.material.color.r, shape.material.color.g, shape.material.color.b);
+		printf("	position: (%.2f, %.2f, %.2f)(x,y,z)\n", shape.point.x, shape.point.y, shape.point.z);
+	}
 
 	prog.mlx = mlx_init();
 	prog.win = mlx_new_window(prog.mlx, WIDTH, HEIGHT, "Hello world!");
 	img.img = mlx_new_image(prog.mlx, WIDTH, HEIGHT);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-								&img.endian);
-
-    clock_t start, end;
-    double cpu_time_used;
-
-	start = clock();
-
-/* ************************************************************************** */
-/*																			  */
-/* ************************************************************************** */
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 	
-	char **file;
-	float fov;
-	t_camera c;
-    t_shape *shape;
-	t_world	w;
-	int n = 0;
-	
-	shape = NULL;
-    file = checkfile(argc, argv);
-    if (file)
-    {
-        n = init(file, &shape);
-		if (n)
-		{
-			for (int i = 0; i < n; i++) {
-				printf("Shape %d:\n", i + 1);
-				printf("Type: %d\n", shape[i].type);
-        	}
-		}
-		free_2(file);
-		if (!n)
-			return (1);
-    }
-	else
-		return (1);
-
-	//shape[0].material.color = set_color(0.1, 1, 0.5);
-
-	w = set_world();
-	w.shape = shape;
-	w.count = n;
-	
-	fov = PI/3;
-	c = camera(WIDTH, HEIGHT, fov);
-	c.transform = view_transform(point(0,1.5,-5), point(0,1,0), vector(0,1,0));
 	render(c, w, &img);
 	
-	
 	mlx_put_image_to_window(prog.mlx, prog.win, img.img, 0, 0);
-
 	// mlx_hook(prog.mlx, KeyPress, KeyPressMask, &handle_keypress, &prog);
 	// mlx_hook(prog.mlx, 17, 1L << 1, &handle_exit, &prog);
 
-	
 	end = clock();
     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-    printf("\nCPU time used: %f seconds\n", cpu_time_used);
-
-
+    printf("CPU time used: %f seconds\n", cpu_time_used);
 	
 	mlx_loop(prog.mlx);
 	return(0);

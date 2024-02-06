@@ -3,43 +3,45 @@
 
 t_color	str_to_color(const char *str)
 {
-	t_color p;
-	int c;
-	char **tmp;
+	t_color		p;
+	float		c;
+	char		**tmp;
 
 	tmp = ft_split(str, ',');
-    if (tmp)
+	if (tmp)
 	{
-		c = atoi(tmp[0]);
+		c = ft_strtof(tmp[0]);
 		p.r = c / 255;
-		c = atoi(tmp[1]);
+		c = ft_strtof(tmp[1]);
 		p.g = c / 255;
-		c = atoi(tmp[2]);
+		c = ft_strtof(tmp[2]);
 		p.b = c / 255;
 		free_2(tmp);
 	}
 	return (p);
 }
 
-t_material	str_to_material(const char *str)
+t_material	str_to_material(const char *str, t_world *w)
 {
 	t_material	m;
-
+	t_color c;
+		
+	c = str_to_color(str);
+	m.ambiant = mul_color(c, w->ambiant);
 	m.color = str_to_color(str);
-	m.ambiant = 0.1;
-	m.diffuse = 0.7;
+	m.diffuse = 0.9;
 	m.specular = 0.9;
 	m.shininess = 200;
-	return(m);
+	return (m);
 }
 
 t_tuple	str_to_point(const char *str)
 {
-	t_tuple p;
-    char **tmp;
+	t_tuple		p;
+	char		**tmp;
 
 	tmp = ft_split(str, ',');
-    if (tmp)
+	if (tmp)
 	{
 		p.x = ft_strtof(tmp[0]);
 		p.y = ft_strtof(tmp[1]);
@@ -52,11 +54,11 @@ t_tuple	str_to_point(const char *str)
 
 t_tuple	str_to_vector(const char *str)
 {
-	t_tuple v;
-    char **tmp;
+	t_tuple		v;
+	char		**tmp;
 
 	tmp = ft_split(str, ',');
-    if (tmp)
+	if (tmp)
 	{
 		v.x = ft_strtof(tmp[0]);
 		v.y = ft_strtof(tmp[1]);

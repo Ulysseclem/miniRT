@@ -6,13 +6,12 @@
 /*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 12:29:59 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/01/28 17:19:23 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/05 09:44:18 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "struct.h"
-
 
 t_inter	create_inter_new(float t, t_shape shape)
 {
@@ -20,7 +19,7 @@ t_inter	create_inter_new(float t, t_shape shape)
 
 	xs.t = t;
 	xs.shape = shape;
-	xs.hit = false;
+	xs.hit = true;
 	return (xs);
 }
 
@@ -29,14 +28,13 @@ int intersect_shape(t_shape *shape, t_ray ray)
 	t_ray local_ray;
 	t_matrix *inverted;
 
-	//printf("intersect_shape :\n");
 	inverted = inverse(shape->transform); // if NULL a gerer
 	local_ray = trnsform_ray(ray, inverted);
 	free_matrix(inverted);
 	if (shape->type == SPHERE)
 		shape->xs = sphere_intersect(shape, local_ray);
-	// else if (shape->type == PLANE)
-	// 	shape->xs = plane_intersect(shape, local_ray);
+	else if (shape->type == PLANE) 
+		shape->xs = plane_intersect(shape, local_ray);
 	if (shape->xs != NULL)
 		return(2);
 	else
@@ -81,7 +79,6 @@ t_inter	*inter_world(t_world w, t_ray ray)
 		size += intersect_shape(&(w.shape[i]), ray);	
 		i++;
 	}
-
 	if (size == 0)
 		return (NULL);
 	xs = malloc(sizeof(t_inter) * size);
