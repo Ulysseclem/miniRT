@@ -1,9 +1,10 @@
-.build/parsing/saveShape.o: src/parsing/saveShape.c include/minirt.h \
- lib/libft/include/libft.h mlx_linux/mlx.h include/struct.h \
- include/minirt.h include/struct.h
-include/minirt.h:
-lib/libft/include/libft.h:
+.build/parsing/saveShape.o: Mandatory/src/parsing/saveShape.c \
+ Mandatory/include/minirt.h Mandatory/lib/libft/include/libft.h \
+ mlx_linux/mlx.h Mandatory/include/struct.h Mandatory/include/minirt.h \
+ Mandatory/include/struct.h
+Mandatory/include/minirt.h:
+Mandatory/lib/libft/include/libft.h:
 mlx_linux/mlx.h:
-include/struct.h:
-include/minirt.h:
-include/struct.h:
+Mandatory/include/struct.h:
+Mandatory/include/minirt.h:
+Mandatory/include/struct.h:

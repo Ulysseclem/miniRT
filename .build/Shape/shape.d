@@ -1,9 +1,10 @@
-.build/Shape/shape.o: src/Shape/shape.c include/minirt.h \
- lib/libft/include/libft.h mlx_linux/mlx.h include/struct.h \
- include/minirt.h include/struct.h
-include/minirt.h:
-lib/libft/include/libft.h:
+.build/Shape/shape.o: Mandatory/src/Shape/shape.c \
+ Mandatory/include/minirt.h Mandatory/lib/libft/include/libft.h \
+ mlx_linux/mlx.h Mandatory/include/struct.h Mandatory/include/minirt.h \
+ Mandatory/include/struct.h
+Mandatory/include/minirt.h:
+Mandatory/lib/libft/include/libft.h:
 mlx_linux/mlx.h:
-include/struct.h:
-include/minirt.h:
-include/struct.h:
+Mandatory/include/struct.h:
+Mandatory/include/minirt.h:
+Mandatory/include/struct.h:

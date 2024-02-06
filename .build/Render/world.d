@@ -1,9 +1,10 @@
-.build/Render/world.o: src/Render/world.c include/minirt.h \
- lib/libft/include/libft.h mlx_linux/mlx.h include/struct.h \
- include/minirt.h include/struct.h
-include/minirt.h:
-lib/libft/include/libft.h:
+.build/Render/world.o: Mandatory/src/Render/world.c \
+ Mandatory/include/minirt.h Mandatory/lib/libft/include/libft.h \
+ mlx_linux/mlx.h Mandatory/include/struct.h Mandatory/include/minirt.h \
+ Mandatory/include/struct.h
+Mandatory/include/minirt.h:
+Mandatory/lib/libft/include/libft.h:
 mlx_linux/mlx.h:
-include/struct.h:
-include/minirt.h:
-include/struct.h:
+Mandatory/include/struct.h:
+Mandatory/include/minirt.h:
+Mandatory/include/struct.h:

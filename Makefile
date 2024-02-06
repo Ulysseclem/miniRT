@@ -1,6 +1,5 @@
-
-
 NAME		= miniRT
+BONUS		= miniRT_BONUS
 
 #------------------------------------------------#
 #   INGREDIENTS                                  #
@@ -25,12 +24,12 @@ NAME		= miniRT
 
 LIBS	:= ft
 LIBS_TARGET :=            \
-	lib/libft/libft.a \
+	Mandatory/lib/libft/libft.a \
 
-INCS        := include    \
-	lib/libft/include   \
+INCS        := Mandatory/include    \
+	Mandatory/lib/libft/include   \
 
-SRC_DIR     := src
+SRC_DIR     := Mandatory/src
 SRCS        :=	main.c \
 				Tuples/color.c \
 				Matrix/matrix.c \
@@ -42,7 +41,7 @@ SRCS        :=	main.c \
 				Render/camera.c \
 				ray/shadow.c \
 				Shape/shape.c \
-				Shape/sphere.c \
+				Shape/shape_inter.c \
 				Utils/utils_to_delete.c \
 				Utils/utils.c \
 				Render/intersection.c \
@@ -64,8 +63,56 @@ SRCS        := $(SRCS:%=$(SRC_DIR)/%)
 BUILD_DIR   := .build
 OBJS        := $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 
+# BONUS --------------------------
+
+LIBS_TARGET_BONUS :=            \
+	Bonus/lib/libft/libft.a \
+
+INCS_BONUS        := Bonus/include    \
+	Bonus/lib/libft/include   \
+
+SRC_DIR_BONUS	:= Bonus/src
+
+SRCS_BONUS     	:=	main.c \
+				Tuples/color.c \
+				Matrix/matrix.c \
+				Matrix/matrix_inverter.c \
+				Matrix/matrix_transformation.c \
+				ray/ray.c \
+				ray/light_shading.c \
+				Render/world.c \
+				Render/camera.c \
+				ray/shadow.c \
+				Shape/shape.c \
+				Shape/shape_inter.c \
+				Utils/utils_to_delete.c \
+				Utils/utils.c \
+				Render/intersection.c \
+				Render/render.c \
+				Tuples/tuple.c \
+				parsing/check.c\
+				parsing/checkInfo.c\
+				parsing/checkShape.c\
+				parsing/save.c\
+				parsing/saveInfo.c\
+				parsing/saveShape.c\
+				parsing/string_utils.c\
+				parsing/gnl.c\
+				parsing/strto.c\
+				parsing/valid.c\
+				pattern/pattern.c
+
+SRCS_BONUS	:= $(SRCS_BONUS:%=$(SRC_DIR_BONUS)/%)
+BUILD_DIR_B   := .build_b
+OBJS_BONUS	:= $(SRCS_BONUS:$(SRC_DIR_BONUS)/%.c=$(BUILD_DIR_B)/%.o)
+
+CPPFLAGS_BONUS    := $(addprefix -I,$(INCS_BONUS)) -MMD -MP
+LDFLAGS_BONUS     := $(addprefix -L,$(dir $(LIBS_TARGET_BONUS)))
+
+# BONUS --------------------------
+
 DEPS        := $(OBJS:.o=.d)
-# -fsanitize=thread
+DEPS_B      := $(OBJS_BONUS:.o=.d)
 
 CC          := gcc 
 CFLAGS      := -Wall -Wextra -Werror
@@ -110,17 +157,38 @@ $(LIBS_TARGET):
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	$(DIR_DUP)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -Imlx_linux -O3 -c -o $@ $<
-$(info CREATED $@)
+	$(info CREATED $@)
 
 -include $(DEPS)
+
+# BONUS --------------------------
+bonus: $(BONUS)
+
+$(BONUS): $(OBJS_BONUS) $(LIBS_TARGET_BONUS)
+	$(CC) $(LDFLAGS_BONUS) $(OBJS_BONUS) -Lmlx_linux -lmlx_Linux $(LDLIBS) -Imlx_linux -lXext -lX11 -lm -lz -o $(BONUS)
+	$(info CREATED $(BONUS))
+
+$(LIBS_TARGET_BONUS):
+	$(MAKE) -C $(@D)
+
+$(BUILD_DIR_B)/%.o: $(SRC_DIR_BONUS)/%.c
+	$(DIR_DUP)
+	$(CC) $(CFLAGS) $(CPPFLAGS_BONUS) -Imlx_linux -O3 -c -o $@ $<
+	$(info CREATED BONUS $@)
+
+# BONUS --------------------------
+
+
 
 clean:
 	for f in $(dir $(LIBS_TARGET)); do $(MAKE) -C $$f clean; done
 	$(RM) $(OBJS) $(DEPS)
+	$(RM) $(OBJS_BONUS) $(DEPS_B)
 
 fclean: clean
 	for f in $(dir $(LIBS_TARGET)); do $(MAKE) -C $$f fclean; done
 	$(RM) $(NAME)
+	$(RM) $(BONUS)
 
 re:
 	$(MAKE) fclean

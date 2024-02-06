@@ -1,9 +1,10 @@
-.build/Tuples/color.o: src/Tuples/color.c include/minirt.h \
- lib/libft/include/libft.h mlx_linux/mlx.h include/struct.h \
- include/minirt.h include/struct.h
-include/minirt.h:
-lib/libft/include/libft.h:
+.build/Tuples/color.o: Mandatory/src/Tuples/color.c \
+ Mandatory/include/minirt.h Mandatory/lib/libft/include/libft.h \
+ mlx_linux/mlx.h Mandatory/include/struct.h Mandatory/include/minirt.h \
+ Mandatory/include/struct.h
+Mandatory/include/minirt.h:
+Mandatory/lib/libft/include/libft.h:
 mlx_linux/mlx.h:
-include/struct.h:
-include/minirt.h:
-include/struct.h:
+Mandatory/include/struct.h:
+Mandatory/include/minirt.h:
+Mandatory/include/struct.h:

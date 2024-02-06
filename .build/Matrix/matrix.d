@@ -1,9 +1,10 @@
-.build/Matrix/matrix.o: src/Matrix/matrix.c include/minirt.h \
- lib/libft/include/libft.h mlx_linux/mlx.h include/struct.h \
- include/minirt.h include/struct.h
-include/minirt.h:
-lib/libft/include/libft.h:
+.build/Matrix/matrix.o: Mandatory/src/Matrix/matrix.c \
+ Mandatory/include/minirt.h Mandatory/lib/libft/include/libft.h \
+ mlx_linux/mlx.h Mandatory/include/struct.h Mandatory/include/minirt.h \
+ Mandatory/include/struct.h
+Mandatory/include/minirt.h:
+Mandatory/lib/libft/include/libft.h:
 mlx_linux/mlx.h:
-include/struct.h:
-include/minirt.h:
-include/struct.h:
+Mandatory/include/struct.h:
+Mandatory/include/minirt.h:
+Mandatory/include/struct.h:
