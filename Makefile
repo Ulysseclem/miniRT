@@ -35,6 +35,7 @@ SRCS        :=	main.c \
 				Matrix/matrix.c \
 				Matrix/matrix_inverter.c \
 				Matrix/matrix_transformation.c \
+				Matrix/matrix_maker.c \
 				ray/ray.c \
 				ray/light_shading.c \
 				Render/world.c \
@@ -47,6 +48,7 @@ SRCS        :=	main.c \
 				Render/intersection.c \
 				Render/render.c \
 				Tuples/tuple.c \
+				Tuples/tuple_2.c \
 				parsing/check.c\
 				parsing/checkInfo.c\
 				parsing/checkShape.c\
@@ -78,6 +80,7 @@ SRCS_BONUS     	:=	main.c \
 				Matrix/matrix.c \
 				Matrix/matrix_inverter.c \
 				Matrix/matrix_transformation.c \
+				Matrix/matrix_maker.c \
 				ray/ray.c \
 				ray/light_shading.c \
 				Render/world.c \
@@ -90,6 +93,7 @@ SRCS_BONUS     	:=	main.c \
 				Render/intersection.c \
 				Render/render.c \
 				Tuples/tuple.c \
+				Tuples/tuple_2.c \
 				parsing/check.c\
 				parsing/checkInfo.c\
 				parsing/checkShape.c\

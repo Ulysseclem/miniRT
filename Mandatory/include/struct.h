@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/08 16:31:45 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/08 18:02:57 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,17 @@ typedef struct s_light {
 	t_tuple	position;
 	t_color	color;
 }	t_light;
+
+typedef struct s_t_lightning {
+	t_color	effective_color;
+	t_color	ambiant;
+	t_color	diffuse;
+	t_color	specular;
+	float	light_dot_normal;
+	float	reflect_dot_eye;
+	t_tuple	lightv;
+	t_tuple	reflectv;
+}	t_lightning;
 
 typedef enum type {
     PLANE,

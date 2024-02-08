@@ -6,21 +6,20 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 15:26:52 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/02/03 16:01:23 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/08 18:12:09 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "struct.h"
 
-
-t_matrix *view_transform(t_tuple from, t_tuple to, t_tuple up)
+t_matrix	*view_transform(t_tuple from, t_tuple to, t_tuple up)
 {
-	t_tuple 	forward;
-	t_tuple 	left;
-	t_tuple 	true_up;
+	t_tuple		forward;
+	t_tuple		left;
+	t_tuple		true_up;
 	t_matrix	*orientation;
-	
+
 	forward = norm(sub_tuple(to, from));
 	left = cross_product(forward, norm(up));
 	true_up = cross_product(left, forward);
@@ -34,15 +33,16 @@ t_matrix *view_transform(t_tuple from, t_tuple to, t_tuple up)
 	orientation->data[2][0] = -forward.x;
 	orientation->data[2][1] = -forward.y;
 	orientation->data[2][2] = -forward.z;
-	return(mul_matrix(orientation, matrix_translation(-from.x, -from.y, -from.z)));
+	return (mul_matrix(orientation, \
+	matrix_translation(-from.x, -from.y, -from.z)));
 }
 
 t_camera	camera(int hsize, int vsize, float fov)
 {
-	t_camera c;
+	t_camera	c;
 	float		half_view;
 	float		aspect;
-	
+
 	c.hsize = hsize;
 	c.vsize = vsize;
 	c.fov = fov;
@@ -56,7 +56,7 @@ t_camera	camera(int hsize, int vsize, float fov)
 	else
 	{
 		c.half_width = half_view * aspect;
-		c.half_height = half_view;	
+		c.half_height = half_view;
 	}
 	c.pixel_size = (c.half_width * 2) / c.hsize;
 	return (c);
@@ -64,27 +64,18 @@ t_camera	camera(int hsize, int vsize, float fov)
 
 t_ray	ray_for_pixel(t_camera c, float px, float py)
 {
-	float	xoffset;
-	float	yoffset;
-	float	world_x;
-	float	world_y;
-	t_tuple	direction;
-	t_tuple	origin;
-	t_tuple	pixel;
-	t_ray r;
+	float		world_y;
+	t_tuple		origin;
+	t_tuple		pixel;
+	t_ray		r;
 	t_matrix	*inverted;
 
-	xoffset = (px + 0.5) * c.pixel_size; // +0.5 poura voir le centre du pixel
-	yoffset = (py + 0.5) * c.pixel_size;
-	world_x = c.half_width - xoffset; // ajuste le pixel par rapport a la camera
-	world_y = c.half_height - yoffset;
+	world_y = c.half_height - (py + 0.5) * c.pixel_size;
 	inverted = inverse(c.transform);
-	pixel = mul_matrix_tuple(inverted, point(world_x, world_y, -1)); // -1 is for the nearest plan
+	pixel = mul_matrix_tuple(inverted, point(c.half_width - (px + 0.5) * \
+	c.pixel_size, world_y, -1));
 	origin = mul_matrix_tuple(inverted, point(0, 0, 0));
 	free_matrix(inverted);
-	direction = norm(sub_tuple(pixel, origin));
-	ray(&r, origin, direction);
-	
-	return(r);
+	ray(&r, origin, norm(sub_tuple(pixel, origin)));
+	return (r);
 }
-

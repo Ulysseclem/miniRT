@@ -6,13 +6,12 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/08 14:44:31 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/08 18:30:44 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "struct.h"
-
 
 int	handle_exit(t_prog *prog)
 {

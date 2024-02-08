@@ -6,85 +6,17 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 11:43:53 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/05 12:25:37 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/08 17:42:48 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "struct.h"
 
-
-t_matrix *create_matrix(int r, int c) // ok
-{
-	t_matrix	*matrix;
-	int 		i;
-
-	matrix = malloc(sizeof(t_matrix));
-	if (!matrix)
-		return(NULL);
-	matrix->r = r;
-	matrix->c = c;
-	matrix->data = malloc(sizeof(float *) * r);
-	if (!matrix->data)
-		return(NULL);
-	i = 0;
-	while (i < c)
-	{
-		matrix->data[i] = malloc(sizeof(float) * c);
-			if (!matrix->data[i])
-		return(NULL);
-		i++;
-	}
-	return(matrix);
-}
-
-void fill_matrix(t_matrix *m, float **value) //ok
+int	equal_matrix(t_matrix *a, t_matrix *b)
 {
 	int	i;
-	int j;
-
-	i = 0;
-	while (i < m->r)
-	{
-		j = 0;
-		while (j < m->c)
-		{
-			m->data[i][j] = value[i][j];
-			j++;
-		}
-		i++;
-	}
-}
-
-t_matrix *identify_matrix(int r, int c) // ok
-{
-	int 		i;
-	int			j;
-	t_matrix	*matrix;
-
-	matrix = create_matrix(r, c);
-	i = 0;
-	while (i < r)
-	{
-		j = 0;
-		while (j < c)
-		{
-			if (i == j)
-				matrix->data[i][j] = 1;
-			else
-				matrix->data[i][j] = 0;
-			j++;
-		}
-		i++;
-	}
-	return(matrix);
-}
-
-int	equal_matrix(t_matrix *a, t_matrix *b) // ok I guess
-{
-	int i;
-	int j;
-
+	int	j;
 
 	if (a->c != b->c || a->r != b->r)
 		return (0);
@@ -95,38 +27,37 @@ int	equal_matrix(t_matrix *a, t_matrix *b) // ok I guess
 		while (j < a->c)
 		{
 			if (!equal(a->data[i][j], b->data[i][j]))
-				return(0);
+				return (0);
 			j++;
 		}
 		i++;
 	}
-	return(1);
+	return (1);
 }
 
-t_matrix* mul_matrix(t_matrix *a, t_matrix *b) 
+t_matrix	*mul_matrix(t_matrix *a, t_matrix *b)
 {
-	t_matrix	*result = create_matrix(a->r, b->c);
-	int 		i;
-	int 		k;
-	float 		sum;
+	t_matrix	*result;
+	int			i;
+	int			j;
+	int			k;
+	float		sum;
 
-	i = 0;
-	while (i < a->r) 
+	result = create_matrix(a->r, b->c);
+	i = -1;
+	while (++i < a->r)
 	{
-		int j = 0;
-		while (j < b->c) 
+		j = -1;
+		while (++j < b->c)
 		{
-			k = 0;
+			k = -1;
 			sum = 0;
-			while (k < a->c) 
+			while (++k < a->c)
 			{
 				sum += a->data[i][k] * b->data[k][j];
-				k++;
 			}
 			result->data[i][j] = sum;
-			j++;
 		}
-		i++;
 	}
 	free_matrix(a);
 	free_matrix(b);
@@ -137,10 +68,14 @@ t_tuple	mul_matrix_tuple(t_matrix *a, t_tuple b)
 {
 	t_tuple		result;	
 
-	result.x = a->data[0][0] * b.x + a->data[0][1] * b.y + a->data[0][2] * b.z + a->data[0][3] * b.w;
-    result.y = a->data[1][0] * b.x + a->data[1][1] * b.y + a->data[1][2] * b.z + a->data[1][3] * b.w;
-    result.z = a->data[2][0] * b.x + a->data[2][1] * b.y + a->data[2][2] * b.z + a->data[2][3] * b.w;
-    result.w = a->data[3][0] * b.x + a->data[3][1] * b.y + a->data[3][2] * b.z + a->data[3][3] * b.w;
+	result.x = a->data[0][0] * b.x + a->data[0][1] \
+	* b.y + a->data[0][2] * b.z + a->data[0][3] * b.w;
+	result.y = a->data[1][0] * b.x + a->data[1][1] \
+	* b.y + a->data[1][2] * b.z + a->data[1][3] * b.w;
+	result.z = a->data[2][0] * b.x + a->data[2][1] \
+	* b.y + a->data[2][2] * b.z + a->data[2][3] * b.w;
+	result.w = a->data[3][0] * b.x + a->data[3][1] \
+	* b.y + a->data[3][2] * b.z + a->data[3][3] * b.w;
 	return (result);
 }
 
@@ -152,7 +87,7 @@ t_matrix	*transp_matrix(t_matrix *m)
 
 	transpose = create_matrix(m->r, m->c);
 	if (!transpose)
-		return(NULL);
+		return (NULL);
 	i = 0;
 	while (i < m->r)
 	{
@@ -166,7 +101,3 @@ t_matrix	*transp_matrix(t_matrix *m)
 	}
 	return (transpose);
 }
-
-
-
-

@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/08 16:38:05 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/08 18:38:20 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,7 @@ t_matrix 	*matrix_rotation_z(float d);
 // light & shading
 t_tuple		reflect(t_tuple vector_in, t_tuple normal);
 t_material	material_default();
-t_color 	lightning(t_material m, t_light l, t_tuple p, t_tuple eyev, t_tuple normalv, bool in_shadow);
-t_color 	lightning_no_specular(t_material m, t_light l, t_tuple p, t_tuple normalv, bool in_shadow);
+t_color		lightning(t_comps c, t_light l, bool in_shadow);
 
 // ray
 void 		ray(t_ray *r, t_tuple p, t_tuple v);
@@ -171,6 +170,7 @@ t_tuple 	norm(t_tuple t);
 float 		magnitude(t_tuple t);
 void 		free_matrix(t_matrix *mat);
 float		d_to_r(float deg);
+void		bubble_sort(t_inter *xs, int n);
 
 
 // utils_to_delete
