@@ -6,23 +6,12 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 10:09:14 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/02/06 12:20:09 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/08 13:23:54 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "struct.h"
-
-t_world set_world()
-{
-	t_world w;
-
-	w.l.intensity = set_color(1, 1, 1); // test
-	w.l.position = point( -10, 10, -10); // test
-	w.count = 0;
-	w.shape = NULL;
-	return(w);
-}
 
 t_tuple	normale_at(t_shape s, t_tuple world_point)
 {
@@ -72,14 +61,6 @@ t_color shade_hit(t_world w, t_comps c)
 
 	shadowed = is_shadowed(w, c.over_p);
 	return (lightning(c.shape.material, c.shape, w.l, c.p, c.eyev, c.normalv, shadowed));
-}
-
-t_color shade_hit_no_specular(t_world w, t_comps c) // enleve le specular
-{
-	bool	shadowed;
-
-	shadowed = is_shadowed(w, c.over_p);
-	return (lightning_no_specular(c.shape.material, w.l, c.p, c.normalv, shadowed));
 }
 
 t_color	color_at(t_world w, t_ray r)

@@ -26,7 +26,7 @@ t_material	str_to_material(const char *str, t_world *w)
 	t_material	m;
 	t_color c;
 		
-	c = str_to_color(str);
+	c = str_to_color(str);	
 	m.ambiant = mul_color(c, w->ambiant); // couleur de la forme + couleur ambiant
 	m.color = str_to_color(str);
 	m.diffuse = 0.9;

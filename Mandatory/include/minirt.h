@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/06 15:19:39 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/08 16:38:05 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 
 
 # ifndef WIDTH
-# define WIDTH 500
+# define WIDTH 750
 # endif
 
 # ifndef HEIGHT

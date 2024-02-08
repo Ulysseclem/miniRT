@@ -11,9 +11,8 @@ int	init_sp(char **param, t_shape *shape, t_world *world)
 	shape->point = str_to_point(param[1]);
 	sphere->diameter = ft_strtof(param[2]);
 	shape->material = str_to_material(param[3], world);
-	// shape->transform = mul_matrix(matrix_translation(shape->point.x, shape->point.y, shape->point.z),matrix_scaling(sphere->diameter,sphere->diameter,sphere->diameter));
-	// shape->transform = mul_matrix(shape->transform, matrix_rotation_z(45));
-	shape->transform = identify_matrix(4, 4);
+	print_tuple(shape->point);
+	shape->transform = matrix_translation(shape->point.x, shape->point.y, shape->point.z);
 	shape->ptrType = sphere;
 	shape->type = SPHERE;
 	return (1);

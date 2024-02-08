@@ -21,7 +21,7 @@ t_light	light(t_tuple position, t_color color)
 
 int init_light(char **param, t_world *w)
 {
-	w->l = light(str_to_point(param[1]), mul_sca_color(str_to_color(param[3]), ft_strtof(param[2])));
+	w->l = light(str_to_point(param[1]), mul_sca_color(set_color(1,1,1), ft_strtof(param[2])));
 	return (1);
 }
 
@@ -38,8 +38,8 @@ int init_cam(char **param, t_camera *c)
 	t_tuple		pos;
 	t_tuple		orientation;
 	
-	c->hsize = HEIGHT;
-	c->vsize = WIDTH;
+	c->hsize = WIDTH ; //horiozon
+	c->vsize = HEIGHT; //
 	c->fov = d_to_r(ft_strtof(param[3]));
 	half_view = tan(c->fov / 2);
 	aspect = c->hsize / c->vsize;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light_shading.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 14:15:55 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/07 09:43:09 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/08 16:34:06 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ float customPow(float base, int exponent) // pow custom pour eviter des nombre t
 /* ************************************************************************** */
 /*	Lightning avec specular													  */
 /* ************************************************************************** */
-
+// C = (.5 * Ca * Ia) + (.5 * Co)
+// Avec : C couleur resultante; Ca couleur de la lumiere ambiante; Ia intensite ambiente; Co couleur de l'objet
 
 t_color lightning(t_material m, t_light l, t_tuple p, t_tuple eyev, t_tuple normalv, bool in_shadow)
 {
@@ -58,10 +59,9 @@ t_color lightning(t_material m, t_light l, t_tuple p, t_tuple eyev, t_tuple norm
 	t_tuple	reflectv;
 
 
-	effective_color = mul_color(m.color, l.color); // combine surface color with light color / intensivity
-	ambiant = add_color(effective_color, m.ambiant);
+	effective_color = mul_color(m.color, l.color); // 0.3 = / intensivity
+	ambiant = mul_color(effective_color, m.ambiant); // 0.3 = light m.ambiant // ICI PROB - aucun calcul entre Ca et Ci
 	lightv = norm(sub_tuple(l.position, p)); // Find the direction to the light source
-	// ambiant = mul_sca_color(effective_color, m.ambiant); //ambiant contribution  PROBEME ICI ?
 	light_dot_normal = dot_product(lightv, normalv);
 	if (light_dot_normal < 0 || in_shadow == true)
 	{

@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/06 15:43:41 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/08 14:44:31 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ int main(int argc, char **argv)
 
  	printf("World:\n");
     printf("Light position: (%.2f, %.2f, %.2f)(x,y,z)\n", w.l.position.x, w.l.position.y, w.l.position.z);
-    printf("Light color: %.2f, %.2f, %.2f (unit RGB)\n", w.l.color.r, w.l.color.g, w.l.color.b);
-    printf("Ambiant color: %.2f, %.2f, %.2f (unit RGB)\n", w.ambiant.r, w.ambiant.g, w.ambiant.b);
+    // printf("Light luminosity: %.2f, %.2f, %.2f (unit RGB)\n", w.l.luminosity.r, w.l.luminosity.g, w.l.luminosity.b);
+    // printf("Ambiant color: %.2f, %.2f, %.2f (unit RGB)\n", w.ambiant.r, w.ambiant.g, w.ambiant.b);
     printf("Shape count: %d\n", w.count);
     printf("\nCamera:\n");
     printf("HSize: %.f\n", c.hsize);
