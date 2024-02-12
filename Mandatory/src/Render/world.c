@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 10:09:14 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/02/08 18:20:46 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/12 13:16:46 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_tuple	normale_at(t_shape s, t_tuple world_point)
 	inverted = inverse(s.transform);
 	local_point = mul_matrix_tuple(inverted, world_point);
 	if (s.type == SPHERE)
-		local_normal = sub_tuple(local_point, point(0,0,0));
+		local_normal = sub_tuple(local_point, point(0, 0, 0));
 	else if (s.type == PLANE)
 		local_normal = s.pl_dir;
 	transposed = transp_matrix(inverted);

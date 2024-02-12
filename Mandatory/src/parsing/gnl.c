@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   gnl.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/12 12:19:59 by uclement          #+#    #+#             */
+/*   Updated: 2024/02/12 13:11:53 by uclement         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 #include "struct.h"
 
@@ -37,8 +49,8 @@ char	*set_final(void *temp, int eof)
 
 char	*get_next_line(int fd)
 {
-	int		eof;
-	int		b_read;
+	int			eof;
+	int			b_read;
 	char		*buf;
 	static char	temp[10000000];
 
@@ -51,13 +63,12 @@ char	*get_next_line(int fd)
 		if (!buf)
 			return (NULL);
 		b_read = read(fd, buf, BUFFER_SIZE);
-        if (b_read == -1 || (b_read == 0 && ft_strlen(temp) == 0))
-		{
-            free(buf);
-            return NULL;
-        }
-        if (ft_strncat(temp, buf, b_read) == FALSE)
-            eof = TRUE;
+		if (b_read == -1 || (b_read == 0 && ft_strlen(temp) == 0))
+			free(buf);
+		if (b_read == -1 || (b_read == 0 && ft_strlen(temp) == 0))
+			return (NULL);
+		if (ft_strncat(temp, buf, b_read) == FALSE)
+			eof = TRUE;
 		free(buf);
 		if (!temp[0])
 			return (NULL);

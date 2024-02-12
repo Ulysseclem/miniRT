@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 12:49:21 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/02/08 18:38:05 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/12 13:34:40 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,45 +64,4 @@ void	free_matrix(t_matrix *mat)
 	}
 	free(mat->data);
 	free(mat);
-}
-
-float	d_to_r(float deg)
-{
-	return((deg / 180) * 3.141592);
-}
-void	swap(t_inter *xp, t_inter *yp)
-{
-	t_inter	temp;
-
-	temp = *xp;
-	*xp = *yp;
-	*yp = temp;
-}
-
-void	bubble_sort(t_inter *xs, int n)
-{
-	int		i;
-	int		j;
-	bool	swapped;
-
-	swapped = false;
-	i = 0;
-	while (i < n - 1)
-	{
-		swapped = false;
-		j = 0;
-		while (j < n - i - 1)
-		{
-			if (xs[j].t > xs[j + 1].t)
-			{
-				swap(&xs[j], &xs[j + 1]);
-				xs[j].count = n;
-				swapped = true;
-			}
-			j++;
-		}
-		if (swapped == false)
-			break ;
-		i++;
-	}
 }

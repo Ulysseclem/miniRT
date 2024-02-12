@@ -1,12 +1,44 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   save.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/12 12:41:33 by uclement          #+#    #+#             */
+/*   Updated: 2024/02/12 13:19:14 by uclement         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 #include "struct.h"
 
-void free_shape(t_shape *s, int nshapes)
+void	free_shape(t_shape *s, int nshapes)
 {
-    for (int i = 0; i < nshapes; i++) {
-        free(s[i].ptrType);
-    }
-    free(s);
+	int	i;
+
+	i = -1;
+	while (++i < nshapes)
+		free(s[i].ptr_type);
+	free(s);
+}
+
+void	search_1(char **file, int *ret, t_world *w)
+{
+	int		i;
+	char	**line;
+
+	i = 0;
+	while (file[i])
+	{
+		line = ft_split(file[i], ' ');
+		if (strcmp(line[0], "A") == 0)
+			*ret = init_ambiant(line, w);
+		else if (strcmp(line[0], "L") == 0)
+			*ret = init_light(line, w);
+		free_2(line);
+		i++;
+	}
 }
 
 int	search(char **file, t_shape **s, t_world *w)
@@ -19,16 +51,7 @@ int	search(char **file, t_shape **s, t_world *w)
 	i = 0;
 	j = 0;
 	ret = 0;
-	while (file[i])
-	{
-		line = ft_split(file[i], ' ');
-		if (strcmp(line[0], "A") == 0)
-			ret = init_ambiant(line, w);
-		else if (strcmp(line[0], "L") == 0)
-			ret = init_light(line, w);
-		free_2(line);
-		i++;
-	}
+	search_1(file, &ret, w);
 	i = 0;
 	while (file[i])
 	{
@@ -47,12 +70,12 @@ int	search(char **file, t_shape **s, t_world *w)
 	return (1);
 }
 
-int	initWorld(char **file, t_world *w)
+int	init_world(char **file, t_world *w)
 {
 	int		i;
 	int		nshape;
 	char	**line;
-	t_shape *s;
+	t_shape	*s;
 
 	i = 0;
 	nshape = 0;
@@ -69,16 +92,16 @@ int	initWorld(char **file, t_world *w)
 	if (!s)
 		return (0);
 	if (!search(file, &s, w))
-		return (free(s), 0); //need to be free
+		return (free(s), 0);
 	w->shape = s;
 	w->count = nshape;
 	return (nshape);
 }
 
-int	initCamera(char **file, t_camera *c)
+int	init_camera(char **file, t_camera *c)
 {
 	int			i;
-	int 		ret;
+	int			ret;
 	char		**line;
 
 	i = 0;

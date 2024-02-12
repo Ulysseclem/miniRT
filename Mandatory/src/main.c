@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/08 18:30:44 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/12 13:38:41 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,22 @@ int	handle_keypress(int key, t_prog *prog)
 	return (0);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_prog prog;
-	t_data	img;
+	t_prog		prog;
+	t_data		img;
+	char		**file;
+	t_camera	c;
+	t_world		w;
 
-	char **file;
-	t_camera c;
-	t_world	w;
-	
-    file = checkfile(argc, argv);
-    if (!file)
+	file = checkfile(argc, argv);
+	if (!file)
 		return (1);
-    if (!initWorld(file, &w))
+	if (!init_world(file, &w))
 		return (free_2(file), 1);
-	if (!initCamera(file, &c))
+	if (!init_camera(file, &c))
 		return (free_2(file), 1); // gerer memoire world
 	free_2(file);
- 
 
  	printf("World:\n");
     printf("Light position: (%.2f, %.2f, %.2f)(x,y,z)\n", w.l.position.x, w.l.position.y, w.l.position.z);
@@ -75,15 +73,13 @@ int main(int argc, char **argv)
 		return (1);
 	prog.win = mlx_new_window(prog.mlx, WIDTH, HEIGHT, "miniRT!");
 	img.img = mlx_new_image(prog.mlx, WIDTH, HEIGHT);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-				&img.endian);
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, \
+	&img.line_length, &img.endian);
 	prog.data = img;
-	
 	render(c, w, &img);
-	
 	mlx_put_image_to_window(prog.mlx, prog.win, img.img, 0, 0);
 	mlx_hook(prog.win, KeyPress, KeyPressMask, &handle_keypress, &prog);
 	mlx_hook(prog.win, DestroyNotify, ButtonPressMask, &handle_exit, &prog);
 	mlx_loop(prog.mlx);
-	return(0);
+	return (0);
 }

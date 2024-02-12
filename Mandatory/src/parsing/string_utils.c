@@ -1,14 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   string_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/12 12:55:14 by uclement          #+#    #+#             */
+/*   Updated: 2024/02/12 12:55:44 by uclement         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 #include "struct.h"
 
-void print_error(const char *error, const int n)
+
+void	print_error(const char *error, const int n)
 {
-    printf("Error\n\033[31m%d | %s\n\033[0m", n, error);
+	printf("Error\n\033[31m%d | %s\n\033[0m", n, error);
 }
 
-
-# define RED "\033[31m"
-# define RESET "\033[0m"
 void	*ft_calloc(size_t nmemb, size_t size)
 {
 	void			*al;
@@ -87,37 +97,37 @@ int	add_string_to_array(char ***array, const char *str)
 
 float ft_strtof(const char *str)
 {
-    float result = 0.0;
-    int sign = 1;
-    int has_decimal = 0;
-    float decimal_place = 1.0;
+	float result = 0.0;
+	int sign = 1;
+	int has_decimal = 0;
+	float decimal_place = 1.0;
 
-    if (*str == '-')
-    {
-        sign = -1;
-        str++;
-    }
-    else if (*str == '+')
-        str++;
-    while (ft_isdigit(*str))
-    {
-        result = result * 10.0 + (*str - '0');
-        str++;
-    }
-    if (*str == '.')
-    {
-        has_decimal = 1;
-        str++;
-        while (ft_isdigit(*str))
-        {
-            result = result * 10.0 + (*str - '0');
-            decimal_place *= 10.0;
-            str++;
-        }
-    }
-    if (has_decimal)
-        result /= decimal_place;
-    return (result * sign);
+	if (*str == '-')
+	{
+		sign = -1;
+		str++;
+	}
+	else if (*str == '+')
+		str++;
+	while (ft_isdigit(*str))
+	{
+		result = result * 10.0 + (*str - '0');
+		str++;
+	}
+	if (*str == '.')
+	{
+		has_decimal = 1;
+		str++;
+		while (ft_isdigit(*str))
+		{
+			result = result * 10.0 + (*str - '0');
+			decimal_place *= 10.0;
+			str++;
+		}
+	}
+	if (has_decimal)
+		result /= decimal_place;
+	return (result * sign);
 }
 
 int	ft_isdigit(int c)
@@ -241,15 +251,15 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 void free_2(char **tab)
 {
-    int i;
+	int i;
 
-    i = 0;
-    while (tab[i])
-    {
-        free(tab[i]);
-        i++;
-    }
-    free(tab);
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 }
 
 int len_2(char **tab)
@@ -258,8 +268,8 @@ int len_2(char **tab)
 
 	i = 0;
 	while (tab[i])
-    {
-        i++;
-    }
+	{
+		i++;
+	}
 	return (i);
 }

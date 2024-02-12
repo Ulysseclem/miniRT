@@ -41,10 +41,10 @@ SRCS        :=	main.c \
 				Render/world.c \
 				Render/camera.c \
 				ray/shadow.c \
-				Shape/shape.c \
 				Shape/shape_inter.c \
 				Utils/utils_to_delete.c \
 				Utils/utils.c \
+				Utils/utils_2.c \
 				Render/intersection.c \
 				Render/render.c \
 				Tuples/tuple.c \

@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 12:13:20 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/02/08 18:26:04 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/12 13:19:05 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_inter	*sphere_intersect(t_shape *s, t_ray r)
 	t_tuple		s_t_r;
 	t_sphere	*current;
 
-	current = (t_sphere *)s->ptrType;
+	current = (t_sphere *)s->ptr_type;
 	s_t_r = sub_tuple(r.origin, point(0, 0, 0));
 	current->a = dot_product(r.direction, r.direction);
 	current->b = 2 * dot_product(r.direction, s_t_r);

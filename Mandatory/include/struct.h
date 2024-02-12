@@ -6,16 +6,21 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/08 18:02:57 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/12 13:37:24 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
 # define STRUCT_H
+# include "minirt.h"
 
-#include "minirt.h"
+# define FALSE 0
+# define TRUE 1
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
 
-typedef struct	s_data {
+typedef struct s_data {
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
@@ -44,22 +49,22 @@ typedef struct s_color {
 
 typedef struct s_matrix
 {
-	int	r;
-	int	c;
+	int		r;
+	int		c;
 	float	**data;
 }	t_matrix;
 
 typedef struct s_ray {
-	t_tuple origin;
+	t_tuple	origin;
 	t_tuple	direction;
 }	t_ray;
 
 typedef struct s_material {
-	t_color	color;
+	t_color		color;
 	t_color		ambiant;
-	float diffuse;
-	float specular;
-	float shininess;
+	float		diffuse;
+	float		specular;
+	float		shininess;
 }	t_material;
 
 typedef struct s_light {
@@ -79,32 +84,18 @@ typedef struct s_t_lightning {
 }	t_lightning;
 
 typedef enum type {
-    PLANE,
+	PLANE,
 	SPHERE,
-    CYLINDER
-} t_type;
+	CYLINDER
+}	t_type;
 
-// typedef struct s_sphere {
-// 	t_tuple 	point;
-// 	int		id;
-// 	float	a;
-// 	float	b;
-// 	float	c;
-// 	float	d;
-// } t_sphere;
-
-// typedef struct s_plane {
-// 	t_tuple 	normal;
-// 	int		id;
-// } t_plane;
-
-typedef struct s_inter t_inter;
+typedef struct s_inter	t_inter;
 
 typedef struct s_shape {
 	t_type		type;
-    t_tuple 	point;
-	void		*ptrType;
-	t_matrix 	*transform;
+	t_tuple		point;
+	void		*ptr_type;
+	t_matrix	*transform;
 	t_material	material;
 	t_inter		*xs;
 	t_tuple		pl_dir;
@@ -115,14 +106,14 @@ typedef struct s_inter {
 	int			count;
 	bool		hit;
 	t_shape		shape;
-} t_inter;
+}	t_inter;
 
 typedef struct s_world {
 	t_shape		*shape;
 	t_light		l;
 	t_color		ambiant;
 	int			count;
-} t_world;
+}	t_world;
 
 typedef struct s_proj {
 	t_tuple	pos;
@@ -145,41 +136,34 @@ typedef struct s_comps {
 }	t_comps;
 
 typedef struct s_camera {
-	float			hsize;
-	float			vsize;
+	float		hsize;
+	float		vsize;
 	float		fov;
 	t_matrix	*transform;
 	float		half_width;
 	float		half_height;
-	float			pixel_size;
+	float		pixel_size;
 }	t_camera;
 
-
-# define FALSE 0
-# define TRUE 1
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
-# endif
-
 typedef struct s_sphere {
-	float	diameter;  
+	float	diameter;
 	int		id;
 	float	a;
 	float	b;
 	float	c;
 	float	d;
-} t_sphere;
+}	t_sphere;
 
 typedef struct s_plane {
 	int			id;
-    t_tuple		directions;
-} t_plane;
+	t_tuple		directions;
+}		t_plane;
 
 typedef struct s_cylinder {
-	int	        id;
-    float	diameter; 
-    float	height; 
-    t_tuple   directions;
-} t_cylinder;
+	int		id;
+	float	diameter;
+	float	height;
+	t_tuple	directions;
+}	t_cylinder;
 
 #endif

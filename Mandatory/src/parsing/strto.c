@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   strto.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/12 12:56:04 by uclement          #+#    #+#             */
+/*   Updated: 2024/02/12 12:57:18 by uclement         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 #include "struct.h"
 
@@ -24,24 +36,24 @@ t_color	str_to_color(const char *str)
 t_material	str_to_material(const char *str, t_world *w)
 {
 	t_material	m;
-	t_color c;
-		
-	c = str_to_color(str);	
-	m.ambiant = mul_color(c, w->ambiant); // couleur de la forme + couleur ambiant
+	t_color		c;
+
+	c = str_to_color(str);
+	m.ambiant = mul_color(c, w->ambiant);
 	m.color = str_to_color(str);
 	m.diffuse = 0.9;
 	m.specular = 0.9;
 	m.shininess = 200;
-	return(m);
+	return (m);
 }
 
 t_tuple	str_to_point(const char *str)
 {
-	t_tuple p;
-    char **tmp;
+	t_tuple	p;
+	char	**tmp;
 
 	tmp = ft_split(str, ',');
-    if (tmp)
+	if (tmp)
 	{
 		p.x = ft_strtof(tmp[0]);
 		p.y = ft_strtof(tmp[1]);
@@ -54,11 +66,11 @@ t_tuple	str_to_point(const char *str)
 
 t_tuple	str_to_vector(const char *str)
 {
-	t_tuple v;
-    char **tmp;
+	t_tuple	v;
+	char	**tmp;
 
 	tmp = ft_split(str, ',');
-    if (tmp)
+	if (tmp)
 	{
 		v.x = ft_strtof(tmp[0]);
 		v.y = ft_strtof(tmp[1]);
