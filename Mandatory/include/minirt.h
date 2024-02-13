@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/12 13:37:07 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/13 10:08:41 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,11 @@ t_color		color_at(t_world w, t_ray r);
 /*								SHAPE										  */
 /* ************************************************************************** */
 
-// sphere_intersect
+// shape_intersect
 t_inter		*sphere_intersect(t_shape *s, t_ray r);
 t_inter		*plane_intersect(t_shape *s, t_ray r);
+t_inter     *cylinder_intersect(t_shape *s, t_ray r);
+
 
 /* ************************************************************************** */
 /*								TUPLES										  */

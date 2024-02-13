@@ -3,15 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   world.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 10:09:14 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/02/12 13:16:46 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/13 10:08:13 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "struct.h"
+
+t_tuple normale_cy(t_shape s, t_tuple local_point)
+{
+    t_cylinder *cylinder;
+	float distance;
+
+	cylinder = (t_cylinder *)s.ptr_type;
+	distance = (local_point.x  * local_point.x) + (local_point.z  * local_point.z);
+    if (distance < 1 && local_point.y >= cylinder->height - EPSILON)
+        return (vector(0, 1, 0));
+	else if (distance < 1 && local_point.y <= 0 + EPSILON)
+        return (vector(0, -1, 0));
+	else 
+		return (vector(local_point.x, 0, local_point.z));
+}
 
 t_tuple	normale_at(t_shape s, t_tuple world_point)
 {
@@ -27,6 +42,8 @@ t_tuple	normale_at(t_shape s, t_tuple world_point)
 		local_normal = sub_tuple(local_point, point(0, 0, 0));
 	else if (s.type == PLANE)
 		local_normal = s.pl_dir;
+	else if (s.type == CYLINDER)
+		local_normal = normale_cy(s, local_point);
 	transposed = transp_matrix(inverted);
 	world_normal = mul_matrix_tuple(transposed, local_normal);
 	world_normal.w = 0;
