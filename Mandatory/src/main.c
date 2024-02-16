@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/12 13:38:41 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/16 09:24:48 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	handle_keypress(int key, t_prog *prog)
 	return (0);
 }
 
+
+
 int	main(int argc, char **argv)
 {
 	t_prog		prog;
@@ -44,8 +46,7 @@ int	main(int argc, char **argv)
 		return (free_2(file), 1);
 	if (!init_camera(file, &c))
 		return (free_2(file), 1); // gerer memoire world
-	free_2(file);
-
+	// free_2(file);
  	printf("World:\n");
     printf("Light position: (%.2f, %.2f, %.2f)(x,y,z)\n", w.l.position.x, w.l.position.y, w.l.position.z);
     // printf("Light luminosity: %.2f, %.2f, %.2f (unit RGB)\n", w.l.luminosity.r, w.l.luminosity.g, w.l.luminosity.b);
@@ -81,5 +82,10 @@ int	main(int argc, char **argv)
 	mlx_hook(prog.win, KeyPress, KeyPressMask, &handle_keypress, &prog);
 	mlx_hook(prog.win, DestroyNotify, ButtonPressMask, &handle_exit, &prog);
 	mlx_loop(prog.mlx);
+
+
+
+
+
 	return (0);
 }

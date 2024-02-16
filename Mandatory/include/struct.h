@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/12 13:37:24 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/13 15:46:43 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,11 @@ typedef struct s_cylinder {
 	int		id;
 	float	diameter;
 	float	height;
+	float	a;
+	float	b;
+	float	c;
+	float	d;
+	t_tuple	axis;
 	t_tuple	directions;
 }	t_cylinder;
 

@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 12:29:59 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/02/08 18:38:00 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/13 12:07:38 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	intersect_shape(t_shape *shape, t_ray ray)
 		shape->xs = sphere_intersect(shape, local_ray);
 	else if (shape->type == PLANE)
 		shape->xs = plane_intersect(shape, local_ray);
+	else if (shape->type == CYLINDER)
+		shape->xs = cylinder_intersect(shape, local_ray);
 	if (shape->xs != NULL)
 		return (2);
 	else
