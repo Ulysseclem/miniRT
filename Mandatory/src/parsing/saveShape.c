@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   saveShape.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 12:53:47 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/15 13:31:00 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/16 10:35:15 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,7 @@ int	init_cy(char **param, t_shape *shape, t_world *world)
 	cylinder->diameter = ft_strtof(param[3]);
 	cylinder->height = ft_strtof(param[4]);
 	shape->material = str_to_material(param[5], world);
-	shape->transform = matrix_translation(shape->point.x, \
-	shape->point.y, shape->point.z);
+	shape->transform = identify_matrix(4,4);
 	shape->ptr_type = cylinder;
 	shape->type = CYLINDER;
 	return (1);

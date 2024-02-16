@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shape_inter.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 12:13:20 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/02/16 10:27:49 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/16 10:50:28 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,81 +88,75 @@ void add_intersection(t_inter **xs, float t)
 		(*xs)[1].t = t;
 }
 
+
 int intersect_caps(t_shape *s, t_ray r, t_inter *xs)
 {
-	float t;
-	float t1;
-	t_cylinder *cylinder;
-	
-	cylinder = (t_cylinder *)s->ptr_type;
-	// if (equal(r.direction.y, 0))
-	// 	return (0);
+    float t, t1;
+	int ret;
+    t_cylinder *cylinder = (t_cylinder *)s->ptr_type;
 
-	t = (-r.origin.y) / r.direction.y;
-	if (t >= 0 && check_cap(r, t, cylinder->diameter/2))
-	{
-		add_intersection(&xs, t);
-		xs->count++;
-
-	}
-	t1 = (cylinder->height - r.origin.y) / r.direction.y;
-	if (t1 >= 0 && check_cap(r, t1, cylinder->diameter/2))
-	{
-		add_intersection(&xs, t1);
-		xs->count++;
-	}
-	return (1);
+	ret = 0;
+    // disque inférieur
+    // if (equal(r.direction.y, 0))
+    //     return (ret);
+    t = (-r.origin.y) / r.direction.y;
+    //printf("intersect_caps      t = %f\n", t);
+    if (t >= 0 && check_cap(r, t, cylinder->diameter/2))
+    {
+        printf("touch top caps\n");
+        add_intersection(&xs, t);
+		ret++;
+    }
+    t1 = (cylinder->height - r.origin.y) / r.direction.y;
+    //printf("intersect_caps      t1 = %f\n", t1);
+    if (t1 >= 0 && check_cap(r, t1, cylinder->diameter/2))
+    {
+        printf("touch botom caps\n");
+        add_intersection(&xs, t1);
+		ret++;
+    }
+    return (ret);
 }
 
 t_inter *cylinder_intersect(t_shape *s, t_ray r)
 {
-	t_inter *xs;
-	t_cylinder *cylinder;
-	float a, b, c, d, t0, t1, y0, y1;
+    t_inter *xs;
+    t_cylinder *cylinder = (t_cylinder *)s->ptr_type;
+    float a, b, c, d, t0, t1, y0, y1;
 
-	cylinder = (t_cylinder *)s->ptr_type;
-	a = pow(r.direction.x, 2) + pow(r.direction.z, 2);
-	if (equal(a, 0))
-	{
-		xs = malloc(sizeof(t_inter) * 2);
-		if (!xs)
-			return (NULL);
-		xs[0] = create_inter_new(-1, *s);
-		xs[1] = create_inter_new(-1, *s);
-		xs->count = 0;
-		intersect_caps(s, r, xs);
-		if (xs->count == 0)
-			return(NULL);
-		return(xs);
-	}
-	b = 2 * (r.origin.x * r.direction.x + r.origin.z * r.direction.z);
-	c = pow(r.origin.x, 2) + pow(r.origin.z, 2) - pow(cylinder->diameter / 2, 2);
-	d = b * b - 4 * a * c;
 	xs = malloc(sizeof(t_inter) * 2);
-	if (!xs)
-		return (NULL);
-	xs[0] = create_inter_new(-1, *s);
-	xs[1] = create_inter_new(-1, *s);
-	xs->count = 0;
-	if (d >= 0)
-	{
-		t0 = (-b - sqrt(d)) / (2 * a);
-		y0 = r.origin.y + t0 * r.direction.y;
-		t1 = (-b + sqrt(d)) / (2 * a);
-		y1 = r.origin.y + t1 * r.direction.y;
-		if (t0 >= 0 && y0 >= 1 && y0 <= cylinder->height){
-			xs->count++;
-			add_intersection(&xs, t0);}
-		if (t1 >= 0 && y1 >= 1 && y1 <= cylinder->height){
-			xs->count++;
-			add_intersection(&xs, t1);}
-	}
-	intersect_caps(s, r, xs);
-	// printf("hit %d\n", xs->count);
-	if ((d < 0))
-	{
-		free(xs);
-		return (NULL);
-	}
-	return (xs);
+    if (!xs)
+        return (NULL);
+    xs[0] = create_inter_new(-1, *s);
+    xs[1] = create_inter_new(-1, *s);
+
+    a = pow(r.direction.x, 2) + pow(r.direction.z, 2);
+	
+    // if (equal(a, 0))
+    // {
+	// 	if (intersect_caps(s, r, xs))
+	// 		return (xs);
+	// 	else
+	// 		return (free(xs), NULL);
+	// }
+
+    b = 2 * (r.origin.x * r.direction.x + r.origin.z * r.direction.z);
+    c = pow(r.origin.x, 2) + pow(r.origin.z, 2) - pow(cylinder->diameter / 2, 2);
+    d = b * b - 4 * a * c;
+
+    if (d >= 0)
+    {
+        t0 = (-b - sqrt(d)) / (2 * a);
+        y0 = r.origin.y + t0 * r.direction.y;
+        t1 = (-b + sqrt(d)) / (2 * a);
+        y1 = r.origin.y + t1 * r.direction.y;
+        if (t0 >= 0 && y0 >= 0 && y0 <= cylinder->height)
+            add_intersection(&xs, t0);
+        if (t1 >= 0 && y1 >= 0 && y1 <= cylinder->height)
+            add_intersection(&xs, t1);
+    }
+  
+    if (intersect_caps(s, r, xs) == 0 && d < 0)
+		return (free(xs), NULL);
+    return (xs);
 }
