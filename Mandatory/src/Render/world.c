@@ -6,12 +6,20 @@
 /*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 10:09:14 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/02/16 11:15:31 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/16 11:42:16 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "struct.h"
+
+float dist( t_tuple p1, t_tuple p2)
+{
+    float dx = p2.x - p1.x;
+    float dy = p2.y - p1.y;
+    float dz = p2.z - p1.z;
+    return (sqrt(dx*dx + dy*dy + dz*dz));
+}
 
 t_tuple normale_cy(t_shape s, t_tuple local_point)
 {
@@ -19,10 +27,11 @@ t_tuple normale_cy(t_shape s, t_tuple local_point)
 	float distance;
 
 	cylinder = (t_cylinder *)s.ptr_type;
-	distance = dot_product(local_point, point(0,local_point.y,0));
-    if (distance <= cylinder->diameter  && local_point.y >= cylinder->height - EPSILON)
+	distance = dist(local_point, point(0, local_point.y, 0));
+	
+    if (distance <= cylinder->diameter/2  && local_point.y >= cylinder->height - EPSILON)
         return (vector(0, 1, 0));
-	else if (distance <= cylinder->diameter && local_point.y <= 0 + EPSILON)
+	else if (distance <= cylinder->diameter/2 && local_point.y <= 0 + EPSILON)
         return (vector(0, -1, 0));
 	else 
 		return (vector(local_point.x, 0, local_point.z));
