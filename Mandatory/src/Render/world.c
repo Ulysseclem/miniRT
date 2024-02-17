@@ -6,35 +6,38 @@
 /*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 10:09:14 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/02/17 13:55:00 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/17 17:16:58 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "struct.h"
 
-float dist( t_tuple p1, t_tuple p2)
+float	dist( t_tuple p1, t_tuple p2)
 {
-    float dx = p2.x - p1.x;
-    float dy = p2.y - p1.y;
-    float dz = p2.z - p1.z;
-    return (sqrt(dx*dx + dy*dy + dz*dz));
+	float	dx;
+	float	dy;
+	float	dz;
+
+	dx = p2.x - p1.x;
+	dy = p2.y - p1.y;
+	dz = p2.z - p1.z;
+	return (sqrt(dx * dx + dy * dy + dz * dz));
 }
 
-t_tuple normale_cy(t_shape s, t_tuple local_point)
+t_tuple	normale_cy(t_shape s, t_tuple loc)
 {
-    t_cylinder *cylinder;
-	float distance;
+	t_cylinder	*cy;
+	float		distance;
 
-	cylinder = (t_cylinder *)s.ptr_type;
-	distance = dist(local_point, point(0, local_point.y, 0));
-	
-    if (distance <= cylinder->diameter/2  && local_point.y >= cylinder->height - EPSILON)
-        return (vector(0, 1, 0));
-	else if (distance <= cylinder->diameter/2 && local_point.y <= 0 + EPSILON)
-        return (vector(0, -1, 0));
-	else 
-		return (vector(local_point.x, 0, local_point.z));
+	cy = (t_cylinder *)s.ptr_type;
+	distance = dist(loc, point(0, loc.y, 0));
+	if (distance <= cy->diameter / 2 && loc.y >= cy->height - EPSILON)
+		return (vector(0, 1, 0));
+	else if (distance <= cy->diameter / 2 && loc.y <= 0 + EPSILON)
+		return (vector(0, -1, 0));
+	else
+		return (vector(loc.x, 0, loc.z));
 }
 
 t_tuple	normale_at(t_shape s, t_tuple world_point)
@@ -50,7 +53,7 @@ t_tuple	normale_at(t_shape s, t_tuple world_point)
 	if (s.type == SPHERE)
 		local_normal = sub_tuple(local_point, point(0, 0, 0));
 	else if (s.type == PLANE)
-		local_normal = vector(0,1,0);
+		local_normal = vector(0, 1, 0);
 	else if (s.type == CYLINDER)
 		local_normal = normale_cy(s, local_point);
 	transposed = transp_matrix(inverted);
