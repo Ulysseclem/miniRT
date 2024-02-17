@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checkShape.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 12:19:14 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/12 13:36:15 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:26:58 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_sp(char **line, const int n)
 		return (print_error("sp - Wrong number of parameter", n), 0);
 	if (!valid_tuple(line[1], 0, 0))
 		return (print_error("sp - Position format not respected", n), 0);
-	if (!valid_float(line[2]))
+	if (!valid_positive_float(line[2]))
 		return (print_error("sp - Diameter format not respected", n), 0);
 	if (!valid_rgb(line[3]))
 		return (print_error("sp - Color format not respected", n), 0);
@@ -47,9 +47,9 @@ int	check_cy(char **line, const int n)
 		return (print_error("cy - Position format not respected", n), 0);
 	if (!valid_tuple(line[2], -1.0, 1.0))
 		return (print_error("cy - Vector format not respected", n), 0);
-	if (!valid_float(line[3]))
+	if (!valid_positive_float(line[3]))
 		return (print_error("cy - Diameter format not respected", n), 0);
-	if (!valid_float(line[4]))
+	if (!valid_positive_float(line[4]))
 		return (print_error("cy - Height format not respected", n), 0);
 	if (!valid_rgb(line[5]))
 		return (print_error("cy - Color format not respected", n), 0);

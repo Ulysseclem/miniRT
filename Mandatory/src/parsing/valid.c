@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valid.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 12:57:23 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/12 12:58:38 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:28:38 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,26 @@ int	valid_range(char *str, float min, float max)
 	ratio = ft_strtof(str);
 	if (ratio > max || ratio < min)
 		return (0);
+	return (1);
+}
+
+int	valid_positive_float(char *str)
+{
+	int	sign;
+
+	sign = 0;
+	if (*str == '-')
+		return (0);
+	else if (*str == '+')
+		str++;
+	while (*str)
+	{
+		if (sign == 0 && *str == '.')
+			sign = 1;
+		else if (!ft_isdigit(*str))
+			return (0);
+		str++;
+	}
 	return (1);
 }
 
@@ -43,24 +63,27 @@ int	valid_float(char *str)
 
 int	valid_tuple(char *str, float min, float max)
 {
-	char	**v;
+	char	**param;
 	int		i;
 
 	i = 0;
-	v = ft_split(str, ',');
-	if (!v)
+	param = ft_split(str, ',');
+	if (!param)
 		return (0);
-	if (len_2(v) != 3)
-		return (free_2(v), 0);
-	while (v[i] && i++)
-		if (!valid_float(v[i]))
-			return (free_2(v), 0);
+	if (len_2(param) != 3)
+		return (free_2(param), 0);
+	while (param[i] && i++)
+		if (!valid_float(param[i]))
+			return (free_2(param), 0);
 	i = 0;
-	if (min && max)
-		while (v[i] && i++)
-			if (!valid_range(v[i], min, max))
-				return (free_2(v), 0);
-	free_2(v);
+	if (max)
+		while (param[i])
+		{
+			if (!valid_range(param[i], min, max))
+				return (free_2(param), 0);
+			i++;
+		}
+	free_2(param);
 	return (1);
 }
 

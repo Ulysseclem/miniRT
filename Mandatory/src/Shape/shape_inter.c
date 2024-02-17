@@ -6,7 +6,7 @@
 /*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 12:13:20 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/02/16 10:50:28 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/17 14:00:12 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,46 +39,30 @@ t_inter	*sphere_intersect(t_shape *s, t_ray r)
 	return (xs);
 }
 
-t_inter	*plane_intersect(t_shape *s, t_ray r)
-{
-	t_inter	*xs;
-	t_tuple	normal;
-	float	dot;
-	float	distance;
+// t_inter	*plane_intersect(t_shape *s, t_ray r)
+// {
+// 	t_inter	*xs;
+// 	t_tuple	normal;
+// 	float	dot;
+// 	float	distance;
 
-	normal = s->pl_dir;
-	dot = dot_product(r.direction, normal);
-	if (dot == 0.0f)
-		return (NULL);
-	distance = ((s->point.x - r.origin.x) * normal.x + \
-	(s->point.y - r.origin.y) * normal.y + \
-	(s->point.z - r.origin.z) * normal.z) / dot;
-	if (distance >= 0.0f)
-	{
-		xs = malloc(sizeof(t_inter) * 2);
-		xs[0] = create_inter_new(distance, *s);
-		xs[1] = create_inter_new(distance, *s);
-		return (xs);
-	}
-	else
-		return (NULL);
-}
-int check_cap(t_ray r, float t, float radius)
-{
-	float x;
-	float z;
-
-	x = r.origin.x + t * r.direction.x;
-		// printf("or %f | ", r.origin.x);
-		// printf("t %f | ", t);
-		// printf("di %f\n", r.direction.x);
-		// printf("x %f\n", x);
-	z = r.origin.z + t * r.direction.z;
-	if (x * x + z * z <= radius * radius)
-		return (TRUE);
-	else 
-		return (FALSE);
-}
+// 	normal = vector(0,1,0);
+// 	dot = dot_product(r.direction, normal);
+// 	if (dot == 0.0f)
+// 		return (NULL);
+// 	distance = ((s->point.x - r.origin.x) * normal.x + 
+// 	(s->point.y - r.origin.y) * normal.y + 
+// 	(s->point.z - r.origin.z) * normal.z) / dot;
+// 	if (distance >= 0.0f)
+// 	{
+// 		xs = malloc(sizeof(t_inter) * 2);
+// 		xs[0] = create_inter_new(distance, *s);
+// 		xs[1] = create_inter_new(distance, *s);
+// 		return (xs);
+// 	}
+// 	else
+// 		return (NULL);
+// }
 
 void add_intersection(t_inter **xs, float t)
 {
@@ -88,6 +72,33 @@ void add_intersection(t_inter **xs, float t)
 		(*xs)[1].t = t;
 }
 
+t_inter	*plane_intersect(t_shape *s, t_ray r)
+{
+	t_inter	*xs;
+
+	xs = malloc(sizeof(t_inter) * 2);
+    if (!xs)
+		return (NULL);
+	xs[0] = create_inter_new(-1, *s);
+    xs[1] = create_inter_new(-1, *s);
+	xs->count = 2;
+	add_intersection(&xs, -r.origin.y / r.direction.y);
+	add_intersection(&xs, -r.origin.y / r.direction.y);
+	return (xs);
+}
+
+int check_cap(t_ray r, float t, float radius)
+{
+	float x;
+	float z;
+
+	x = r.origin.x + t * r.direction.x;
+	z = r.origin.z + t * r.direction.z;
+	if (x * x + z * z <= radius * radius)
+		return (TRUE);
+	else 
+		return (FALSE);
+}
 
 int intersect_caps(t_shape *s, t_ray r, t_inter *xs)
 {
@@ -96,22 +107,17 @@ int intersect_caps(t_shape *s, t_ray r, t_inter *xs)
     t_cylinder *cylinder = (t_cylinder *)s->ptr_type;
 
 	ret = 0;
-    // disque inférieur
-    // if (equal(r.direction.y, 0))
-    //     return (ret);
+    if (equal(r.direction.y, 0))
+        return (ret);
     t = (-r.origin.y) / r.direction.y;
-    //printf("intersect_caps      t = %f\n", t);
     if (t >= 0 && check_cap(r, t, cylinder->diameter/2))
     {
-        printf("touch top caps\n");
         add_intersection(&xs, t);
 		ret++;
     }
     t1 = (cylinder->height - r.origin.y) / r.direction.y;
-    //printf("intersect_caps      t1 = %f\n", t1);
     if (t1 >= 0 && check_cap(r, t1, cylinder->diameter/2))
     {
-        printf("touch botom caps\n");
         add_intersection(&xs, t1);
 		ret++;
     }
@@ -121,42 +127,38 @@ int intersect_caps(t_shape *s, t_ray r, t_inter *xs)
 t_inter *cylinder_intersect(t_shape *s, t_ray r)
 {
     t_inter *xs;
-    t_cylinder *cylinder = (t_cylinder *)s->ptr_type;
-    float a, b, c, d, t0, t1, y0, y1;
+    t_cylinder *cy = (t_cylinder *)s->ptr_type;
+    float t0, t1, y0, y1;
 
 	xs = malloc(sizeof(t_inter) * 2);
     if (!xs)
         return (NULL);
     xs[0] = create_inter_new(-1, *s);
     xs[1] = create_inter_new(-1, *s);
-
-    a = pow(r.direction.x, 2) + pow(r.direction.z, 2);
 	
-    // if (equal(a, 0))
-    // {
-	// 	if (intersect_caps(s, r, xs))
-	// 		return (xs);
-	// 	else
-	// 		return (free(xs), NULL);
-	// }
-
-    b = 2 * (r.origin.x * r.direction.x + r.origin.z * r.direction.z);
-    c = pow(r.origin.x, 2) + pow(r.origin.z, 2) - pow(cylinder->diameter / 2, 2);
-    d = b * b - 4 * a * c;
-
-    if (d >= 0)
+    cy->a = pow(r.direction.x, 2) + pow(r.direction.z, 2);
+    if (equal(cy->a, 0))
     {
-        t0 = (-b - sqrt(d)) / (2 * a);
+		if (intersect_caps(s, r, xs))
+			return (xs);
+		else
+			return (free(xs), NULL);
+	}
+    cy->b = 2 * (r.origin.x * r.direction.x + r.origin.z * r.direction.z);
+    cy->c = pow(r.origin.x, 2) + pow(r.origin.z, 2) - pow(cy->diameter / 2, 2);
+    cy->d = cy->b * cy->b - 4 * cy->a * cy->c;
+    if (cy->d >= 0)
+    {
+        t0 = (-cy->b - sqrt(cy->d)) / (2 * cy->a);
         y0 = r.origin.y + t0 * r.direction.y;
-        t1 = (-b + sqrt(d)) / (2 * a);
+        t1 = (-cy->b + sqrt(cy->d)) / (2 * cy->a);
         y1 = r.origin.y + t1 * r.direction.y;
-        if (t0 >= 0 && y0 >= 0 && y0 <= cylinder->height)
+        if (t0 >= 0 && y0 >= 0 && y0 <= cy->height)
             add_intersection(&xs, t0);
-        if (t1 >= 0 && y1 >= 0 && y1 <= cylinder->height)
+        if (t1 >= 0 && y1 >= 0 && y1 <= cy->height)
             add_intersection(&xs, t1);
     }
-  
-    if (intersect_caps(s, r, xs) == 0 && d < 0)
+    if (intersect_caps(s, r, xs) == 0 && cy->d < 0)
 		return (free(xs), NULL);
     return (xs);
 }

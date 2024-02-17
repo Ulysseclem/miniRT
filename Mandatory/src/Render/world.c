@@ -6,7 +6,7 @@
 /*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 10:09:14 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/02/16 11:42:16 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/17 13:55:00 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_tuple	normale_at(t_shape s, t_tuple world_point)
 	if (s.type == SPHERE)
 		local_normal = sub_tuple(local_point, point(0, 0, 0));
 	else if (s.type == PLANE)
-		local_normal = s.pl_dir;
+		local_normal = vector(0,1,0);
 	else if (s.type == CYLINDER)
 		local_normal = normale_cy(s, local_point);
 	transposed = transp_matrix(inverted);

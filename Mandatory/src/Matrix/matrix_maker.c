@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matrix_maker.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 17:42:55 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/08 17:43:08 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/16 11:45:00 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,3 +78,28 @@ t_matrix	*identify_matrix(int r, int c)
 	}
 	return (matrix);
 }
+
+t_matrix	*identify_matrix_reverse(int r, int c)
+{
+	int			i;
+	int			j;
+	t_matrix	*matrix;
+
+	matrix = create_matrix(r, c);
+	i = 0;
+	while (i < r)
+	{
+		j = 0;
+		while (j < c)
+		{
+			if (i == j)
+				matrix->data[i][j] = -1;
+			else
+				matrix->data[i][j] = 0;
+			j++;
+		}
+		i++;
+	}
+	return (matrix);
+}
+

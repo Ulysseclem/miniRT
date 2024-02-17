@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/16 09:24:48 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/17 12:59:25 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,27 +47,25 @@ int	main(int argc, char **argv)
 	if (!init_camera(file, &c))
 		return (free_2(file), 1); // gerer memoire world
 	// free_2(file);
- 	printf("World:\n");
-    printf("Light position: (%.2f, %.2f, %.2f)(x,y,z)\n", w.l.position.x, w.l.position.y, w.l.position.z);
-    // printf("Light luminosity: %.2f, %.2f, %.2f (unit RGB)\n", w.l.luminosity.r, w.l.luminosity.g, w.l.luminosity.b);
-    // printf("Ambiant color: %.2f, %.2f, %.2f (unit RGB)\n", w.ambiant.r, w.ambiant.g, w.ambiant.b);
-    printf("Shape count: %d\n", w.count);
-    printf("\nCamera:\n");
-    printf("HSize: %.f\n", c.hsize);
-    printf("VSize: %.2f\n", c.vsize);
-    printf("FOV: %.2f\n", c.fov);
-    printf("Half Width: %.2f\n", c.half_width);
-    printf("Half Height: %.2f\n", c.half_height);
-    printf("Pixel Size: %.2f\n", c.pixel_size);
+ 	// printf("World:\n");
+    // printf("Light position: (%.2f, %.2f, %.2f)(x,y,z)\n", w.l.position.x, w.l.position.y, w.l.position.z);
+    // printf("Shape count: %d\n", w.count);
+    // printf("\nCamera:\n");
+    // printf("HSize: %.f\n", c.hsize);
+    // printf("VSize: %.2f\n", c.vsize);
+    // printf("FOV: %.2f\n", c.fov);
+    // printf("Half Width: %.2f\n", c.half_width);
+    // printf("Half Height: %.2f\n", c.half_height);
+    // printf("Pixel Size: %.2f\n", c.pixel_size);
 
-	for (int j = 0; j < w.count; j++) {
-		t_shape shape = w.shape[j];
-		printf("Shape %d:\n", j);
-		(void)shape;
-		printf("	type: %d\n", shape.type);
-		printf("	color: %.2f, %.2f, %.2f (unit RGB)\n", shape.material.color.r, shape.material.color.g, shape.material.color.b);
-		printf("	position: (%.2f, %.2f, %.2f)(x,y,z)\n", shape.point.x, shape.point.y, shape.point.z);
-	}
+	// for (int j = 0; j < w.count; j++) {
+	// 	t_shape shape = w.shape[j];
+	// 	printf("Shape %d:\n", j);
+	// 	(void)shape;
+	// 	printf("	type: %d\n", shape.type);
+	// 	printf("	color: %.2f, %.2f, %.2f (unit RGB)\n", shape.material.color.r, shape.material.color.g, shape.material.color.b);
+	// 	printf("	position: (%.2f, %.2f, %.2f)(x,y,z)\n", shape.point.x, shape.point.y, shape.point.z);
+	// }
 
 	prog.mlx = mlx_init();
 	if (prog.mlx == NULL)

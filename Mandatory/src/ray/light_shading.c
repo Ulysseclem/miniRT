@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light_shading.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 14:15:55 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/08 18:06:12 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/17 13:56:09 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ t_color	lightning(t_comps c, t_light l, bool in_shadow)
 	var.ambiant = mul_color(var.effective_color, c.shape.material.ambiant);
 	var.lightv = norm(sub_tuple(l.position, c.p));
 	var.light_dot_normal = dot_product(var.lightv, c.normalv);
-	if (var.light_dot_normal < 0 || in_shadow == true)
+	if (in_shadow == true)
+		return (var.ambiant);
+	if (c.shape.type != PLANE && var.light_dot_normal < 0)
 		return (var.ambiant);
 	else
 	{

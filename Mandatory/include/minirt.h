@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/15 15:02:35 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/17 13:09:27 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 # include "struct.h"
 # include <fcntl.h>
 # include <unistd.h>
-# define WIDTH 750
-# define HEIGHT 500
+# define WIDTH 1000
+# define HEIGHT 600
 # define PI 3.1415
 # define EPSILON 0.0001
 # define RED "\033[31m"
@@ -45,6 +45,7 @@ int			equal_matrix(t_matrix *a, t_matrix *b);
 t_matrix	*mul_matrix(t_matrix *a, t_matrix *b);
 t_tuple		mul_matrix_tuple(t_matrix *a, t_tuple b);
 t_matrix	*identify_matrix(int r, int c);
+t_matrix	*identify_matrix_reverse(int r, int c);
 t_matrix	*transp_matrix(t_matrix *m);
 
 // matrix inverter
@@ -110,7 +111,6 @@ t_inter		*sphere_intersect(t_shape *s, t_ray r);
 t_inter		*plane_intersect(t_shape *s, t_ray r);
 t_inter     *cylinder_intersect(t_shape *s, t_ray r);
 
-
 /* ************************************************************************** */
 /*								TUPLES										  */
 /* ************************************************************************** */
@@ -171,6 +171,7 @@ int			check_pl(char **line, const int n);
 // valid.c
 int			valid_rgb(char *str);
 int			valid_float(char *str);
+int         valid_positive_float(char *str);
 int			valid_range(char *str, float min, float max);
 int			valid_tuple(char *str, float min, float max);
 
