@@ -3,66 +3,72 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/14 12:49:21 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/02/17 17:05:31 by icaharel         ###   ########.fr       */
+/*   Created: 2024/02/12 13:34:25 by uclement          #+#    #+#             */
+/*   Updated: 2024/02/17 18:52:03 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "struct.h"
 
-
-float	magnitude(t_tuple t)
+float	d_to_r(float deg)
 {
-	return (sqrt(t.x * t.x + t.y * t.y + t.z * t.z + t.w * t.w));
+	return ((deg / 180) * 3.141592);
 }
 
-t_tuple	norm(t_tuple t)
+void	swap(t_inter *xp, t_inter *yp)
 {
-	float	mag;
+	t_inter	temp;
 
-	mag = magnitude(t);
-	if (mag != 0)
+	temp = *xp;
+	*xp = *yp;
+	*yp = temp;
+}
+
+void	bubble_sort(t_inter *xs, int n)
+{
+	int		i;
+	int		j;
+	bool	swapped;
+
+	swapped = false;
+	i = 0;
+	while (i < n - 1)
 	{
-		t.x = t.x / mag;
-		t.y = t.y / mag;
-		t.z = t.z / mag;
-		t.w = t.w / mag;
+		swapped = false;
+		j = 0;
+		while (j < n - i - 1)
+		{
+			if (xs[j].t > xs[j + 1].t)
+			{
+				swap(&xs[j], &xs[j + 1]);
+				xs[j].count = n;
+				swapped = true;
+			}
+			j++;
+		}
+		if (swapped == false)
+			break ;
+		i++;
 	}
-	return (t);
 }
 
-bool	equal(float a, float b)
+void	print_error(const char *error, const int n)
 {
-	float	epsilon;
-
-	epsilon = 0.00001;
-	if ((a - b) < epsilon)
-		return (true);
-	else
-		return (false);
+	printf("Error\n\033[31m%d | %s\n\033[0m", n, error);
 }
 
-bool	equal_tuple(t_tuple a, t_tuple b)
-{
-	if (equal(a.x, b.x) && equal(a.y, b.y) && equal(a.z, b.z))
-		return (true);
-	else
-		return (false);
-}
-
-void	free_matrix(t_matrix *mat)
+void	free_2(char **tab)
 {
 	int	i;
 
 	i = 0;
-	while (i < mat->r)
+	while (tab[i])
 	{
-		free(mat->data[i]);
+		free(tab[i]);
 		i++;
 	}
-	free(mat->data);
-	free(mat);
+	free(tab);
 }

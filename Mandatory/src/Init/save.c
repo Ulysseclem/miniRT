@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   save.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 12:41:33 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/17 16:53:20 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/17 18:26:19 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ void	free_shape(t_shape *s, int nshapes)
 
 	i = -1;
 	while (++i < nshapes)
+	{
+		free_matrix(s[i].transform);
 		free(s[i].ptr_type);
+	}
 	free(s);
 }
 

@@ -21,7 +21,7 @@ t_matrix	*view_transform(t_tuple from, t_tuple to, t_tuple up)
 	t_matrix	*orientation;
 
 	forward = norm(sub_tuple(to, from));
-	left = cross_product(forward, norm(up));
+	left = norm(cross_product(forward, norm(up)));
 	true_up = cross_product(left, forward);
 	orientation = identify_matrix(4, 4);
 	orientation->data[0][0] = left.x;

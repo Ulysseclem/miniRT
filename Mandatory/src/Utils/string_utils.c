@@ -3,40 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 12:55:14 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/17 16:45:35 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/17 18:51:54 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "struct.h"
-
-
-void	print_error(const char *error, const int n)
-{
-	printf("Error\n\033[31m%d | %s\n\033[0m", n, error);
-}
-
-void	*ft_calloc(size_t nmemb, size_t size)
-{
-	void			*al;
-	unsigned int	i;
-	unsigned int	n;
-
-	i = 0;
-	n = size * nmemb;
-	al = malloc(size * nmemb);
-	if (al == NULL)
-		return (NULL);
-	while (i < n)
-	{
-		*((unsigned char *) al + i) = 0;
-		i++;
-	}
-	return (al);
-}
 
 int	ft_isspace(int c)
 {
@@ -95,64 +70,6 @@ int	add_string_to_array(char ***array, const char *str)
 	return (1);
 }
 
-int	ft_isdigit(int c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	else
-		return (0);
-}
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	if (!s)
-		return (0);
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
-
-char	*ft_strndup(const char *s, size_t n)
-{
-	char	*dest;
-	size_t	i;
-
-	i = 0;
-	dest = malloc(sizeof(char) * (n + 1));
-	if (!dest)
-		return (perror("Memory error, please retry"), NULL);
-	while (s[i] && i < n)
-	{
-		dest[i] = s[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
-
-char	*ft_strdup(const char *s)
-{
-	int		size;
-	int		i;
-	char	*str;
-
-	i = 0;
-	size = ft_strlen(s);
-	str = malloc (sizeof(char) * (size + 1));
-	if (!(str))
-		return (NULL);
-	while (s[i])
-	{
-		str[i] = s[i];
-		i++;
-	}
-	str[i] = '\0';
-	return (str);
-}
-
 char	*ft_strncpy(char *dest, const char *src, unsigned int n)
 {
 	unsigned int	i;
@@ -190,43 +107,6 @@ int	ft_strncat(char *dest, char *src, unsigned int nb)
 	dest[i + a] = '\0';
 	return (a);
 }
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	int		i;
-	char	*sub;
-
-	i = 0;
-	if (start > ft_strlen(s))
-		return (ft_strdup(""));
-	if (len > ft_strlen(s) - start)
-		len = ft_strlen(s) - start;
-	sub = ft_calloc(sizeof(char), len + 1);
-	if (sub == NULL)
-		return (NULL);
-	while (len > 0)
-	{
-		sub[i] = s[start + i];
-		len--;
-		i++;
-	}
-	sub[i] = '\0';
-	return (sub);
-}
-
-void free_2(char **tab)
-{
-	int i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-}
-
 int len_2(char **tab)
 {
 	int i;
