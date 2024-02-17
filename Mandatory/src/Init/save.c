@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   save.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 12:41:33 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/13 11:41:59 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/17 16:53:20 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,53 +68,4 @@ int	search(char **file, t_shape **s, t_world *w)
 		i++;
 	}
 	return (1);
-}
-
-int	init_world(char **file, t_world *w)
-{
-	int		i;
-	int		nshape;
-	char	**line;
-	t_shape	*s;
-
-	i = 0;
-	nshape = 0;
-	while (file[i])
-	{
-		line = ft_split(file[i], ' ');
-		if (strcmp(line[0], "sp") == 0 || strcmp(line[0], "pl") == 0
-			|| strcmp(line[0], "cy") == 0)
-			nshape++;
-		free_2(line);
-		i++;
-	}
-	s = malloc(sizeof(t_shape) * nshape);
-	if (!s)
-		return (0);
-	if (!search(file, &s, w))
-		return (free(s), 0);
-	w->shape = s;
-	w->count = nshape;
-	return (nshape);
-}
-
-int	init_camera(char **file, t_camera *c)
-{
-	int			i;
-	int			ret;
-	char		**line;
-
-	i = 0;
-	ret = 0;
-	while (file[i])
-	{
-		line = ft_split(file[i], ' ');
-		if (strcmp(line[0], "C") == 0)
-		{
-			ret = init_cam(line, c);
-		}
-		free_2(line);
-		i++;
-	}
-	return (ret);
 }

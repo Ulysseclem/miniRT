@@ -6,7 +6,7 @@
 /*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 12:57:23 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/16 16:28:38 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/17 16:34:49 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,14 @@ int	valid_tuple(char *str, float min, float max)
 			return (free_2(param), 0);
 	i = 0;
 	if (max)
+	{
 		while (param[i])
 		{
 			if (!valid_range(param[i], min, max))
 				return (free_2(param), 0);
 			i++;
 		}
+	}
 	free_2(param);
 	return (1);
 }

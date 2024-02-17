@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   strto.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 12:56:04 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/12 12:57:18 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/17 16:45:51 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,39 @@ t_tuple	str_to_vector(const char *str)
 		free_2(tmp);
 	}
 	return (v);
+}
+
+float ft_strtof(const char *str)
+{
+	float result = 0.0;
+	int sign = 1;
+	int has_decimal = 0;
+	float decimal_place = 1.0;
+
+	if (*str == '-')
+	{
+		sign = -1;
+		str++;
+	}
+	else if (*str == '+')
+		str++;
+	while (ft_isdigit(*str))
+	{
+		result = result * 10.0 + (*str - '0');
+		str++;
+	}
+	if (*str == '.')
+	{
+		has_decimal = 1;
+		str++;
+		while (ft_isdigit(*str))
+		{
+			result = result * 10.0 + (*str - '0');
+			decimal_place *= 10.0;
+			str++;
+		}
+	}
+	if (has_decimal)
+		result /= decimal_place;
+	return (result * sign);
 }

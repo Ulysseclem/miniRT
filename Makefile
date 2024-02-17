@@ -31,34 +31,36 @@ INCS        := Mandatory/include    \
 
 SRC_DIR     := Mandatory/src
 SRCS        :=	main.c \
-				Tuples/color.c \
 				Matrix/matrix.c \
+				Matrix/matrix_maker.c \
 				Matrix/matrix_inverter.c \
 				Matrix/matrix_transformation.c \
-				Matrix/matrix_maker.c \
-				ray/ray.c \
-				ray/light_shading.c \
+				Ray/ray.c \
+				Ray/shadow.c \
+				Ray/light_shading.c \
 				Render/world.c \
 				Render/camera.c \
-				ray/shadow.c \
-				Shape/shape_inter.c \
-				Utils/utils_to_delete.c \
-				Utils/utils.c \
-				Utils/utils_2.c \
-				Render/intersection.c \
 				Render/render.c \
+				Render/intersection.c \
+				Shape/cylinder_inter.c \
+				Shape/shape_inter.c \
+				Tuples/color.c \
 				Tuples/tuple.c \
 				Tuples/tuple_2.c \
-				parsing/check.c\
-				parsing/checkInfo.c\
-				parsing/checkShape.c\
-				parsing/save.c\
-				parsing/saveInfo.c\
-				parsing/saveShape.c\
-				parsing/string_utils.c\
-				parsing/gnl.c\
-				parsing/strto.c\
-				parsing/valid.c\
+				Checker/check.c \
+				Checker/validation.c \
+				Checker/check_info.c \
+				Checker/check_shape.c \
+				Init/save.c \
+				Init/strto.c \
+				Init/save_info.c \
+				Init/save_shape.c \
+				Init/save_matrix.c \
+				Utils/gnl.c \
+				Utils/utils.c \
+				Utils/utils_2.c \
+				Utils/string_utils.c\
+				Utils/utils_to_delete.c \
 
 
 SRCS        := $(SRCS:%=$(SRC_DIR)/%)
@@ -86,7 +88,7 @@ SRCS_BONUS     	:=	main.c \
 				Render/world.c \
 				Render/camera.c \
 				ray/shadow.c \
-				Shape/shape.c \
+				Shape/cylinder_inter.c \
 				Shape/shape_inter.c \
 				Utils/utils_to_delete.c \
 				Utils/utils.c \

@@ -6,7 +6,7 @@
 /*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/17 13:09:27 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/17 16:55:46 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 # include "struct.h"
 # include <fcntl.h>
 # include <unistd.h>
-# define WIDTH 1000
-# define HEIGHT 600
+# define WIDTH 1500
+# define HEIGHT 700
 # define PI 3.1415
 # define EPSILON 0.0001
 # define RED "\033[31m"
@@ -105,11 +105,12 @@ t_color		color_at(t_world w, t_ray r);
 /* ************************************************************************** */
 /*								SHAPE										  */
 /* ************************************************************************** */
+//cylinder_inter.c
+t_inter     *cylinder_intersect(t_shape *s, t_ray r);
 
-// shape_intersect
+// shape_inter.c
 t_inter		*sphere_intersect(t_shape *s, t_ray r);
 t_inter		*plane_intersect(t_shape *s, t_ray r);
-t_inter     *cylinder_intersect(t_shape *s, t_ray r);
 
 /* ************************************************************************** */
 /*								TUPLES										  */
@@ -158,40 +159,60 @@ void		print_matrix(t_matrix *matrix);
 //check.c
 char		**checkfile(int argc, char **argv);
 
-//checkInfo.c
+//check_info.c
 int			check_a(char **line, const int n);
 int			check_c(char **line, const int n);
 int			check_l(char **line, const int n);
 
-//checkShape.c
+//check_shape.c
 int			check_sp(char **line, const int n);
 int			check_cy(char **line, const int n);
 int			check_pl(char **line, const int n);
 
-// valid.c
+// validation.c
 int			valid_rgb(char *str);
 int			valid_float(char *str);
 int         valid_positive_float(char *str);
 int			valid_range(char *str, float min, float max);
 int			valid_tuple(char *str, float min, float max);
 
+/* ************************************************************************** */
+/*								PARSING										  */
+/* ************************************************************************** */
+
 //save.c
 int			init(char **file, t_shape **s, t_camera *cam);
-int			init_world(char **file, t_world *w);
-int			init_camera(char **file, t_camera *c);
+int         search(char **file, t_shape **s, t_world *w);
 void		free_shape(t_shape *s, int nshapes);
 
-//saveShape
+//save_shape.c
 int			init_sp(char **param, t_shape *shape, t_world *world);
 int			init_pl(char **param, t_shape *shape, t_world *world);
 int			init_cy(char **param, t_shape *shape, t_world *world);
+
+
+t_light		light(t_tuple position, t_color color);
+
+
+//save_info.c
+int			init_world(char **file, t_world *w);
+int			init_camera(char **file, t_camera *c);
+int			init_light(char **param, t_world *w);
+int			init_ambiant(char **param, t_world *w);
 int			init_cam(char **param, t_camera *c);
+
+//save_matrix.c
+t_matrix	*applies_movement(t_tuple direction, t_tuple pos);
 
 // strto.c
 t_color		str_to_color(const char *str);
 t_material	str_to_material(const char *str, t_world *w);
 t_tuple		str_to_point(const char *str);
 t_tuple		str_to_vector(const char *str);
+float		ft_strtof(const char *str);
+
+
+
 
 //string_utils.c
 int			ft_isdigit(int c);
@@ -202,7 +223,6 @@ size_t		ft_strlen(const char *s);
 char		*ft_strdup(const char *s);
 char		*ft_strndup(const char *s, size_t n);
 void		*ft_calloc(size_t nmemb, size_t size);
-float		ft_strtof(const char *str);
 void		print_error(const char *error, const int n);
 int			ft_strncat(char *dest, char *src, unsigned int nb);
 char		*ft_strncpy(char *dest, const char *src, unsigned int n);
@@ -210,10 +230,5 @@ char		*ft_substr(char const *s, unsigned int start, size_t len);
 int			add_string_to_array(char ***array, const char *str);
 
 char		*get_next_line(int fd);
-
-t_color		intense(float intensity, t_color color); // mul_sca_color
-t_light		light(t_tuple position, t_color color);
-int			init_light(char **param, t_world *w);
-int			init_ambiant(char **param, t_world *w);
 
 #endif
