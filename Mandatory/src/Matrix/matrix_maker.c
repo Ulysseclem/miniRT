@@ -6,7 +6,7 @@
 /*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 17:42:55 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/16 11:45:00 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/17 17:25:40 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,3 @@ t_matrix	*identify_matrix_reverse(int r, int c)
 	}
 	return (matrix);
 }
-
