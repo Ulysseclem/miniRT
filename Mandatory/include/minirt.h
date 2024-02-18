@@ -6,7 +6,7 @@
 /*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/18 12:52:15 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/18 13:28:25 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,10 +203,10 @@ int			init_cam(char **param, t_camera *c);
 t_matrix	*applies_movement(t_tuple direction, t_tuple pos);
 
 // strto.c
-t_color		str_to_color(const char *str);
-t_material	str_to_material(const char *str, t_world *w);
-t_tuple		str_to_point(const char *str);
-t_tuple		str_to_vector(const char *str);
+t_color		str_to_color(const char *str, int *ret);
+t_material	str_to_material(const char *str, t_world *w, int *ret);
+t_tuple		str_to_point(const char *str, int *ret);
+t_tuple		str_to_vector(const char *str, int *ret);
 float       ft_strtof(const char *str, int sign, float decimal_place, int has_decimal);
 
 //string_utils.c

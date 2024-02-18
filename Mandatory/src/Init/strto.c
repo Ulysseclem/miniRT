@@ -6,14 +6,14 @@
 /*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 12:56:04 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/18 12:26:08 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/18 13:24:44 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "struct.h"
 
-t_color	str_to_color(const char *str)
+t_color	str_to_color(const char *str, int *ret)
 {
 	t_color		p;
 	float		c;
@@ -30,24 +30,26 @@ t_color	str_to_color(const char *str)
 		p.b = c / 255;
 		free_2(tmp);
 	}
+	else
+		*ret = 0;
 	return (p);
 }
 
-t_material	str_to_material(const char *str, t_world *w)
+t_material	str_to_material(const char *str, t_world *w, int *ret)
 {
 	t_material	m;
 	t_color		c;
 
-	c = str_to_color(str);
+	c = str_to_color(str, ret);
 	m.ambiant = mul_color(c, w->ambiant);
-	m.color = str_to_color(str);
+	m.color = str_to_color(str, ret);
 	m.diffuse = 0.9;
 	m.specular = 0.9;
 	m.shininess = 200;
 	return (m);
 }
 
-t_tuple	str_to_point(const char *str)
+t_tuple	str_to_point(const char *str, int *ret)
 {
 	t_tuple	p;
 	char	**tmp;
@@ -61,10 +63,12 @@ t_tuple	str_to_point(const char *str)
 		p.w = 1;
 		free_2(tmp);
 	}
+	else
+		*ret = 0;
 	return (p);
 }
 
-t_tuple	str_to_vector(const char *str)
+t_tuple	str_to_vector(const char *str, int *ret)
 {
 	t_tuple	v;
 	char	**tmp;
@@ -78,6 +82,8 @@ t_tuple	str_to_vector(const char *str)
 		v.w = 0;
 		free_2(tmp);
 	}
+	else
+		*ret = 0;
 	return (v);
 }
 

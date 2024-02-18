@@ -6,7 +6,7 @@
 /*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/18 12:43:40 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/18 13:44:25 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,17 @@ int	handle_keypress(int key, t_prog *prog)
 int	check_and_init(char ***file, t_world *w, t_camera *c, t_prog *prog)
 {
 	if (!file)
-		return (1);
+		return (0);
 	if (!init_world(*file, w))
-		return (free_2(*file), 1);
+		return (free_2(*file), 0);
 	if (!init_camera(*file, c))
-		return (free_2(*file), 1);
+		return (free_2(*file), 0);
 	free_2(*file);
 	prog->mlx = mlx_init();
 	if (prog->mlx == NULL)
-		return (1);
-	else
 		return (0);
+	else
+		return (1);
 }
 
 int	main(int argc, char **argv)
@@ -54,7 +54,7 @@ int	main(int argc, char **argv)
 	t_world		w;
 
 	file = checkfile(argc, argv);
-	if (check_and_init(&file, &w, &c, &prog))
+	if (!check_and_init(&file, &w, &c, &prog))
 		return (1);
 	prog.win = mlx_new_window(prog.mlx, WIDTH, HEIGHT, "miniRT!");
 	img.img = mlx_new_image(prog.mlx, WIDTH, HEIGHT);

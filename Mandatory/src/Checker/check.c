@@ -6,7 +6,7 @@
 /*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 12:08:52 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/18 12:30:28 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/18 13:05:51 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@ int	checktype(char **line, int line_nbr)
 	int		ret;
 
 	ret = 0;
-	if (strcmp(line[0], "A") == 0)
+	if (ft_strcmp(line[0], "A") == 0)
 		ret = check_a(line, line_nbr);
-	else if (strcmp(line[0], "C") == 0)
+	else if (ft_strcmp(line[0], "C") == 0)
 		ret = check_c(line, line_nbr);
-	else if (strcmp(line[0], "L") == 0)
+	else if (ft_strcmp(line[0], "L") == 0)
 		ret = check_l(line, line_nbr);
-	else if (strcmp(line[0], "sp") == 0)
+	else if (ft_strcmp(line[0], "sp") == 0)
 		ret = check_sp(line, line_nbr);
-	else if (strcmp(line[0], "pl") == 0)
+	else if (ft_strcmp(line[0], "pl") == 0)
 		ret = check_pl(line, line_nbr);
-	else if (strcmp(line[0], "cy") == 0)
+	else if (ft_strcmp(line[0], "cy") == 0)
 		ret = check_cy(line, line_nbr);
 	else
 		return (printf("%d | Invalid ID\n", line_nbr), 0);
@@ -89,7 +89,7 @@ char	**checkfile(int argc, char **argv)
 		{
 			if (res)
 				free_2(res);
-			(free(line), exit(1));
+			(close(fd), free(line), exit(1));
 		}
 		if (!is_empty(line))
 			add_string_to_array(&res, line, 0, 0);
