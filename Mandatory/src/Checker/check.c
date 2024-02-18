@@ -6,7 +6,7 @@
 /*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 12:08:52 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/18 13:05:51 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/18 16:06:04 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	**checkfile(int argc, char **argv)
 		{
 			if (res)
 				free_2(res);
-			(close(fd), free(line), exit(1));
+			return (close(fd), free(line), NULL);
 		}
 		if (!is_empty(line))
 			add_string_to_array(&res, line, 0, 0);

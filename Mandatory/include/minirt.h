@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/18 14:55:54 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/18 16:04:41 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 # include "struct.h"
 # include <fcntl.h>
 # include <unistd.h>
-# define WIDTH 750
-# define HEIGHT 500
+# define WIDTH 50
+# define HEIGHT 50
 # define PI 3.1415
 # define EPSILON 0.0001
 # define RED "\033[31m"

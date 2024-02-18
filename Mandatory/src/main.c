@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/18 14:54:18 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/18 16:09:06 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ int	handle_keypress(int key, t_prog *prog)
 
 int	check_and_init(char ***file, t_world *w, t_prog *prog)
 {
-	if (!file)
-		return (0);
 	if (!init_world(*file, w))
 		return (free_2(*file), 0);
 	if (!init_camera(*file, &w->cam))
@@ -60,6 +58,8 @@ int	main(int argc, char **argv)
 	t_world		w;
 
 	file = checkfile(argc, argv);
+	if (!file)
+		return (0);
 	if (!check_and_init(&file, &w, &prog))
 		return (1);
 	prog.win = mlx_new_window(prog.mlx, WIDTH, HEIGHT, "miniRT!");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   save_info.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 12:47:58 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/18 14:46:33 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/18 16:10:11 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,24 @@
 int	init_light(char **param, t_world *w)
 {
 	t_tuple	position;
+	t_color	color;
 	int		ret;
+	int		size;
 
 	ret = 1;
+	size = len_2(param);
+	if (ft_strlen(param[size - 1]) == 1)
+		size--;
 	position = str_to_point(param[1], &ret);
 	if (!ret)
 		return (0);
-	w->l = light(position, mul_sca_color(set_color(1, 1, 1), \
+	if (size == 3)
+		color = set_color(1, 1, 1);
+	else if (size == 4)
+		color = str_to_color(param[3], &ret);
+	if (!ret)
+		return (0);
+	w->l = light(position, mul_sca_color(color, \
 	ft_strtof(param[2], 1, 1.0, 0)));
 	return (1);
 }
