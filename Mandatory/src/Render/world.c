@@ -6,24 +6,12 @@
 /*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 10:09:14 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/02/17 17:16:58 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/18 12:51:19 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "struct.h"
-
-float	dist( t_tuple p1, t_tuple p2)
-{
-	float	dx;
-	float	dy;
-	float	dz;
-
-	dx = p2.x - p1.x;
-	dy = p2.y - p1.y;
-	dz = p2.z - p1.z;
-	return (sqrt(dx * dx + dy * dy + dz * dz));
-}
 
 t_tuple	normale_cy(t_shape s, t_tuple loc)
 {

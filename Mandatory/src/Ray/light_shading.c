@@ -6,12 +6,21 @@
 /*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 14:15:55 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/18 11:52:31 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/18 12:50:08 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "struct.h"
+
+t_light	light(t_tuple position, t_color color)
+{
+	t_light	l;
+
+	l.position = position;
+	l.color = color;
+	return (l);
+}
 
 t_tuple	reflect(t_tuple vector_in, t_tuple normal)
 {

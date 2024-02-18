@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: uclement <uclement@student.42.fr>          +#+  +:+       +#+         #
+#    By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/10 12:28:28 by uclement          #+#    #+#              #
-#    Updated: 2023/06/01 10:34:17 by uclement         ###   ########.fr        #
+#    Updated: 2024/02/18 12:46:35 by icaharel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,7 @@ SRCS = 		ft_isalpha.c \
 			ft_tolower.c \
 			ft_strchr.c \
 			ft_strrchr.c \
+			ft_isspace.c \
 			ft_strncmp.c \
 			ft_memchr.c \
 			ft_memcmp.c \

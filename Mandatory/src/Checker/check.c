@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 12:08:52 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/17 18:42:33 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/18 12:30:28 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char	**checkfile(int argc, char **argv)
 			(free(line), exit(1));
 		}
 		if (!is_empty(line))
-			add_string_to_array(&res, line);
+			add_string_to_array(&res, line, 0, 0);
 		free(line);
 		line = get_next_line(fd);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 13:34:25 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/17 18:52:03 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/18 12:44:48 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,24 @@ void	swap(t_inter *xp, t_inter *yp)
 	temp = *xp;
 	*xp = *yp;
 	*yp = temp;
+}
+
+void	free_2(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
+
+void	print_error(const char *error, const int n)
+{
+	printf("Error\n\033[31m%d | %s\n\033[0m", n, error);
 }
 
 void	bubble_sort(t_inter *xs, int n)
@@ -53,22 +71,4 @@ void	bubble_sort(t_inter *xs, int n)
 			break ;
 		i++;
 	}
-}
-
-void	print_error(const char *error, const int n)
-{
-	printf("Error\n\033[31m%d | %s\n\033[0m", n, error);
-}
-
-void	free_2(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
 }

@@ -6,32 +6,24 @@
 /*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 12:47:58 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/17 16:53:29 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/18 12:50:18 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "struct.h"
 
-t_light	light(t_tuple position, t_color color)
-{
-	t_light	l;
-
-	l.position = position;
-	l.color = color;
-	return (l);
-}
-
 int	init_light(char **param, t_world *w)
 {
 	w->l = light(str_to_point(param[1]), \
-	mul_sca_color(set_color(1, 1, 1), ft_strtof(param[2])));
+	mul_sca_color(set_color(1, 1, 1), ft_strtof(param[2], 1, 1.0, 0)));
 	return (1);
 }
 
 int	init_ambiant(char **param, t_world *w)
 {
-	w->ambiant = mul_sca_color(str_to_color(param[2]), ft_strtof(param[1]));
+	w->ambiant = mul_sca_color(str_to_color(param[2]), \
+	ft_strtof(param[1], 1, 1.0, 0));
 	return (1);
 }
 
@@ -43,7 +35,7 @@ int	init_cam(char **param, t_camera *c)
 
 	c->hsize = WIDTH ;
 	c->vsize = HEIGHT;
-	half_view = tan(d_to_r(ft_strtof(param[3])) / 2);
+	half_view = tan(d_to_r(ft_strtof(param[3], 1, 1.0, 0)) / 2);
 	if ((c->hsize / c->vsize) >= 1)
 	{
 		c->half_width = half_view;
@@ -63,7 +55,6 @@ int	init_cam(char **param, t_camera *c)
 	c->transform = view_transform(pos, orientation, vector(0, 1, 0));
 	return (1);
 }
-
 
 int	init_world(char **file, t_world *w)
 {
@@ -113,4 +104,3 @@ int	init_camera(char **file, t_camera *c)
 	}
 	return (ret);
 }
-

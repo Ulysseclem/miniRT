@@ -6,7 +6,7 @@
 /*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 12:13:20 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/02/18 11:57:18 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/18 12:20:31 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int	intersect_body(t_cylinder *cy, t_ray r, t_inter *xs)
 		add_intersection(&xs, t0);
 	if (t1 >= 0 && y1 >= 0 && y1 <= cy->height)
 		add_intersection(&xs, t1);
-	
 	return (1);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/17 19:00:57 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/18 12:43:40 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	check_and_init(char ***file, t_world *w, t_camera *c, t_prog *prog)
 		return (free_2(*file), 1);
 	if (!init_camera(*file, c))
 		return (free_2(*file), 1);
+	free_2(*file);
 	prog->mlx = mlx_init();
 	if (prog->mlx == NULL)
 		return (1);
@@ -64,7 +65,6 @@ int	main(int argc, char **argv)
 	mlx_put_image_to_window(prog.mlx, prog.win, img.img, 0, 0);
 	free_shape(w.shape, w.count);
 	free_matrix(c.transform);
-	free_2(file);
 	mlx_hook(prog.win, KeyPress, KeyPressMask, &handle_keypress, &prog);
 	mlx_hook(prog.win, DestroyNotify, ButtonPressMask, &handle_exit, &prog);
 	mlx_loop(prog.mlx);

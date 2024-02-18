@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   valid.c                                            :+:      :+:    :+:   */
+/*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 12:57:23 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/17 16:34:49 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/18 12:11:10 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	valid_range(char *str, float min, float max)
 {
 	float	ratio;
 
-	ratio = ft_strtof(str);
+	ratio = ft_strtof(str, 1, 1.0, 0);
 	if (ratio > max || ratio < min)
 		return (0);
 	return (1);

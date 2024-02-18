@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/17 19:01:36 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/18 12:52:15 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 # include "struct.h"
 # include <fcntl.h>
 # include <unistd.h>
-# define WIDTH 750
-# define HEIGHT 500
+# define WIDTH 50
+# define HEIGHT 50
 # define PI 3.1415
 # define EPSILON 0.0001
 # define RED "\033[31m"
@@ -66,6 +66,7 @@ t_matrix	*matrix_rotation_z(float d);
 // light & shading
 t_tuple		reflect(t_tuple vector_in, t_tuple normal);
 t_color		lightning(t_comps c, t_light l, bool in_shadow);
+t_light		light(t_tuple position, t_color color);
 
 // ray
 void		ray(t_ray *r, t_tuple p, t_tuple v);
@@ -125,6 +126,7 @@ t_tuple		sub_tuple(t_tuple a, t_tuple b);
 float		dot_product(t_tuple a, t_tuple b);
 t_tuple		neg_tuple(t_tuple a);
 t_tuple		cross_product(t_tuple a, t_tuple b);
+float		dist(t_tuple p1, t_tuple p2);
 
 //color
 t_color		add_color(t_color a, t_color b);
@@ -190,10 +192,6 @@ int			init_sp(char **param, t_shape *shape, t_world *world);
 int			init_pl(char **param, t_shape *shape, t_world *world);
 int			init_cy(char **param, t_shape *shape, t_world *world);
 
-
-t_light		light(t_tuple position, t_color color);
-
-
 //save_info.c
 int			init_world(char **file, t_world *w);
 int			init_camera(char **file, t_camera *c);
@@ -209,10 +207,7 @@ t_color		str_to_color(const char *str);
 t_material	str_to_material(const char *str, t_world *w);
 t_tuple		str_to_point(const char *str);
 t_tuple		str_to_vector(const char *str);
-float		ft_strtof(const char *str);
-
-
-
+float       ft_strtof(const char *str, int sign, float decimal_place, int has_decimal);
 
 //string_utils.c
 int			ft_isdigit(int c);
@@ -227,8 +222,7 @@ void		print_error(const char *error, const int n);
 int			ft_strncat(char *dest, char *src, unsigned int nb);
 char		*ft_strncpy(char *dest, const char *src, unsigned int n);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
-int			add_string_to_array(char ***array, const char *str);
-
+int			add_string_to_array(char ***array, const char *str, int size, int i);
 char		*get_next_line(int fd);
 
 #endif

@@ -5,7 +5,7 @@ int valid_range(char *str, float min, float max)
 {
     float  ratio;
 
-    ratio = ft_strtof(str);
+    ratio = ft_strtof(str, 1, 1.0, 0);
     if (ratio > max || ratio < min)
         return(0);
     return (1);
