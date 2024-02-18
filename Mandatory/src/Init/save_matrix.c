@@ -6,7 +6,7 @@
 /*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 12:47:58 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/17 17:25:24 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/18 10:57:17 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,10 @@ float	calculate_rotation_y(t_tuple direction)
 
 float	calculate_rotation_x(t_tuple direction)
 {
-	float	angle;
-	float	magnitude;
 	t_tuple	normalized;
 
-	magnitude = sqrt(direction.x * direction.x + direction.y \
-	* direction.y + direction.z * direction.z);
-	normalized = vector(direction.x / magnitude, direction.y \
-	/ magnitude, direction.z / magnitude);
-	angle = acos(normalized.y);
-	return (angle * (180.0f / PI));
+	normalized = norm(direction);
+	return (acos(normalized.y) * (180.0f / PI));
 }
 
 t_matrix	*applies_movement(t_tuple direction, t_tuple pos)

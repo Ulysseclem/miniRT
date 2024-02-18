@@ -6,7 +6,7 @@
 /*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 12:13:20 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/02/17 16:33:09 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/18 11:57:18 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ int	intersect_caps(t_cylinder *cy, t_ray r, t_inter *xs)
 	int		ret;
 
 	ret = 0;
-	if (equal(r.direction.y, 0))
-		return (ret);
 	t = (-r.origin.y) / r.direction.y;
 	if (t >= 0 && check_cap(r, t, cy->diameter / 2))
 	{
@@ -73,6 +71,7 @@ int	intersect_body(t_cylinder *cy, t_ray r, t_inter *xs)
 		add_intersection(&xs, t0);
 	if (t1 >= 0 && y1 >= 0 && y1 <= cy->height)
 		add_intersection(&xs, t1);
+	
 	return (1);
 }
 
@@ -90,10 +89,10 @@ t_inter	*cylinder_intersect(t_shape *s, t_ray r)
 	cy->a = pow(r.direction.x, 2) + pow(r.direction.z, 2);
 	if (equal(cy->a, 0))
 	{
-		if (intersect_caps(cy, r, xs))
-			return (xs);
-		else
+		if (!intersect_caps(cy, r, xs))
 			return (free(xs), NULL);
+		else
+			return (xs);
 	}
 	cy->b = 2 * (r.origin.x * r.direction.x + r.origin.z * r.direction.z);
 	cy->c = pow(r.origin.x, 2) + pow(r.origin.z, 2) - pow(cy->diameter / 2, 2);
