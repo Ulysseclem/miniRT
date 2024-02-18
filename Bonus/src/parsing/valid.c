@@ -68,7 +68,7 @@ int valid_rgb(char *str)
     {
         if (color[i][0] == '\n')
             return (free_2(color), 0);
-        range = atoi(color[i]);
+        range = ft_atoi(color[i]);
         if (range > 255 || range < 0)
             return (free_2(color), 0);
         i++;

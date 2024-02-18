@@ -6,19 +6,38 @@
 /*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 12:57:23 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/18 12:11:10 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/18 14:26:23 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "struct.h"
 
-int	valid_range(char *str, float min, float max)
+int	valid_range(char *str, int nbr, float min, float max)
 {
-	float	ratio;
+	float		value[3];
+	char		**param;
+	int			i;
 
-	ratio = ft_strtof(str, 1, 1.0, 0);
-	if (ratio > max || ratio < min)
+	i = 0;
+	if (nbr > 1)
+	{
+		param = ft_split(str, ',');
+		if (!param)
+			return (0);
+		while (i < 3)
+		{
+			value[i] = ft_strtof(param[i], 1, 1.0, 0);
+			if (value[i] > max || value[i] < min)
+				return (free_2(param), 0);
+			i++;
+		}
+		if (equal(value[0], 0) && equal(value[1], 0) && equal(value[2], 0))
+			return (free_2(param), 0);
+		return (free_2(param), 1);
+	}
+	value[0] = ft_strtof(str, 1, 1.0, 0);
+	if (value[0] > max || value[0] < min)
 		return (0);
 	return (1);
 }
@@ -75,15 +94,10 @@ int	valid_tuple(char *str, float min, float max)
 	while (param[i] && i++)
 		if (!valid_float(param[i]))
 			return (free_2(param), 0);
-	i = 0;
 	if (max)
 	{
-		while (param[i])
-		{
-			if (!valid_range(param[i], min, max))
-				return (free_2(param), 0);
-			i++;
-		}
+		if (!valid_range(str, 3, min, max))
+			return (free_2(param), 0);
 	}
 	free_2(param);
 	return (1);
@@ -91,9 +105,9 @@ int	valid_tuple(char *str, float min, float max)
 
 int	valid_rgb(char *str)
 {
-	int		range;
-	int		i;
-	char	**color;
+	int			value;
+	int			i;
+	char		**color;
 
 	color = ft_split(str, ',');
 	if (!color)
@@ -105,8 +119,10 @@ int	valid_rgb(char *str)
 	{
 		if (color[i][0] == '\n')
 			return (free_2(color), 0);
-		range = atoi(color[i]);
-		if (range > 255 || range < 0)
+		if (ft_strlen(color[i]) > 4)
+			return (0);
+		value = atoi(color[i]);
+		if (value > 255 || value < 0)
 			return (free_2(color), 0);
 		i++;
 	}

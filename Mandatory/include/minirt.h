@@ -6,7 +6,7 @@
 /*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/18 13:28:25 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/18 14:01:34 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,8 +175,8 @@ int			check_pl(char **line, const int n);
 int			valid_rgb(char *str);
 int			valid_float(char *str);
 int         valid_positive_float(char *str);
-int			valid_range(char *str, float min, float max);
 int			valid_tuple(char *str, float min, float max);
+int			valid_range(char *str, int nbr, float min, float max);
 
 /* ************************************************************************** */
 /*								PARSING										  */

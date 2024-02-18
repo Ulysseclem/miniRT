@@ -6,7 +6,7 @@
 /*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 12:47:58 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/18 13:46:47 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/18 14:26:33 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,6 @@ int	init_ambiant(char **param, t_world *w)
 	w->ambiant = mul_sca_color(color_input, ft_strtof(param[1], 1, 1.0, 0));
 	return (1);
 }
-
-
-
-
-
 
 int	init_cam(char **param, t_camera *c)
 {
