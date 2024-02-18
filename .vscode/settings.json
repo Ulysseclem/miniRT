@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "random": "c",
-        "algorithm": "c",
-        "errno.h": "c",
-        "stdint.h": "c",
-        "minirt.h": "c"
-    }
-}
