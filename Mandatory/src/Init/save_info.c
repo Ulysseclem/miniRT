@@ -6,7 +6,7 @@
 /*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 12:47:58 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/18 14:26:33 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/18 14:38:18 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,10 @@ int	init_ambiant(char **param, t_world *w)
 	return (1);
 }
 
-int	init_cam(char **param, t_camera *c)
+void	init_camsize(char **param, t_camera *c)
 {
-	int			ret;
-	float		half_view;
-	t_tuple		pos;
-	t_tuple		orient;
+	float	half_view;
 
-	ret = 1;
 	c->hsize = WIDTH ;
 	c->vsize = HEIGHT;
 	half_view = tan(d_to_r(ft_strtof(param[3], 1, 1.0, 0)) / 2);
@@ -62,6 +58,16 @@ int	init_cam(char **param, t_camera *c)
 		c->half_height = half_view;
 	}
 	c->pixel_size = (c->half_width * 2) / c->hsize;
+}
+
+int	init_cam(char **param, t_camera *c)
+{
+	int			ret;
+	t_tuple		pos;
+	t_tuple		orient;
+
+	ret = 1;
+	init_camsize(param, c);
 	pos = str_to_point(param[1], &ret);
 	orient = str_to_point(param[2], &ret);
 	if (ret == 0)
