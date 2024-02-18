@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 13:34:25 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/18 14:34:36 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/18 14:47:34 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,24 @@ void	swap(t_inter *xp, t_inter *yp)
 	temp = *xp;
 	*xp = *yp;
 	*yp = temp;
+}
+
+void	free_2(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
+
+void	print_error(const char *error, const int n)
+{
+	printf("Error\n\033[31m%d | %s\n\033[0m", n, error);
 }
 
 void	bubble_sort(t_inter *xs, int n)
@@ -53,29 +71,4 @@ void	bubble_sort(t_inter *xs, int n)
 			break ;
 		i++;
 	}
-}
-
-void	print_error(const char *error, const int n)
-{
-	printf("Error\n\033[31m%d | %s\n\033[0m", n, error);
-}
-
-void	free_2(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-}
-
-void	free_and_exit(t_world w)
-{
-	free_matrix(w.cam.transform);
-	free_shape(w.shape, w.count);
-	exit(1);
 }

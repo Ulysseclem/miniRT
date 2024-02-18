@@ -3,24 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 12:55:14 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/17 18:51:54 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/18 12:45:13 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "struct.h"
-
-int	ft_isspace(int c)
-{
-	if (c >= 9 && c <= 13)
-		return (1);
-	if (c == ' ')
-		return (1);
-	return (0);
-}
 
 int	is_empty(char *str)
 {
@@ -36,29 +27,32 @@ int	is_empty(char *str)
 	return (1);
 }
 
-int	add_string_to_array(char ***array, const char *str)
+int	len_2(char **tab)
 {
-	char	**new_array;
-	int		size;
-	int		i;
+	int	i;
 
 	i = 0;
-	size = 0;
+	while (tab[i])
+		i++;
+	return (i);
+}
+
+int	add_string_to_array(char ***array, const char *str, int size, int i)
+{
+	char	**new_array;
+
 	if (*array)
 		size = len_2(*array);
 	size++;
 	new_array = (char **)malloc((size + 1) * sizeof(char *));
 	if (!new_array)
-		return (perror("Memory error, please retry"), 0);
-	if (*array)
+		return (perror("malloc error (string_utils.c:60)"), 0);
+	while (i < size - 1)
 	{
-		while (i < size - 1)
-		{
-			new_array[i] = ft_strdup((*array)[i]);
-			if (!new_array[i])
-				return (free_2(new_array), 0);
-			i++;
-		}
+		new_array[i] = ft_strdup((*array)[i]);
+		if (!new_array[i])
+			return (free_2(new_array), 0);
+		i++;
 	}
 	new_array[size - 1] = ft_strdup(str);
 	if (!new_array[size - 1])
@@ -106,15 +100,4 @@ int	ft_strncat(char *dest, char *src, unsigned int nb)
 	}
 	dest[i + a] = '\0';
 	return (a);
-}
-int len_2(char **tab)
-{
-	int i;
-
-	i = 0;
-	while (tab[i])
-	{
-		i++;
-	}
-	return (i);
 }

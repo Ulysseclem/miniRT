@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_matrix.c                                     :+:      :+:    :+:   */
+/*   matrix_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 12:49:21 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/02/17 18:51:50 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/18 14:27:08 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ bool	equal(float a, float b)
 	float	epsilon;
 
 	epsilon = 0.00001;
-	if ((a - b) < epsilon)
+	if (((a - b) * (a - b)) < (epsilon * epsilon))
 		return (true);
 	else
 		return (false);

@@ -10,11 +10,11 @@ t_color	str_to_color(const char *str)
 	tmp = ft_split(str, ',');
 	if (tmp)
 	{
-		c = ft_strtof(tmp[0]);
+		c = ft_strtof(tmp[0], 1, 1.0, 0.0);
 		p.r = c / 255;
-		c = ft_strtof(tmp[1]);
+		c = ft_strtof(tmp[1], 1, 1.0, 0.0);
 		p.g = c / 255;
-		c = ft_strtof(tmp[2]);
+		c = ft_strtof(tmp[2], 1, 1.0, 0.0);
 		p.b = c / 255;
 		free_2(tmp);
 	}
@@ -43,9 +43,9 @@ t_tuple	str_to_point(const char *str)
 	tmp = ft_split(str, ',');
     if (tmp)
 	{
-		p.x = ft_strtof(tmp[0]);
-		p.y = ft_strtof(tmp[1]);
-		p.z = ft_strtof(tmp[2]);
+		p.x = ft_strtof(tmp[0], 1, 1.0, 0.0);
+		p.y = ft_strtof(tmp[1], 1, 1.0, 0.0);
+		p.z = ft_strtof(tmp[2], 1, 1.0, 0.0);
 		p.w = 1;
 		free_2(tmp);
 	}
@@ -60,9 +60,9 @@ t_tuple	str_to_vector(const char *str)
 	tmp = ft_split(str, ',');
     if (tmp)
 	{
-		v.x = ft_strtof(tmp[0]);
-		v.y = ft_strtof(tmp[1]);
-		v.z = ft_strtof(tmp[2]);
+		v.x = ft_strtof(tmp[0], 1, 1.0, 0.0);
+		v.y = ft_strtof(tmp[1], 1, 1.0, 0.0);
+		v.z = ft_strtof(tmp[2], 1, 1.0, 0.0);
 		v.w = 0;
 		free_2(tmp);
 	}

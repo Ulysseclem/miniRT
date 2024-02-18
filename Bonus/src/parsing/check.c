@@ -79,7 +79,7 @@ char	**checkfile(int argc, char **argv)
 			(free(line), exit(1));
 		}
 		if (!is_empty(line))
-			add_string_to_array(&res, line);
+			add_string_to_array(&res, line, 0, 0);
 		free(line);
 		line = get_next_line(fd);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tuple_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
+/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:01 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/12 13:13:42 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/18 12:52:24 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,16 @@ float	dot_product(t_tuple a, t_tuple b)
 
 	nbr = (a.x * b.x) + (a.y * b.y) + (a.z * b.z) + (a.w * b.w);
 	return (nbr);
+}
+
+float	dist( t_tuple p1, t_tuple p2)
+{
+	float	dx;
+	float	dy;
+	float	dz;
+
+	dx = p2.x - p1.x;
+	dy = p2.y - p1.y;
+	dz = p2.z - p1.z;
+	return (sqrt(dx * dx + dy * dy + dz * dz));
 }

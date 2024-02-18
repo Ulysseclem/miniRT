@@ -6,12 +6,19 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:49:57 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/18 14:30:47 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/18 14:54:18 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "struct.h"
+
+void	free_and_exit(t_world w)
+{
+	free_matrix(w.cam.transform);
+	free_shape(w.shape, w.count);
+	exit(1);
+}
 
 int	handle_exit(t_prog *prog)
 {
@@ -32,17 +39,17 @@ int	handle_keypress(int key, t_prog *prog)
 int	check_and_init(char ***file, t_world *w, t_prog *prog)
 {
 	if (!file)
-		return (1);
-	if (!init_world(*file, w))
-		return (free_2(*file), 1);
-	if (!init_camera(*file, &w->cam))
-		return (free_2(*file), 1);
-	prog->mlx = mlx_init();
-	free_2(*file);
-	if (prog->mlx == NULL)
-		return (1);
-	else
 		return (0);
+	if (!init_world(*file, w))
+		return (free_2(*file), 0);
+	if (!init_camera(*file, &w->cam))
+		return (free_2(*file), 0);
+	free_2(*file);
+	prog->mlx = mlx_init();
+	if (prog->mlx == NULL)
+		return (0);
+	else
+		return (1);
 }
 
 int	main(int argc, char **argv)
@@ -53,7 +60,7 @@ int	main(int argc, char **argv)
 	t_world		w;
 
 	file = checkfile(argc, argv);
-	if (check_and_init(&file, &w, &prog))
+	if (!check_and_init(&file, &w, &prog))
 		return (1);
 	prog.win = mlx_new_window(prog.mlx, WIDTH, HEIGHT, "miniRT!");
 	img.img = mlx_new_image(prog.mlx, WIDTH, HEIGHT);

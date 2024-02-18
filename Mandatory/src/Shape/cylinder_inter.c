@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 12:13:20 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/02/18 14:40:04 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/18 14:46:57 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,10 @@ t_inter	*cylinder_intersect(t_shape *s, t_ray r, t_world w)
 	cy->a = pow(r.direction.x, 2) + pow(r.direction.z, 2);
 	if (equal(cy->a, 0))
 	{
-		if (intersect_caps(cy, r, xs))
-			return (xs);
-		else
+		if (!intersect_caps(cy, r, xs))
 			return (free(xs), NULL);
+		else
+			return (xs);
 	}
 	cy->b = 2 * (r.origin.x * r.direction.x + r.origin.z * r.direction.z);
 	cy->c = pow(r.origin.x, 2) + pow(r.origin.z, 2) - pow(cy->diameter / 2, 2);

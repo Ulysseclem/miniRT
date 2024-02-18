@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/18 14:44:45 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/18 14:55:54 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ t_matrix	*matrix_rotation_z(float d);
 // light & shading
 t_tuple		reflect(t_tuple vector_in, t_tuple normal);
 t_color		lightning(t_comps c, t_light l, bool in_shadow);
+t_light		light(t_tuple position, t_color color);
 
 // ray
 void		ray(t_ray *r, t_tuple p, t_tuple v);
@@ -106,7 +107,7 @@ t_color		color_at(t_world w, t_ray r);
 /*								SHAPE										  */
 /* ************************************************************************** */
 //cylinder_inter.c
-t_inter     *cylinder_intersect(t_shape *s, t_ray r, t_world w);
+t_inter		*cylinder_intersect(t_shape *s, t_ray r, t_world w);
 
 // shape_inter.c
 t_inter		*sphere_intersect(t_shape *s, t_ray r, t_world w);
@@ -125,6 +126,7 @@ t_tuple		sub_tuple(t_tuple a, t_tuple b);
 float		dot_product(t_tuple a, t_tuple b);
 t_tuple		neg_tuple(t_tuple a);
 t_tuple		cross_product(t_tuple a, t_tuple b);
+float		dist(t_tuple p1, t_tuple p2);
 
 //color
 t_color		add_color(t_color a, t_color b);
@@ -172,9 +174,9 @@ int			check_pl(char **line, const int n);
 // validation.c
 int			valid_rgb(char *str);
 int			valid_float(char *str);
-int         valid_positive_float(char *str);
-int			valid_range(char *str, float min, float max);
+int			valid_positive_float(char *str);
 int			valid_tuple(char *str, float min, float max);
+int			valid_range(char *str, int nbr, float min, float max);
 
 /* ************************************************************************** */
 /*								PARSING										  */
@@ -182,17 +184,13 @@ int			valid_tuple(char *str, float min, float max);
 
 //save.c
 int			init(char **file, t_shape **s, t_camera *cam);
-int         search(char **file, t_shape **s, t_world *w);
+int			search(char **file, t_shape **s, t_world *w);
 void		free_shape(t_shape *s, int nshapes);
 
 //save_shape.c
 int			init_sp(char **param, t_shape *shape, t_world *world);
 int			init_pl(char **param, t_shape *shape, t_world *world);
 int			init_cy(char **param, t_shape *shape, t_world *world);
-
-
-t_light		light(t_tuple position, t_color color);
-
 
 //save_info.c
 int			init_world(char **file, t_world *w);
@@ -205,14 +203,12 @@ int			init_cam(char **param, t_camera *c);
 t_matrix	*applies_movement(t_tuple direction, t_tuple pos);
 
 // strto.c
-t_color		str_to_color(const char *str);
-t_material	str_to_material(const char *str, t_world *w);
-t_tuple		str_to_point(const char *str);
-t_tuple		str_to_vector(const char *str);
-float		ft_strtof(const char *str);
-
-
-
+t_color		str_to_color(const char *str, int *ret);
+t_material	str_to_material(const char *str, t_world *w, int *ret);
+t_tuple		str_to_point(const char *str, int *ret);
+t_tuple		str_to_vector(const char *str, int *ret);
+float		ft_strtof(const char *str, int sign, float decimal_place, \
+int has_decimal);
 
 //string_utils.c
 int			ft_isdigit(int c);
@@ -227,8 +223,8 @@ void		print_error(const char *error, const int n);
 int			ft_strncat(char *dest, char *src, unsigned int nb);
 char		*ft_strncpy(char *dest, const char *src, unsigned int n);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
-int			add_string_to_array(char ***array, const char *str);
-
+int			add_string_to_array(char ***array, const char \
+			*str, int size, int i);
 char		*get_next_line(int fd);
 void		free_and_exit(t_world w);
 

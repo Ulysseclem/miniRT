@@ -57,9 +57,9 @@ SRCS        :=	main.c \
 				Init/save_shape.c \
 				Init/save_matrix.c \
 				Utils/gnl.c \
-				Utils/utils_matrix.c \
 				Utils/utils.c \
 				Utils/string_utils.c\
+				Utils/matrix_utils.c \
 
 
 SRCS        := $(SRCS:%=$(SRC_DIR)/%)

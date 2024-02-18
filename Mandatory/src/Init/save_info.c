@@ -6,44 +6,47 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 12:47:58 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/18 13:25:28 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/18 14:46:33 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "struct.h"
 
-t_light	light(t_tuple position, t_color color)
-{
-	t_light	l;
-
-	l.position = position;
-	l.color = color;
-	return (l);
-}
-
 int	init_light(char **param, t_world *w)
 {
-	w->l = light(str_to_point(param[1]), \
-	mul_sca_color(set_color(1, 1, 1), ft_strtof(param[2])));
+	t_tuple	position;
+	int		ret;
+
+	ret = 1;
+	position = str_to_point(param[1], &ret);
+	if (!ret)
+		return (0);
+	w->l = light(position, mul_sca_color(set_color(1, 1, 1), \
+	ft_strtof(param[2], 1, 1.0, 0)));
 	return (1);
 }
 
 int	init_ambiant(char **param, t_world *w)
 {
-	w->ambiant = mul_sca_color(str_to_color(param[2]), ft_strtof(param[1]));
+	int		ret;
+	t_color	color_input;
+
+	ret = 1;
+	color_input = str_to_color(param[2], &ret);
+	if (!ret)
+		return (0);
+	w->ambiant = mul_sca_color(color_input, ft_strtof(param[1], 1, 1.0, 0));
 	return (1);
 }
 
-int	init_cam(char **param, t_camera *c)
+void	init_camsize(char **param, t_camera *c)
 {
-	float		half_view;
-	t_tuple		pos;
-	t_tuple		orientation;
+	float	half_view;
 
 	c->hsize = WIDTH ;
 	c->vsize = HEIGHT;
-	half_view = tan(d_to_r(ft_strtof(param[3])) / 2);
+	half_view = tan(d_to_r(ft_strtof(param[3], 1, 1.0, 0)) / 2);
 	if ((c->hsize / c->vsize) >= 1)
 	{
 		c->half_width = half_view;
@@ -55,42 +58,22 @@ int	init_cam(char **param, t_camera *c)
 		c->half_height = half_view;
 	}
 	c->pixel_size = (c->half_width * 2) / c->hsize;
-	pos = str_to_point(param[1]);
-	orientation = str_to_point(param[2]);
-	orientation.x += pos.x;
-	orientation.y += pos.y;
-	orientation.z += pos.z;
-	c->transform = view_transform(pos, orientation, vector(0, 1, 0));
-	return (1);
 }
 
-
-int	init_world(char **file, t_world *w)
+int	init_cam(char **param, t_camera *c)
 {
-	int		i;
-	int		nshape;
-	char	**line;
-	t_shape	*s;
+	int			ret;
+	t_tuple		pos;
+	t_tuple		orient;
 
-	i = 0;
-	nshape = 0;
-	while (file[i])
-	{
-		line = ft_split(file[i], ' ');
-		if (strcmp(line[0], "sp") == 0 || strcmp(line[0], "pl") == 0
-			|| strcmp(line[0], "cy") == 0)
-			nshape++;
-		free_2(line);
-		i++;
-	}
-	s = malloc(sizeof(t_shape) * nshape);
-	if (!s)
+	ret = 1;
+	init_camsize(param, c);
+	pos = str_to_point(param[1], &ret);
+	orient = str_to_point(param[2], &ret);
+	if (ret == 0)
 		return (0);
-	if (!search(file, &s, w))
-		return (free(s), 0);
-	w->shape = s;
-	w->count = nshape;
-	return (nshape);
+	c->transform = view_transform(pos, add_tuple(orient, pos), vector(0, 1, 0));
+	return (1);
 }
 
 int	init_camera(char **file, t_camera *c)
@@ -100,17 +83,18 @@ int	init_camera(char **file, t_camera *c)
 	char		**line;
 
 	i = 0;
-	ret = 0;
+	ret = 1;
 	while (file[i])
 	{
 		line = ft_split(file[i], ' ');
-		if (strcmp(line[0], "C") == 0)
+		if (ft_strcmp(line[0], "C") == 0)
 		{
 			ret = init_cam(line, c);
 		}
 		free_2(line);
+		if (!ret)
+			return (0);
 		i++;
 	}
-	return (ret);
+	return (1);
 }
-
