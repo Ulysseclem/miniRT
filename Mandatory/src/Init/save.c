@@ -6,7 +6,7 @@
 /*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 12:41:33 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/18 13:22:50 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/18 14:44:35 by icaharel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	search(char **file, t_shape **s, t_world *w)
 			ret = init_cy(line, &(*s)[j++], w);
 		free_2(line);
 		if (!ret)
-			return (ret); // gerer memoire
+			return (free_shape(*s, j), 0);
 		i++;
 	}
 	return (ret);
@@ -98,7 +98,7 @@ int	init_world(char **file, t_world *w)
 	if (!shape_list)
 		return (0);
 	if (!search(file, &shape_list, w))
-		return (free(shape_list), 0);
+		return (0);
 	w->shape = shape_list;
 	w->count = nshape;
 	return (nshape);
