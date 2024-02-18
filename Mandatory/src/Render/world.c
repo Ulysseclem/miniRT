@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   world.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 10:09:14 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/02/17 17:16:58 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/18 14:43:23 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_tuple	normale_cy(t_shape s, t_tuple loc)
 		return (vector(loc.x, 0, loc.z));
 }
 
-t_tuple	normale_at(t_shape s, t_tuple world_point)
+t_tuple	normale_at(t_shape s, t_tuple world_point, t_world w)
 {
 	t_tuple		local_point;
 	t_tuple		local_normal;
@@ -49,6 +49,8 @@ t_tuple	normale_at(t_shape s, t_tuple world_point)
 	t_matrix	*transposed;
 
 	inverted = inverse(s.transform);
+	if (!inverted)
+		free_and_exit(w);
 	local_point = mul_matrix_tuple(inverted, world_point);
 	if (s.type == SPHERE)
 		local_normal = sub_tuple(local_point, point(0, 0, 0));
@@ -64,7 +66,7 @@ t_tuple	normale_at(t_shape s, t_tuple world_point)
 	return (norm(world_normal));
 }
 
-t_comps	prepare_computation(t_inter xs, t_ray r)
+t_comps	prepare_computation(t_inter xs, t_ray r, t_world w)
 {
 	t_comps	comps;
 
@@ -72,7 +74,7 @@ t_comps	prepare_computation(t_inter xs, t_ray r)
 	comps.shape = xs.shape;
 	comps.p = position_f(r, comps.t);
 	comps.eyev = neg_tuple(r.direction);
-	comps.normalv = normale_at(comps.shape, comps.p);
+	comps.normalv = normale_at(comps.shape, comps.p, w);
 	comps.over_p = add_tuple(comps.p, mul_sca_tuple(comps.normalv, 0.001));
 	if (dot_product(comps.normalv, comps.eyev) < 0)
 	{
@@ -105,6 +107,6 @@ t_color	color_at(t_world w, t_ray r)
 	free(xs);
 	if (hit_xs.hit == false)
 		return (set_color(0, 0, 0));
-	c = prepare_computation(hit_xs, r);
+	c = prepare_computation(hit_xs, r, w);
 	return (shade_hit(w, c));
 }

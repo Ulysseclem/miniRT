@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 13:34:25 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/17 18:52:03 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/18 14:34:36 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,11 @@ void	free_2(char **tab)
 		i++;
 	}
 	free(tab);
+}
+
+void	free_and_exit(t_world w)
+{
+	free_matrix(w.cam.transform);
+	free_shape(w.shape, w.count);
+	exit(1);
 }

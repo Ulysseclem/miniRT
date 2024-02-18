@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 12:37:12 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/02/17 17:17:36 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/18 14:29:10 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	render(t_camera c, t_world w, t_data *img)
 		x = 0;
 		while (x < c.hsize - 1)
 		{
-			r = ray_for_pixel(c, x, y);
+			r = ray_for_pixel(w, x, y);
 			color = color_at(w, r);
 			my_mlx_pixel_put(img, x, y, color);
 			x++;

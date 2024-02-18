@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder_inter.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 12:13:20 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/02/17 16:33:09 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/18 14:40:04 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ int	intersect_caps(t_cylinder *cy, t_ray r, t_inter *xs)
 	int		ret;
 
 	ret = 0;
-	if (equal(r.direction.y, 0))
-		return (ret);
 	t = (-r.origin.y) / r.direction.y;
 	if (t >= 0 && check_cap(r, t, cy->diameter / 2))
 	{
@@ -76,7 +74,7 @@ int	intersect_body(t_cylinder *cy, t_ray r, t_inter *xs)
 	return (1);
 }
 
-t_inter	*cylinder_intersect(t_shape *s, t_ray r)
+t_inter	*cylinder_intersect(t_shape *s, t_ray r, t_world w)
 {
 	t_inter		*xs;
 	t_cylinder	*cy;
@@ -84,7 +82,7 @@ t_inter	*cylinder_intersect(t_shape *s, t_ray r)
 	cy = (t_cylinder *)s->ptr_type;
 	xs = malloc(sizeof(t_inter) * 2);
 	if (!xs)
-		return (NULL);
+		free_and_exit(w);
 	xs[0] = create_inter_new(-1, *s);
 	xs[1] = create_inter_new(-1, *s);
 	cy->a = pow(r.direction.x, 2) + pow(r.direction.z, 2);

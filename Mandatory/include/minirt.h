@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/17 19:01:36 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/18 14:44:45 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,11 @@ bool		is_shadowed(t_world w, t_tuple point);
 // camera
 t_matrix	*view_transform(t_tuple from, t_tuple to, t_tuple up);
 t_camera	camera(int hsize, int vsize, float fov);
-t_ray		ray_for_pixel(t_camera c, float px, float py);
+t_ray		ray_for_pixel(t_world w, float px, float py);
 
 // intersection
 t_inter		*inter_world(t_world w, t_ray ray);
-int			intersect_shape(t_shape *shape, t_ray ray);
+int			intersect_shape(t_shape *shape, t_ray ray, t_world w);
 t_inter		create_inter_new(float nbr, t_shape shape);
 
 // render
@@ -97,8 +97,8 @@ void		my_mlx_pixel_put(t_data *data, int x, int y, t_color color);
 int			RGB_to_hex(t_color c);
 
 // world
-t_tuple		normale_at(t_shape s, t_tuple world_point);
-t_comps		prepare_computation(t_inter xs, t_ray r);
+t_tuple		normale_at(t_shape s, t_tuple world_point, t_world w);
+t_comps		prepare_computation(t_inter xs, t_ray r, t_world w);
 t_color		shade_hit(t_world w, t_comps c);
 t_color		color_at(t_world w, t_ray r);
 
@@ -106,11 +106,11 @@ t_color		color_at(t_world w, t_ray r);
 /*								SHAPE										  */
 /* ************************************************************************** */
 //cylinder_inter.c
-t_inter     *cylinder_intersect(t_shape *s, t_ray r);
+t_inter     *cylinder_intersect(t_shape *s, t_ray r, t_world w);
 
 // shape_inter.c
-t_inter		*sphere_intersect(t_shape *s, t_ray r);
-t_inter		*plane_intersect(t_shape *s, t_ray r);
+t_inter		*sphere_intersect(t_shape *s, t_ray r, t_world w);
+t_inter		*plane_intersect(t_shape *s, t_ray r, t_world w);
 
 /* ************************************************************************** */
 /*								TUPLES										  */
@@ -230,5 +230,6 @@ char		*ft_substr(char const *s, unsigned int start, size_t len);
 int			add_string_to_array(char ***array, const char *str);
 
 char		*get_next_line(int fd);
+void		free_and_exit(t_world w);
 
 #endif

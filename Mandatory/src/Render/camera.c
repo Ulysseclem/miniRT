@@ -6,7 +6,7 @@
 /*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 15:26:52 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/02/08 18:12:09 by uclement         ###   ########.fr       */
+/*   Updated: 2024/02/18 14:33:05 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ t_matrix	*view_transform(t_tuple from, t_tuple to, t_tuple up)
 	t_tuple		true_up;
 	t_matrix	*orientation;
 
+	if (equal(to.z, 0.0f))
+		to.z = 0.0001;
 	forward = norm(sub_tuple(to, from));
 	left = norm(cross_product(forward, norm(up)));
 	true_up = cross_product(left, forward);
@@ -62,7 +64,7 @@ t_camera	camera(int hsize, int vsize, float fov)
 	return (c);
 }
 
-t_ray	ray_for_pixel(t_camera c, float px, float py)
+t_ray	ray_for_pixel(t_world w, float px, float py)
 {
 	float		world_y;
 	t_tuple		origin;
@@ -70,10 +72,12 @@ t_ray	ray_for_pixel(t_camera c, float px, float py)
 	t_ray		r;
 	t_matrix	*inverted;
 
-	world_y = c.half_height - (py + 0.5) * c.pixel_size;
-	inverted = inverse(c.transform);
-	pixel = mul_matrix_tuple(inverted, point(c.half_width - (px + 0.5) * \
-	c.pixel_size, world_y, -1));
+	world_y = w.cam.half_height - (py + 0.5) * w.cam.pixel_size;
+	inverted = inverse(w.cam.transform);
+	if (!inverted)
+		free_and_exit(w);
+	pixel = mul_matrix_tuple(inverted, point(w.cam.half_width - (px + 0.5) * \
+	w.cam.pixel_size, world_y, -1));
 	origin = mul_matrix_tuple(inverted, point(0, 0, 0));
 	free_matrix(inverted);
 	ray(&r, origin, norm(sub_tuple(pixel, origin)));

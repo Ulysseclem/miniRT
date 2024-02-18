@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   shape_inter.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 12:13:20 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/02/17 16:33:23 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/18 14:39:15 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "struct.h"
 
-t_inter	*sphere_intersect(t_shape *s, t_ray r)
+t_inter	*sphere_intersect(t_shape *s, t_ray r, t_world w)
 {
 	t_inter		*xs;
 	t_tuple		s_t_r;
@@ -30,7 +30,7 @@ t_inter	*sphere_intersect(t_shape *s, t_ray r)
 		return (NULL);
 	xs = malloc(sizeof(t_inter) * 2);
 	if (!xs)
-		return (NULL);
+		free_and_exit(w);
 	xs[0] = create_inter_new(((current->b * -1) - \
 	sqrt(current->d)) / (2 * current->a), *s);
 	xs[1] = create_inter_new(((current->b * -1) + \
@@ -64,13 +64,13 @@ t_inter	*sphere_intersect(t_shape *s, t_ray r)
 // 		return (NULL);
 // }
 
-t_inter	*plane_intersect(t_shape *s, t_ray r)
+t_inter	*plane_intersect(t_shape *s, t_ray r, t_world w)
 {
 	t_inter	*xs;
 
 	xs = malloc(sizeof(t_inter) * 2);
 	if (!xs)
-		return (NULL);
+		free_and_exit(w);
 	xs[0] = create_inter_new(-r.origin.y / r.direction.y, *s);
 	xs[1] = create_inter_new(-r.origin.y / r.direction.y, *s);
 	xs->count = 2;

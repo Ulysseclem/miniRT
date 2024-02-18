@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersection.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 12:29:59 by ulysseclem        #+#    #+#             */
-/*   Updated: 2024/02/17 16:29:13 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/18 14:41:10 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,22 @@ t_inter	create_inter_new(float t, t_shape shape)
 	return (xs);
 }
 
-int	intersect_shape(t_shape *shape, t_ray ray)
+int	intersect_shape(t_shape *shape, t_ray ray, t_world w)
 {
 	t_ray		local_ray;
 	t_matrix	*inverted;
 
 	inverted = inverse(shape->transform);
+	if (!inverted)
+		free_and_exit(w);
 	local_ray = trnsform_ray(ray, inverted);
 	free_matrix(inverted);
 	if (shape->type == SPHERE)
-		shape->xs = sphere_intersect(shape, local_ray);
+		shape->xs = sphere_intersect(shape, local_ray, w);
 	else if (shape->type == PLANE)
-		shape->xs = plane_intersect(shape, local_ray);
+		shape->xs = plane_intersect(shape, local_ray, w);
 	else if (shape->type == CYLINDER)
-		shape->xs = cylinder_intersect(shape, local_ray);
+		shape->xs = cylinder_intersect(shape, local_ray, w);
 	if (shape->xs != NULL)
 		return (2);
 	else
@@ -53,7 +55,7 @@ t_inter	*inter_world_2(t_world w, int size)
 	j = 0;
 	xs = malloc(sizeof(t_inter) * size);
 	if (!xs)
-		return (NULL);
+		free_and_exit(w);
 	while (++i < w.count)
 	{
 		if (w.shape[i].xs != NULL)
@@ -82,7 +84,7 @@ t_inter	*inter_world(t_world w, t_ray ray)
 	size = 0;
 	while (i < w.count)
 	{
-		size += intersect_shape(&(w.shape[i]), ray);
+		size += intersect_shape(&(w.shape[i]), ray, w);
 		i++;
 	}
 	if (size == 0)

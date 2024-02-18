@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: icaharel <icaharel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: uclement <uclement@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:51:13 by uclement          #+#    #+#             */
-/*   Updated: 2024/02/16 13:54:57 by icaharel         ###   ########.fr       */
+/*   Updated: 2024/02/18 14:20:54 by uclement         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,22 @@ typedef struct s_inter {
 	t_shape		shape;
 }	t_inter;
 
+typedef struct s_camera {
+	float		hsize;
+	float		vsize;
+	float		fov;
+	t_matrix	*transform;
+	float		half_width;
+	float		half_height;
+	float		pixel_size;
+}	t_camera;
+
 typedef struct s_world {
 	t_shape		*shape;
 	t_light		l;
 	t_color		ambiant;
 	int			count;
+	t_camera	cam;
 }	t_world;
 
 typedef struct s_proj {
@@ -134,16 +145,6 @@ typedef struct s_comps {
 	t_tuple		normalv;
 	bool		inside;
 }	t_comps;
-
-typedef struct s_camera {
-	float		hsize;
-	float		vsize;
-	float		fov;
-	t_matrix	*transform;
-	float		half_width;
-	float		half_height;
-	float		pixel_size;
-}	t_camera;
 
 typedef struct s_sphere {
 	float	diameter;
